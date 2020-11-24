@@ -1,0 +1,10 @@
+#!usr/bin/envnode
+var child_process = require("child_process");
+
+try {
+    console.log('please be patient this may take a while...')
+    child_process.execSync('tsc && node built/index.js', { cwd: __dirname, stdio: 'inherit' })
+}
+catch (err) {
+    throw new Error(err)
+}

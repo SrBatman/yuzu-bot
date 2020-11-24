@@ -1,0 +1,13 @@
+# ...
+/node_modules
+package-lock.json
+*.env
+
+# typescript checks
+tsconfig.tsbuildinfo
+
+# github checks
+/built
+
+# TODO
+/src/events
