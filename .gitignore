@@ -8,6 +8,3 @@ tsconfig.tsbuildinfo
 
 # github checks
 /built
-
-# TODO
-/src/events

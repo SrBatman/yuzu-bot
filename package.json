@@ -1,21 +1,30 @@
 {
-  "name": "bot2",
-  "version": "1.0.0",
-  "description": "",
+  "name": "kbot",
+  "version": "2.0.0",
+  "description": "sample bot using Discord.js",
   "main": "index.js",
   "dependencies": {
     "@types/mongoose": "^5.10.1",
     "@types/node": "^14.14.9",
-    "discord.js": "^12.4.1",
+    "discord.js": "^12.5.0",
     "dotenv": "^8.2.0",
     "mongoose": "^5.10.15",
     "tslib": "^2.0.3"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:typescript": "tsc"
+  },
+  "repository": {
+    "url": "https://github.com/Le-Val/k1ssbot",
+    "type": "github:user/repo"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Le Val",
+  "license": "Apache-2.0",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=12"
+  }
 }

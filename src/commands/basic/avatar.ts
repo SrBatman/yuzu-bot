@@ -1,5 +1,5 @@
-import { MessageEmbed } from 'discord.js';
 import type { ICommand } from '../../types/command';
+import { MessageEmbed } from 'discord.js';
 export const command: ICommand = {
     label: 'avatar',
     options: {
@@ -17,7 +17,8 @@ export const command: ICommand = {
     			`[Referencia](https://www.google.com/searchbyimage?image_url=${avatar})`,
     			`[Avatar URL](${avatar})`
     		])
-            .setImage(avatar);
+			.setImage(avatar);
+		
     	return embed;
     }
 };

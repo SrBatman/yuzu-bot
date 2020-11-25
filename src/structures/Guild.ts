@@ -10,7 +10,7 @@ export interface GuildStructure extends Guild {
     editPrefix:({ prefix, server }: { prefix: string, server: string }) => Promise<IPrefix | null>
 }
 
-export default Structures.extend('Guild', (Base) => {
+export default Structures.extend('Guild', Base => {
     return class extends Base implements Guild, GuildStructure {
         public prefix: string = options.prefix;
         constructor(client: Client, data: object) {
@@ -25,7 +25,7 @@ export default Structures.extend('Guild', (Base) => {
         public async getPrefix() {
             const output = await Controller.get(this.id);
             if (output) this.prefix = output.prefix;
-            return output ?? { prefix: options.prefix, server: this.id } as IPrefix;
+            return output ?? { prefix: this.prefix, server: this.id } as IPrefix;
         }
         public async editPrefix({ prefix, server }: { prefix: string, server: string }) {
             const toUpdate = await this.getPrefix();
