@@ -3,7 +3,6 @@ import { readdirSync } from 'fs';
 import { join } from 'path';
 
 export = function handleCommands(dir: string, commands: Map<string, ICommand>, aliases: Map<string, string>) {
-    // added sub-directory support!
     readdirSync(join(__dirname, dir)).forEach(async file => {
         if (!file.endsWith('.js')) {
             handleCommands(join(dir, file), commands, aliases);

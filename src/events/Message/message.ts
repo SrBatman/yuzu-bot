@@ -6,13 +6,14 @@ import type { IEvent } from '../../types/event';
 import { options } from '../../options';
 import { aliases, commands } from '../../bot';
 
+import '../../structures/Guild';
+
 export const event: IEvent = {
     label : 'message',
     execute: async function(session, msg: Message) {
 
-        const guild  = msg.guild as GuildStructure,
-              res   = await guild.getPrefix(),
-              prefix = res?.prefix || options.prefix;
+        const res    = await (msg.guild as GuildStructure).getPrefix();
+        const prefix = res?.prefix || options.prefix;
 
         // arguments, ej: .command args0 args1 args2 ...
         const args    = msg.content.slice(prefix.length).trim().split(/\s+/gm),

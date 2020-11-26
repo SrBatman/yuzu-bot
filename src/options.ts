@@ -1,10 +1,6 @@
 import type { Snowflake } from 'discord.js';
 
 export type Options = {
-	sharded: {
-		isSharded: boolean,
-		shardCount: number | 'auto'
-	},
 	owner: {
 		username: string,
 		id: Snowflake
@@ -17,13 +13,9 @@ export type Options = {
 };
 
 export const options: Options = {
-	sharded: {
-		isSharded: false,
-		shardCount: 'auto'
-	},
 	owner: {
-		username: '',
-		id: ''
+		username: 'Azul 💧#2189',
+		id: '659611986413355018'
 	},
 	disabledCommands: [
 		'...'

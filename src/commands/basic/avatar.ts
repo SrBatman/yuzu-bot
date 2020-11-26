@@ -9,7 +9,7 @@ export const command: ICommand = {
     execute: () => (msg) => {
     	const target = msg.mentions.users.first() ?? msg.author;
     	const avatar = target.displayAvatarURL({ size: 1024, dynamic: true, format: 'png' || 'gif' });
-    	const embed = new MessageEmbed()
+    	return new MessageEmbed()
     		.setAuthor(target.tag, avatar)
     		.setColor(msg.member ? msg.member.displayColor : 'RANDOM')
     		.setTitle(`Avatar pedido por ${msg.author.tag}`)
@@ -18,7 +18,5 @@ export const command: ICommand = {
     			`[Avatar URL](${avatar})`
     		])
 			.setImage(avatar);
-		
-    	return embed;
     }
 };

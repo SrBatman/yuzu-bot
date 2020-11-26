@@ -1,5 +1,4 @@
 import { connection, connect, disconnect, Connection } from 'mongoose';
-import 'dotenv/config';
 
 let database: Connection | undefined = undefined;
 
