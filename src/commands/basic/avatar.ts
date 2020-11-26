@@ -1,7 +1,8 @@
 import type { ICommand } from '../../types/command';
 import { MessageEmbed } from 'discord.js';
 export const command: ICommand = {
-    label: 'avatar',
+	label: 'avatar',
+	alias: [],
     options: {
         guildOnly: false,
         adminOnly: false,

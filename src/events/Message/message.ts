@@ -20,6 +20,8 @@ export const event: IEvent = {
               name    = args.shift()?.toLowerCase(), // command name
               command = commands.get(name!) ?? commands.get(aliases.get(name!)!); // command object
 
+        console.log(aliases)
+
         const error: MessageContent = validateCommandExecution(msg, command?.options);
 
         if (!msg.content.startsWith(prefix) || msg.author.bot) {

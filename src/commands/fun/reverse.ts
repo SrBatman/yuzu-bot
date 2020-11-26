@@ -18,6 +18,7 @@ export const command: ICommand = {
                    .split('')
                    .map(c => c.charCodeAt(0) - OFFSET)
                    .map(c => MAPPING[c] ?? ' ')
-                   .reverse().join('');
+                   .reverse()
+                   .join('');
     }
 };
