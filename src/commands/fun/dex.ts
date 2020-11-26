@@ -43,11 +43,10 @@ async function getPokemonFromApi(pokemon: string | number): Promise<IPokemon | u
     const pokeAPI = 'https://pokeapi.co/api/v2';
     try {
         const { body } = await superagent.get(`${pokeAPI}/pokemon/${pokemon}`);
-
         return body as IPokemon;
     } // ts-ignore
     catch (err: unknown) { // new feature lol
-        console.error('Query to PokeAPI rejected!\n' + new Error(err as string));
+        console.error('Query to PokeAPI rejected!\n %s', err);
         return;
     }
 }
