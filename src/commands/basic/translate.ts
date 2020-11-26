@@ -14,8 +14,7 @@ export const command: ICommand = {
               text = args.slice(1).join(' ');
 
         if (!lang)
-            return 'Necesitas colocar a que idioma vas a traducir el texto.\n\
-            Aquí los lenguajes disponibles: https://www.science.co.il/language/Locale-codes.php';
+            return 'Necesitas especificar a qué idioma vas a traducir el texto.\nAquí los lenguajes disponibles: https://www.science.co.il/language/Locale-codes.php';
 
         if (!text)
             return 'No especificaste un texto válido.';
@@ -27,8 +26,8 @@ export const command: ICommand = {
             .setColor('RANDOM')
             .setAuthor(msg.author.username, msg.author.displayAvatarURL())
             .setTimestamp()
-            .setTitle('💬 Traducción')
-            .setDescription(`${translated.text}`)
+            .setTitle(String.raw`\💬 Traducción`)
+            .setDescription(translated.text)
             .setFooter(`Lenguaje al que se tradució: ${lang}`);
     }
 };
