@@ -13,7 +13,6 @@ export const command: ICommand = {
     execute: () => async (msg, args) => {
 
         const search = args.join(' ');
-
         if (!search)
             return 'Debes ingresar más información del pokémon para buscarlo.';
 
