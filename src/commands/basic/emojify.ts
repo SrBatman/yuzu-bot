@@ -1,8 +1,7 @@
 import type { ICommand } from '../../types/command';
 
 export const command: ICommand = {
-    label: 'translate',
-    alias: ['tr', 'traducir'],
+    label: 'emojify',
     options: {
         guildOnly: false,
         adminOnly: false,
