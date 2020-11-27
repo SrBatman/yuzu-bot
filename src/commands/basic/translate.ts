@@ -20,7 +20,7 @@ export const command: ICommand = {
             return 'No especificaste un texto válido.';
 
         const translated = await translate(text, { from: 'auto', to: lang })
-                                    .catch((err: Error) => console.error(err));
+                                .catch((err: Error) => console.error(err));
 
         return new MessageEmbed()
             .setColor('RANDOM')

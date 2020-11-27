@@ -42,12 +42,10 @@ export interface ICommand {
         cooldown: number
     };
     readonly options: CommandOptions;
-    readonly information?: string | {
+    readonly information?: {
         descr?: string, // description
         usage?: string,
         short?: string, // short description
-        label?: string, // name
-        alias?: string,
     };
     // curry function
     readonly execute: (session: Session) => (msg: Message, args: readonly string[]) => MessageContent | void | Promise<MessageContent | void>;
