@@ -7,6 +7,11 @@ export const command: ICommand = {
         guildOnly: false,
         adminOnly: false,
     },
+    information: {
+        descr: 'Busca el avatar de un usuario.',
+        short: 'Busca avatares.',
+        usage: '[@Mención]'
+    },
     execute: () => (msg) => {
     	const target = msg.mentions.users.first() ?? msg.author;
     	const avatar = target.displayAvatarURL({ size: 1024, dynamic: true, format: 'png' || 'gif' });

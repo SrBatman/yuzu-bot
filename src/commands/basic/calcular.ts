@@ -6,6 +6,11 @@ export const command: ICommand = {
         guildOnly: false,
         adminOnly: false,
     },
+    information: {
+        descr: 'Calcula operaciones matemáticas.',
+        short: 'Calculadora básica.',
+        usage: '<%Operación>'
+    },
     execute: () => (msg, args) => {
         let math = require('maths.ts');
         let result;

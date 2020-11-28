@@ -6,6 +6,11 @@ export const command: ICommand = {
         guildOnly: false,
         adminOnly: false
     },
+    information: {
+        descr: 'Invierte un texto voltéandolo hacia abajo.',
+        short: 'Invertir textos.',
+        usage: '<$Texto>'
+    },
     execute: () => async (_, args) => {
     
         const MAPPING = '¡"#$%⅋,)(*+\'-˙/0ƖᄅƐㄣϛ9ㄥ86:;<=>¿@∀qƆpƎℲפHIſʞ˥WNOԀQɹS┴∩ΛMX⅄Z[/]^_`ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz{|}~',

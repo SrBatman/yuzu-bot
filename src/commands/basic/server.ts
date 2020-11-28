@@ -7,6 +7,11 @@ export const command: ICommand = {
         guildOnly: true,
         adminOnly: false,
     },
+    information: {
+        descr: 'Busca información acerca del servidor.',
+        short: 'Ver el servidor.',
+        usage: ''
+    },
     execute: () => (msg) => {
         const status: { readonly [ k: string ]: number } = {
             'online': msg.guild?.presences.cache.filter(presence => presence.status === 'online' && !presence.user?.bot).size!,

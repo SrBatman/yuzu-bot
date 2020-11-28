@@ -14,7 +14,7 @@ export const command: ICommand = {
     information: {
         descr: 'Busca información acerca de un comando - muestra todos los comandos.',
         short: 'Busca comandos.',
-        usage: ''
+        usage: '[$Comando]'
     },
     execute: (session) => async (msg, args) => {
         const search = args.join(' ');
@@ -30,17 +30,17 @@ export const command: ICommand = {
 
         if (!search) {
             const info = [ ...commands.values() ]
-                            .map(cmd =>
-                                [
-                                    `- \`${`[${cmd.label}] ${cmd?.alias?.join(', ') ?? ''}`.trim() ?? cmd.label}\``,
-                                    ` ${cmd?.information?.short ?? cmd.information?.descr ?? 'Comando sin descripción'}`
-                                ]
-                            );
+                .map(cmd =>
+                    [
+                        `- \`${`[${cmd.label}] ${cmd?.alias?.join(', ') ?? ''}`.trim() ?? cmd.label}\``,
+                        ` ${cmd?.information?.short ?? cmd.information?.descr ?? 'Comando sin descripción'}`
+                    ]
+                );
 
             return Object.assign(base)
                 .setTitle(String.raw`\👾 Comandos de ${session.user?.tag}`)
                 .setColor('RANDOM')
-                .setDescription([base.description!, ...info ]);
+                .setDescription([ base.description!, ...info ]);
         }
 
         const command = commands.get(search) as ICommand;

@@ -9,12 +9,17 @@ export const command: ICommand = {
         guildOnly: false,
         adminOnly: false,
     },
+    information: {
+        descr: 'Traduce al idioma especificado\nAquí los lenguajes disponibles: https://www.science.co.il/language/Locale-codes.php',
+        short: 'Traducir lenguajes.',
+        usage: '<$Lenguaje> <$Texto>'
+    },
     execute: () => async (msg, args) => {
         const lang = args[0],
               text = args.slice(1).join(' ');
 
         if (!lang)
-            return 'Necesitas especificar a qué idioma vas a traducir el texto.\nAquí los lenguajes disponibles: https://www.science.co.il/language/Locale-codes.php';
+            return 'Necesitas especificar a qué idioma vas a traducir el texto, usa **help translate** para poder ayudarte.';
 
         if (!text)
             return 'No especificaste un texto válido.';

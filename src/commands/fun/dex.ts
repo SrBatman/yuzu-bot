@@ -10,6 +10,11 @@ export const command: ICommand = {
         guildOnly: false,
         adminOnly: false
     },
+    information: {
+        descr: 'Comando para buscar un pokémon por su nombre o id',
+        short: 'Busca pokemones.',
+        usage: '<$Nombre o id>'
+    },
     execute: () => async (msg, args) => {
 
         const search = args.join(' ');

@@ -34,9 +34,10 @@ export const event: IEvent = {
             return;
         }
         const output: MessageContent = await command?.execute(session)(msg, args);
-        const sended: Message = await msg.channel.send(output);
-        // TODO
-        console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
+        if (output) {
+            const sended: Message = await msg.channel.send(output);
+            console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
+        }
     }
 };
 
