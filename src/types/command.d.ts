@@ -33,20 +33,19 @@ export type CommandOptions = {
 };
 
 export interface ICommand {
-    readonly label: string;
-    readonly category?: Category;
+    readonly label: string; // the name of the command
+    readonly category?: Category; // TODO
     readonly alias?: string[]; // aliases like ['avatar', 'pfp', 'icon']
     readonly allowedIDS?: Snowflake[] | 'all';
-    readonly cooldown?: number | {
-        uses: number, // the uses before the command cooldown triggers
-        cooldown: number
-    };
+    readonly cooldown?: (number | 3);
     readonly options: CommandOptions;
     readonly information?: {
         descr?: string, // description
-        usage?: string,
+        usage?: string, // duh
         short?: string, // short description
     };
     // curry function
-    readonly execute: (session: Session) => (msg: Message, args: readonly string[]) => MessageContent | void | Promise<MessageContent | void>;
+    readonly execute: (session: Session) =>
+        (msg: Message, args: readonly string[]) =>
+            MessageContent | Promise<MessageContent>;
 }

@@ -66,7 +66,7 @@ function parseMessageToPokemon(message: string): IPokemonTarget {
     return data;
 }
 function parsePokemonWeight(weight: number): string {
-    let strWeight: string = weight.toString();
+    var strWeight: string = weight.toString(); // var prevent shadowing
     const len: number = strWeight.length;
 
     if (len == 1) strWeight = `0.${strWeight}`;

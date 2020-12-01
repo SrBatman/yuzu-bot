@@ -1,5 +1,5 @@
 import type { ICommand } from '../../types/command';
-import type { IPrefix } from '../../database/models/prefix.model'
+import type { IPrefix } from '../../database/models/prefix.model';
 import type { GuildStructure } from '../../structures/Guild';
 import { options } from '../../options';
 import '../../structures/Guild';
@@ -7,7 +7,7 @@ export const command: ICommand = {
     label: 'prefix',
     alias: ['setprefix'],
     options: {
-        guildOnly: false,
+        guildOnly: true,
         adminOnly: false,
     },
     execute: () => async (msg, args) => {
