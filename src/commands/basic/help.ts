@@ -27,7 +27,6 @@ export const command: ICommand = {
                 'Comando de ayuda para pelotudos',
                 `El prefix del bot es ${!msg.guild ? options.prefix : (await (msg.guild as GuildStructure).getPrefix()).prefix}`
             ]);
-
         if (!search) {
             const info = [ ...commands.values() ]
                 .map(cmd =>
@@ -35,14 +34,12 @@ export const command: ICommand = {
                         `- \`${`[${cmd.label}] ${cmd?.alias?.join(', ') ?? ''}`.trim() ?? cmd.label}\``,
                         ` ${cmd?.information?.short ?? cmd.information?.descr ?? 'Comando sin descripción'}`
                     ]
-                );
-
+                );s
             return Object.assign(base)
                 .setTitle(String.raw`\👾 Comandos de ${session.user?.tag}`)
                 .setColor('RANDOM')
                 .setDescription([ base.description!, ...info ]);
         }
-
         const command = commands.get(search) as ICommand;
 
         if (!command)

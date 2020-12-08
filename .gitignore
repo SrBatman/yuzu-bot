@@ -2,9 +2,12 @@
 /node_modules
 package-lock.json
 *.env
+*.log
+logs
+npm-debug.log*
 
 # typescript checks
 tsconfig.tsbuildinfo
 
-# github checks
+# aditional checks
 /built
