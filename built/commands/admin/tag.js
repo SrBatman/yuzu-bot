@@ -13,11 +13,11 @@ var Command;
             adminOnly: false
         },
         execute: (_session) => (msg, args) => tslib_1.__awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+            var _a, _b, _c, _d, _e, _f, _g, _h;
             if (!msg.guild)
                 return;
             const arg = (_a = args === null || args === void 0 ? void 0 : args[0]) === null || _a === void 0 ? void 0 : _a.toLowerCase();
-            const obtain = (content) => tslib_1.__awaiter(this, void 0, void 0, function* () { var _k; return yield tagController.get(content, (_k = msg.guild) === null || _k === void 0 ? void 0 : _k.id); });
+            const obtain = (content) => tslib_1.__awaiter(this, void 0, void 0, function* () { var _j; return yield tagController.get(content, (_j = msg.guild) === null || _j === void 0 ? void 0 : _j.id); });
             switch (arg) {
                 case 'new':
                 case 'set':
@@ -190,7 +190,7 @@ var Command;
                         else {
                             if ((tag === null || tag === void 0 ? void 0 : tag.global) && (tag === null || tag === void 0 ? void 0 : tag.nsfw))
                                 msg.channel.send('Ha habido un fallo en el sistema.');
-                            msg.channel.send([(_j = !(tag === null || tag === void 0 ? void 0 : tag.global)) !== null && _j !== void 0 ? _j : '`Global:`\n', tag === null || tag === void 0 ? void 0 : tag.content], { files: tag.attachments });
+                            msg.channel.send(tag === null || tag === void 0 ? void 0 : tag.content, { files: tag.attachments });
                         }
                     }
                     break;

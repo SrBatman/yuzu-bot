@@ -14,3 +14,4 @@ command_handler_1.default('/commands', exports.commands, exports.aliases);
 const token = process.env.token;
 if (token)
     exports.session.login(token);
+exports.session.on('error', (error) => console.error(error));
