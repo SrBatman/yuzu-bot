@@ -16,7 +16,7 @@ const command: ICommand = {
         if (!text)
             return 'Escribí el contenido del mensaje o te revoleo a piñas.';
         msg.delete();
-        return 'text';
+        return text;
     }
 };
 export = command;
