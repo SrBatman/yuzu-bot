@@ -7,15 +7,11 @@ const command: ICommand = {
     options: {
         guildOnly: true,
         adminOnly: false,
-        argsRequired: {
-            message: 'Código no especificado.',
-            required: true
-        }
     },
     execute: (session) => async (msg, args) => {
         try {
 
-            if (msg.author.id !== '659611986413355018')
+            if (msg.author.id !== '826943403396300881')
                 throw new Error('Qué hacés down solo Le Val puede usar eso.');
 
         }
