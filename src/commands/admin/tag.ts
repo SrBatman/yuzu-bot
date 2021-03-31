@@ -26,7 +26,7 @@ namespace Command {
     const isArgument = (arg: unknown): arg is Argument =>
         (arg instanceof String) && arg === ('add' || 'set' || 'new' || 'remove' || 'delete' || 'edit' || 'list' || 'nsfw' || 'global' || 'merge' || 'owner' || 'origin');
 
-    export const tagCommand: ICommand = {
+    export const command: ICommand = {
         
     	label: 'tag',
 		options: {
@@ -304,4 +304,4 @@ namespace Command {
         }
     }
 }
-export = Command.tagCommand;
+export = Command.command;
