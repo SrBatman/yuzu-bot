@@ -4,7 +4,7 @@ const discord_js_1 = require("discord.js");
 const tagController = tslib_1.__importStar(require("../../database/controllers/tag.controller"));
 var Command;
 (function (Command) {
-    const OWNERID = '';
+    const OWNERID = '790411185970872320';
     const isArgument = (arg) => (arg instanceof String) && arg === ('add' || 'set' || 'new' || 'remove' || 'delete' || 'edit' || 'list' || 'nsfw' || 'global' || 'merge' || 'owner' || 'origin');
     Command.tagCommand = {
         label: 'tag',

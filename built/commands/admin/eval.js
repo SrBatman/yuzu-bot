@@ -8,15 +8,11 @@ const command = {
     options: {
         guildOnly: true,
         adminOnly: false,
-        argsRequired: {
-            message: 'Código no especificado.',
-            required: true
-        }
     },
     execute: (session) => (msg, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
         var _a, _b, _c;
         try {
-            if (msg.author.id !== '659611986413355018')
+            if (msg.author.id !== '826943403396300881')
                 throw new Error('Qué hacés down solo Le Val puede usar eso.');
         }
         catch (err) {
