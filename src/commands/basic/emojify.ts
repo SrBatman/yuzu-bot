@@ -1,6 +1,6 @@
 import type { ICommand } from '../../types/command';
 
-export const command: ICommand = {
+const command: ICommand = {
 		label: 'emojify',
 		options: {
 				guildOnly: false,
@@ -32,3 +32,4 @@ export const command: ICommand = {
 						   .join('');
 		}
 };
+export = command;

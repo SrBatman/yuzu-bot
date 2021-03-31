@@ -1,9 +1,7 @@
 import type { ICommand } from '../../types/command';
-
 import { MessageEmbed } from 'discord.js';
-import { default as superagent } from 'superagent';
-
-export const command: ICommand = {
+import superagent from 'superagent';
+const command: ICommand = {
     label: 'pokedex',
     alias: ['pkm', 'dex', 'poke'],
     options: {
@@ -40,7 +38,7 @@ export const command: ICommand = {
             .setThumbnail(poke.sprites.front_shiny);
     }
 };
-
+export = command;
 // FUNCTIONS
 
 async function getPokemonFromApi(pokemon: string | number): Promise<IPokemon | undefined> {
@@ -66,8 +64,8 @@ function parseMessageToPokemon(message: string): IPokemonTarget {
     return data;
 }
 function parsePokemonWeight(weight: number): string {
-    var strWeight: string = weight.toString(); // var prevent shadowing
-    const len: number = strWeight.length;
+    var strWeight = weight.toString(); // var prevent shadowing
+    const len = strWeight.length;
 
     if (len == 1) strWeight = `0.${strWeight}`;
     else if (len >= 2) strWeight = strWeight.slice(0, len - 1);

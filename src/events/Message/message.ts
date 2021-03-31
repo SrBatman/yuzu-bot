@@ -1,5 +1,5 @@
 import type { Message } from 'discord.js';
-import type { GuildStructure } from "../../structures/Guild";
+import type { GuildStructure } from '../../structures/Guild';
 import type { CommandOptions, MessageContent } from '../../types/command';
 import type { IEvent } from '../../types/event';
 
@@ -7,32 +7,32 @@ import { options } from '../../options';
 import { aliases, commands } from '../../bot';
 
 import '../../structures/Guild';
+import '../../utils/slashCommands';
 
 const cooldowns = new Map<string, Map<string, number>>();
 
 export const event: IEvent = {
-	label : 'message',
-	execute: async function(session, msg: Message) {
-
+	label: 'message',
+	async execute(session, msg: Message): Promise<void> {
 		const res    = await (msg.guild as GuildStructure).getPrefix();
 		const prefix = res?.prefix || options.prefix;
 
 		// arguments, ej: .command args0 args1 args2 ...
 		const args    = msg.content.slice(prefix.length).trim().split(/\s+/gm),
 			  name    = args.shift()?.toLowerCase(), // command name
-			  command = commands.get(name!) ?? commands.get(aliases.get(name!)!); // command object
+			  command = commands.get(name!) ?? commands.get(aliases.get(name!)!);
 
 		const error: MessageContent = validateCommandExecution(msg, command?.options);
 
 		if (!msg.content.startsWith(prefix) || msg.author.bot) {
 			return;
 		}
-		else if (error) {
-			msg.channel.send(error);
-			return;
-		}
 		else if (!command) {
 			msg.channel.send('Ese comando no existe.');
+			return;
+		}
+		else if (error) {
+			msg.channel.send(error);
 			return;
 		}
 		else {
@@ -42,7 +42,7 @@ export const event: IEvent = {
 			var timestamps: Map<string, number> | undefined = cooldowns.get(command.label);
 		}
 		if (timestamps?.has(msg.guild?.id!)) {
-			const expirationTime: number | 3000 = ((command?.cooldown ?? 3000) * 1000) + (timestamps?.get(msg.guild?.id!) ?? 3000);
+			const expirationTime: number | 3000 = ((command.cooldown ?? 3000) * 1000) + (timestamps?.get(msg.guild?.id!) ?? 3000);
 			if (Date.now() < expirationTime) {
 				const timeLeft = new Date(expirationTime - Date.now()).getSeconds();
 				msg.channel.send(`estoy re caliente como para poder ejecutar más comandos \\🔥\nEspera **${timeLeft}** antes volver a usar **${command.label}**`);
@@ -50,11 +50,13 @@ export const event: IEvent = {
 			}
 		}
 
-		session.setTimeout(() => timestamps?.delete(msg.guild?.id!)!, (command?.cooldown ?? 3) * 1000);
+		session.setTimeout(() => timestamps?.delete(msg.guild?.id!)!, (command.cooldown ?? 3) * 1000);
 		timestamps?.set(msg.guild?.id!, Date.now());
 
-		const output: MessageContent = await command?.execute(session)(msg, args);
+		const output: MessageContent = await command.execute(session)(msg, args);
+
 		if (output) {
+			// comando estándar
 			const sended: Message = await msg.channel.send(output);
 			console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
 		}

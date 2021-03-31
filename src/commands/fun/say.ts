@@ -1,5 +1,5 @@
 import type { ICommand } from '../../types/command';
-export const command: ICommand = {
+const command: ICommand = {
     label: 'say',
     alias: ['esay', 'shadowsay'],
     options: {
@@ -19,3 +19,4 @@ export const command: ICommand = {
         return 'text';
     }
 };
+export = command;

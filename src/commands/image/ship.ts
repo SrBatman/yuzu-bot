@@ -2,7 +2,7 @@ import type { ICommand } from '../../types/command';
 import type { Image } from 'canvas';
 import { default as Canvas } from  'canvas';
 import { MessageEmbed, MessageAttachment } from 'discord.js';
-export const command: ICommand = {
+const command: ICommand = {
     label: 'ship',
     alias: ['love'],
     options: {
@@ -93,8 +93,7 @@ export const command: ICommand = {
             .setImage('attachment://avatar.png');
     }
 };
-
-
+export = command;
 function reply(randnum: number): string {
 
     switch (randnum) {

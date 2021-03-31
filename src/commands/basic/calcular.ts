@@ -1,6 +1,6 @@
 import type { ICommand } from '../../types/command';
 import { MessageEmbed } from 'discord.js';
-export const command: ICommand = {
+const command: ICommand = {
     label: 'calcular',
     options: {
         guildOnly: false,
@@ -14,10 +14,11 @@ export const command: ICommand = {
     execute: () => (msg, args) => {
         let math = require('maths.ts');
         let result;
-        try{
-          result = math.evaluate(args.join(' '))
-        } catch(err) {
-          result = 'Entrada Invalida'
+        try {
+            result = math.evaluate(args.join(' '))
+        }
+        catch(err) {
+            result = 'Entrada Invalida'
         }
         const a = new MessageEmbed()
         .addField('Entrada:', '```js\n'+args.join(' ')+'```', false)
@@ -27,8 +28,8 @@ export const command: ICommand = {
         .setThumbnail('https://images.vexels.com/media/users/3/129697/isolated/preview/2cf64de279ce43f6c0b27d81656f2fbb-calculadora-c--rculo-icono-3-by-vexels.png')
         if (args.join(' ')) {
             return msg.channel.send(a);
-          } else {
-            return msg.channel.send(`**${msg.author.username}**, Necesitas calcular algo...`);
-          }
-        
-        }}
+        }
+        return msg.channel.send(`**${msg.author.username}**, Necesitas calcular algo...`);        
+        }
+    }
+export = command;

@@ -4,7 +4,7 @@ import { MessageEmbed } from 'discord.js';
 import { commands } from '../../bot';
 import { options } from '../../options';
 import '../../structures/Guild';
-export const command: ICommand = {
+const command: ICommand = {
 	label: 'help',
 	alias: ['h'],
     options: {
@@ -34,7 +34,7 @@ export const command: ICommand = {
                         `- \`${`[${cmd.label}] ${cmd?.alias?.join(', ') ?? ''}`.trim() ?? cmd.label}\``,
                         ` ${cmd?.information?.short ?? cmd.information?.descr ?? 'Comando sin descripción'}`
                     ]
-                );s
+                );
             return Object.assign(base)
                 .setTitle(String.raw`\👾 Comandos de ${session.user?.tag}`)
                 .setColor('RANDOM')
@@ -74,3 +74,4 @@ export const command: ICommand = {
             ]);
     }
 };
+export = command;

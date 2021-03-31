@@ -7,6 +7,7 @@ import handleEvents from './event-handler';
 
 import './database/db';
 import './structures/Guild';
+import 'process';
 
 export const commands = new Map<string, ICommand>(),
 	         aliases  = new Map<string, string>(),
@@ -16,4 +17,6 @@ export const commands = new Map<string, ICommand>(),
 handleEvents('/events', session, events);
 handleCommands('/commands', commands, aliases);
 
-session.login(process.env.token!);
+const token = process.env.token;
+
+if (token) session.login(token);

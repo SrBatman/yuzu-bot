@@ -2,7 +2,7 @@ import { MessageEmbed } from 'discord.js';
 import { ICommand } from '../../types/command';
 import { default as translate } from '@vitalets/google-translate-api';
 
-export const command: ICommand = {
+const command: ICommand = {
     label: 'translate',
     alias: ['tr', 'traducir'],
     options: {
@@ -35,3 +35,4 @@ export const command: ICommand = {
             .setFooter(`Lenguaje al que se tradució: ${lang}`);
     }
 };
+export = command;

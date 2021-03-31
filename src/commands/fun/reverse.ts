@@ -1,5 +1,5 @@
 import type { ICommand } from '../../types/command';
-export const command: ICommand = {
+const command: ICommand = {
     label: 'reverse',
     alias: ['invert'],
     options: {
@@ -12,7 +12,6 @@ export const command: ICommand = {
         usage: '<$Texto>'
     },
     execute: () => async (_, args) => {
-    
         const MAPPING = '¡"#$%⅋,)(*+\'-˙/0ƖᄅƐㄣϛ9ㄥ86:;<=>¿@∀qƆpƎℲפHIſʞ˥WNOԀQɹS┴∩ΛMX⅄Z[/]^_`ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz{|}~',
               OFFSET  = '!'.charCodeAt(0); // Start with the character '!'
 
@@ -27,3 +26,4 @@ export const command: ICommand = {
                    .join('');
     }
 };
+export = command;

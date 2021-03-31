@@ -11,7 +11,9 @@
     "canvas": "^2.6.1",
     "discord.js": "^12.5.0",
     "dotenv": "^8.2.0",
+    "g-i-s": "^2.1.6",
     "mongoose": "^5.10.15",
+    "slashdiscord.js": "^1.0.11",
     "superagent": "^6.1.0",
     "tslib": "^2.0.3",
     "typescript": "^4.1.2"

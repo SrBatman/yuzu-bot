@@ -1,6 +1,6 @@
 import type { ICommand } from '../../types/command';
 import { MessageEmbed } from 'discord.js';
-export const command: ICommand = {
+const command: ICommand = {
 	label: 'avatar',
 	alias: ['pfp', 'pic'],
     options: {
@@ -26,3 +26,4 @@ export const command: ICommand = {
 			.setImage(avatar);
     }
 };
+export = command;

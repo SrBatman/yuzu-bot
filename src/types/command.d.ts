@@ -47,5 +47,5 @@ export interface ICommand {
     // curry function
     readonly execute: (session: Session) =>
         (msg: Message, args: readonly string[]) =>
-            MessageContent | Promise<MessageContent>;
+            MessageContent | Promise<MessageContent> | undefined | Promise<undefined>;
 }

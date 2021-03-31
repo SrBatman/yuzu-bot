@@ -1,5 +1,5 @@
 import type { ICommand } from '../../types/command';
-export const command: ICommand = {
+const command: ICommand = {
     label: 'edited',
     options: {
         guildOnly: false,
@@ -12,3 +12,4 @@ export const command: ICommand = {
     },
     execute: () => (msg) => msg.channel.send('Hola!').then(m => m.edit('   ‫  Hola    ‫  '))
 };
+export = command;

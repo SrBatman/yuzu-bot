@@ -3,7 +3,7 @@ import { MessageEmbed } from 'discord.js';
 
 const rpts = ['Sí', 'No', 'Tal vez', 'No sé', '¡Claro!', 'Podría ser', 'Es poco probable', 'Quizás'];
 
-export const command: ICommand = {
+const command: ICommand = {
     label: '8ball',
     alias: [`${rpts.length}ball`],
     options: {
@@ -26,4 +26,5 @@ export const command: ICommand = {
                 .addField('Tu pregunta fue:', question)
                 .addField('Mi respuesta es:', rpts[Math.floor(Math.random() * rpts.length)]);
     }
-}
+};
+export = command;

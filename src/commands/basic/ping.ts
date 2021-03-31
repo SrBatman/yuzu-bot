@@ -1,5 +1,5 @@
 import type { ICommand } from '../../types/command';
-export const command: ICommand = {
+const command: ICommand = {
     label: 'ping',
     options: {
         guildOnly: false,
@@ -7,3 +7,4 @@ export const command: ICommand = {
     },
     execute: () => () => 'Pong!'
 };
+export = command;

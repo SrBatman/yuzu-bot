@@ -1,7 +1,7 @@
 import type { ICommand } from '../../types/command';
 import { MessageEmbed, Util } from 'discord.js';
 import superagent from 'superagent';
-export const command: ICommand = {
+const command: ICommand = {
     label: 'lyrics',
     alias: ['song', 's'],
     options: {
@@ -43,6 +43,7 @@ export const command: ICommand = {
         return embed;
     }
 };
+export = command;
 type Song = {
     lyrics: string,
     author: string,

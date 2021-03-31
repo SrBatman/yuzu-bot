@@ -1,4 +1,4 @@
-export const command = {
+var command = {
     label: 'test',
     options: {
         guildOnly: false,
@@ -7,7 +7,7 @@ export const command = {
     execute: () => () => 'tested!'
 };
 // or
-export class Command {
+class Command {
 	label = 'test';
 	options = {
 		guildOnly: false,
@@ -15,3 +15,5 @@ export class Command {
 	};
 	static execute = () => () => 'tested!';
 }
+Command
+export default command;

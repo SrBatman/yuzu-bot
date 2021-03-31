@@ -1,6 +1,6 @@
 import type { ICommand } from '../../types/command';
 import { MessageEmbed } from 'discord.js';
-export const command: ICommand = {
+const command: ICommand = {
 	label: 'serverinfo',
 	alias: ['sv', 'server'],
     options: {
@@ -98,3 +98,4 @@ const REGIONS: { readonly [ k: string ]: string } = {
     'dubai': ':flag_ae: Dubai',
     'none': ':x:'
 };
+export = command;

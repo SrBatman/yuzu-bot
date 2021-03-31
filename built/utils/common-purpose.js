@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.isMention = exports.isEmpty = exports.isURL = exports.isInvite = void 0;
+const isInvite = (str) => /(https:\/\/)?.*(discord.*\.?g.*g.*|invite\/*)\/?.+/igm.test(str);
+exports.isInvite = isInvite;
+const isURL = (str) => /^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/.test(str);
+exports.isURL = isURL;
+const isEmpty = (str) => !/^(\w+\S+)$/.test(str);
+exports.isEmpty = isEmpty;
+const isMention = (str) => /(<a?:.+:.[0-9]+>)|.*(<(#|@)*(!|&)?[0-9]+>)/.test(str);
+exports.isMention = isMention;

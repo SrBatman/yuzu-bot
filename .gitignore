@@ -10,4 +10,6 @@ npm-debug.log*
 tsconfig.tsbuildinfo
 
 # aditional checks
-/built
+start
+start.bat
+install.bat

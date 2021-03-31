@@ -13,12 +13,12 @@ export type Options = {
 };
 
 export const options: Options = {
-	owner: {
+	owner: { // TODO
 		username: 'Azul 💧#2189',
 		id: '659611986413355018'
 	},
 	disabledCommands: [
-		'...'
+		'test'
 	],
 	prefix: '!',
 	voice: {
