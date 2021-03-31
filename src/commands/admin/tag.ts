@@ -294,7 +294,7 @@ namespace Command {
                         } else {
 
                             if (tag?.global && tag?.nsfw) msg.channel.send('Ha habido un fallo en el sistema.');
-                            msg.channel.send([ !tag?.global ?? '`Global:`\n', tag?.content ], { files: tag.attachments });
+                            msg.channel.send(tag?.content, { files: tag.attachments });
 
                         }
                     }
