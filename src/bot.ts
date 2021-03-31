@@ -20,3 +20,5 @@ handleCommands('/commands', commands, aliases);
 const token = process.env.token;
 
 if (token) session.login(token);
+
+session.on('error', (error: Error) => console.error(error));
