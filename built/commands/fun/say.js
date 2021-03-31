@@ -16,7 +16,7 @@ const command = {
         if (!text)
             return 'Escribí el contenido del mensaje o te revoleo a piñas.';
         msg.delete();
-        return 'text';
+        return text;
     }
 };
 module.exports = command;

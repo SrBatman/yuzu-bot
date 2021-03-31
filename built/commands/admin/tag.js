@@ -6,7 +6,7 @@ var Command;
 (function (Command) {
     const OWNERID = '790411185970872320';
     const isArgument = (arg) => (arg instanceof String) && arg === ('add' || 'set' || 'new' || 'remove' || 'delete' || 'edit' || 'list' || 'nsfw' || 'global' || 'merge' || 'owner' || 'origin');
-    Command.tagCommand = {
+    Command.command = {
         label: 'tag',
         options: {
             guildOnly: true,
@@ -199,4 +199,4 @@ var Command;
         })
     };
 })(Command || (Command = {}));
-module.exports = Command.tagCommand;
+module.exports = Command.command;
