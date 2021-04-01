@@ -22,3 +22,4 @@ const token = process.env.token;
 if (token) session.login(token);
 
 session.on('error', (error: Error) => console.error(error));
+session.on('unhandledPromiseRejection', (error: Error) => console.error(error));

@@ -15,3 +15,4 @@ const token = process.env.token;
 if (token)
     exports.session.login(token);
 exports.session.on('error', (error) => console.error(error));
+exports.session.on('unhandledPromiseRejection', (error) => console.error(error));
