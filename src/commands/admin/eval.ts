@@ -9,9 +9,11 @@ const command: ICommand = {
         adminOnly: false,
     },
     execute: (session) => async (msg, args) => {
+    	if (msg.author.id !== '659611986413355018')
+    		return 'Qué hacés down solo Le Val puede usar eso';
         try {
 
-            if (msg.author.id !== '826943403396300881')
+            if (msg.author.id !== '659611986413355018')
                 throw new Error('Qué hacés down solo Le Val puede usar eso.');
 
         }
