@@ -11,10 +11,10 @@ const command = {
     },
     execute: (session) => (msg, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
         var _a, _b, _c;
-        if (msg.author.id !== '659611986413355018')
+        if (msg.author.id !== '790411185970872320')
             return 'Qué hacés down solo Le Val puede usar eso';
         try {
-            if (msg.author.id !== '659611986413355018')
+            if (msg.author.id !== '790411185970872320')
                 throw new Error('Qué hacés down solo Le Val puede usar eso.');
         }
         catch (err) {
