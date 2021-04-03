@@ -29,8 +29,7 @@ const command: ICommand = {
             ]);
         if (!search) {
             const info = [ ...commands.values() ]
-                .map(cmd =>
-                    [
+                .map(cmd => [
                         `- \`${`[${cmd.label}] ${cmd?.alias?.join(', ') ?? ''}`.trim() ?? cmd.label}\``,
                         ` ${cmd?.information?.short ?? cmd.information?.descr ?? 'Comando sin descripción'}`
                     ]

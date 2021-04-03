@@ -7,7 +7,6 @@ import { options } from '../../options';
 import { aliases, commands } from '../../bot';
 
 import '../../structures/Guild';
-import '../../utils/slashCommands';
 
 const cooldowns = new Map<string, Map<string, number>>();
 
@@ -56,7 +55,6 @@ export const event: IEvent = {
 		const output: MessageContent = await command.execute(session)(msg, args);
 
 		if (output) {
-			// comando estándar
 			const sended: Message = await msg.channel.send(output);
 			console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
 		}
@@ -69,6 +67,9 @@ function validateCommandExecution(msg: Message, commandOptions?: CommandOptions)
 
 	if (!commandOptions)
 		return;
+
+	if (commandOptions.disabled)
+		return 'El comando está desactivado';
 
 	if (commandOptions.argsRequired && !commandOptions.argsRequired.message)
 		return `Uso incorrecto, por favor use ${prefix}help \`<Comando>\` para más información`;

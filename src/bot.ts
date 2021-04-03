@@ -4,6 +4,7 @@ import type { IEvent } from './types/event';
 import Discord from 'discord.js';
 import handleCommands from './command-handler';
 import handleEvents from './event-handler';
+import handleAPICommands from './utils/api-handler';
 
 import './database/db';
 import './structures/Guild';
@@ -16,6 +17,7 @@ export const commands = new Map<string, ICommand>(),
 
 handleEvents('/events', session, events);
 handleCommands('/commands', commands, aliases);
+handleAPICommands(commands);
 
 const token = process.env.token;
 

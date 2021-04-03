@@ -29,6 +29,7 @@ namespace Command {
     export const command: ICommand = {
         
     	label: 'tag',
+        alias: ['t'],
 		options: {
 	        guildOnly: true,
 	        adminOnly: false
@@ -51,13 +52,13 @@ namespace Command {
 
                     if (!args?.[1]) {
 
-                        msg.channel.send('Por favor debes especificar un nombre para tu tag.');
+                        msg.channel.send('Por favor debes especificar un nombre para tu tag');
 
                     } else if (!tag) {
 
                         if (!content && msg.attachments.size < 1) {
 
-                            msg.channel.send('Escribe algo, no puedo guardar tags vacíos.');
+                            msg.channel.send('Escribe algo, no puedo guardar tags vacíos');
                             return;
 
                         }
@@ -66,10 +67,10 @@ namespace Command {
 
                     } else {
 
-                        msg.reply('ese tag ya existe.');
+                        msg.reply('ese tag ya existe');
 
                         if (tag.global)
-                            msg.reply('ese tag es global.');
+                            msg.reply('ese tag es global');
                     }
                     break;
                 }
@@ -81,7 +82,7 @@ namespace Command {
 
                     if (!args?.[1]) {
 
-                        msg.channel.send('Por favor debes especificar un tag para borrar.');
+                        msg.channel.send('Por favor debes especificar un tag para borrar');
 
                     } else if (tag) {
 
@@ -137,7 +138,7 @@ namespace Command {
 
                     if (!args?.[1]) {
 
-                        msg.channel.send('Por favor debes especificar un tag para editar.');
+                        msg.channel.send('Por favor debes especificar un tag para editar');
 
                     } else if (tag) {
 
@@ -147,7 +148,7 @@ namespace Command {
 
                         } else if (!content && msg.attachments.size < 1) {
 
-                            msg.channel.send('Por favor debes especificar el contenido del tag.');
+                            msg.channel.send('Por favor debes especificar el contenido del tag');
 
                         } else {
 
@@ -163,7 +164,7 @@ namespace Command {
 
                     } else {
 
-                        msg.channel.send('No encontré ese tag.');
+                        msg.channel.send('No encontré ese tag');
 
                     }
                     break;
@@ -186,7 +187,7 @@ namespace Command {
 
                     if (!args?.[0]) {
 
-                        msg.channel.send('Error inesperado.');
+                        msg.channel.send('Error inesperado');
 
                     } else if (tag?.user !== OWNERID) {
 
@@ -203,7 +204,7 @@ namespace Command {
                                 attachments: msg.attachments.map(att => att.url)
 
                             }, true, false);
-                            msg.channel.send(`Edité el tag ${output?.name} para que se pueda usar en todos los servidores.`);
+                            msg.channel.send(`Edité el tag ${output?.name} para que se pueda usar en todos los servidores`);
 
                         } else {
      
@@ -213,13 +214,13 @@ namespace Command {
                                 attachments: msg.attachments.map(att => att.url)
 
                             }, false, false);
-                            msg.channel.send(`Edité el tag ${output?.name} para que ya no se pueda usar en todos los servidores.`);
+                            msg.channel.send(`Edité el tag ${output?.name} para que ya no se pueda usar en todos los servidores`);
 
                         }
 
                     } else {
 
-                        msg.channel.send('No encontré ese tag.');
+                        msg.channel.send('No encontré ese tag');
 
                     }
                     break;
@@ -231,7 +232,7 @@ namespace Command {
 
                     if (!args?.[1]) {
 
-                        msg.channel.send('Por favor debes especificar el tag que querés volver nsfw.');
+                        msg.channel.send('Por favor debes especificar el tag que querés volver nsfw');
 
                     } else if (tag) {
 
@@ -241,17 +242,17 @@ namespace Command {
 
                         } else if (tag.global) {
 
-                            msg.channel.send('No se puede mostrar un tag global si es nsfw.');
+                            msg.channel.send('No se puede mostrar un tag global si es nsfw');
 
                         } else {
 
                             const output = await tagController.edit(tag, { content: tag.content, attachments: tag.attachments }, false, true);
-                            msg.channel.send(`Edité el tag ${output?.name} para que se pueda usar solo en canales nsfw.`);
+                            msg.channel.send(`Edité el tag ${output?.name} para que se pueda usar solo en canales nsfw`);
 
                         }
                     } else {
 
-                        msg.channel.send('No encontré ese tag.');
+                        msg.channel.send('No encontré ese tag');
 
                     }
                     break;
@@ -263,7 +264,7 @@ namespace Command {
 
                     if (!args?.[1]) {
 
-                        msg.channel.send('Por favor debes especificar el tag del que querés saber.');
+                        msg.channel.send('Por favor debes especificar el tag del que querés saber');
 
                     } else if (tag) {
 
@@ -271,7 +272,7 @@ namespace Command {
 
                     } else {
 
-                        msg.channel.send('No encontré ese tag.');
+                        msg.channel.send('No encontré ese tag');
 
                     }
                     break;
@@ -285,7 +286,7 @@ namespace Command {
 
                         if (!tag) {
 
-                            msg.channel.send('No se ha encontrado el tag.');
+                            msg.channel.send('No se ha encontrado el tag');
 
                         } else if (tag?.nsfw && !(msg.channel as TextChannel).nsfw) {
 
@@ -293,7 +294,7 @@ namespace Command {
 
                         } else {
 
-                            if (tag?.global && tag?.nsfw) msg.channel.send('Ha habido un fallo en el sistema.');
+                            if (tag?.global && tag?.nsfw) msg.channel.send('Ha habido un fallo en el sistema');
                             msg.channel.send(tag?.content, { files: tag.attachments });
 
                         }

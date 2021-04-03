@@ -6,6 +6,7 @@ const command: ICommand = {
     label: 'translate',
     alias: ['tr', 'traducir'],
     options: {
+        disabled: true,
         guildOnly: false,
         adminOnly: false,
     },

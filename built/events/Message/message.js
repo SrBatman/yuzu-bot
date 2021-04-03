@@ -5,7 +5,6 @@ const tslib_1 = require("tslib");
 const options_1 = require("../../options");
 const bot_1 = require("../../bot");
 require("../../structures/Guild");
-require("../../utils/slashCommands");
 const cooldowns = new Map();
 exports.event = {
     label: 'message',
@@ -54,6 +53,8 @@ function validateCommandExecution(msg, commandOptions) {
     const { prefix, owner } = options_1.options;
     if (!commandOptions)
         return;
+    if (commandOptions.disabled)
+        return 'El comando está desactivado';
     if (commandOptions.argsRequired && !commandOptions.argsRequired.message)
         return `Uso incorrecto, por favor use ${prefix}help \`<Comando>\` para más información`;
     if (commandOptions.argsRequired && commandOptions.argsRequired.message)

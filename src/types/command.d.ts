@@ -26,6 +26,7 @@ export type CommandOptions = {
     adminOnly: boolean,
     permissions?: PermissionString[],
     permissionsForClient?: PermissionString[],
+    disabled?: boolean,
     argsRequired?: {
         message: MessageContent,
         required: boolean,
@@ -44,8 +45,7 @@ export interface ICommand {
         usage?: string, // duh
         short?: string, // short description
     };
-    // curry function
     readonly execute: (session: Session) =>
         (msg: Message, args: readonly string[]) =>
-            MessageContent | Promise<MessageContent> | undefined | Promise<undefined>;
+            MessageContent | Promise<MessageContent>;
 }
