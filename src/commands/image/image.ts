@@ -53,7 +53,7 @@ const command: ICommand = {
 				const removeR = (m: Message) => m.reactions.cache.filter((r) => r.users.cache.has(author.id));
 
 				// filter
-				const filter = (reaction: MessageReaction, _user: User) => [BACK, NEXT, DELT].includes(reaction.emoji.name);
+				const filter = (reaction: MessageReaction, user: User) => [BACK, NEXT, DELT].includes(reaction.emoji.name) && reaction.users.cache.first()! === user;
 
 				// update the embed
 				const update = function(m: Message, page: number) {
