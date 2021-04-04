@@ -15,7 +15,6 @@ const command: ICommand = {
 
             if (msg.author.id !== '790411185970872320')
                 throw new Error('Qué hacés down solo Le Val puede usar eso.');
-
         }
         catch (err: unknown) {
 
