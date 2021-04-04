@@ -14,7 +14,7 @@ const command = {
         short: 'Busca imágenes en Google.',
         usage: 'image <$Search>'
     },
-    execute: (_session) => (msg, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    execute: (session) => (msg, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
         const search = args.join(' '), BACK = '⬅️', NEXT = '➡️', DELT = '🗑️';
         var page = 0;
         if (!search) {
@@ -41,7 +41,12 @@ const command = {
                 var _a;
                 return tslib_1.__awaiter(this, void 0, void 0, function* () {
                     const removeR = (m) => m.reactions.cache.filter((r) => r.users.cache.has(author.id));
-                    const filter = (reaction, user) => [BACK, NEXT, DELT].includes(reaction.emoji.name) && reaction.users.cache.first() === user;
+                    const filter = (reaction, user) => {
+                        var _a;
+                        return [BACK, NEXT, DELT].includes(reaction.emoji.name)
+                            && user.id === msg.author.id
+                            && user.id !== ((_a = session === null || session === void 0 ? void 0 : session.user) === null || _a === void 0 ? void 0 : _a.id);
+                    };
                     const update = function (m, page) {
                         const newEmbed = Object.create(m.embeds[0]);
                         newEmbed.setImage(results[page].url);

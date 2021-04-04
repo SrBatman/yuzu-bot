@@ -16,7 +16,7 @@ const command: ICommand = {
         usage: 'image <$Search>'
     },
     // @ts-ignore
-	execute: (_session) => async (msg, args) => {
+	execute: (session) => async (msg, args) => {
 		const search = args.join(' '),
 			// emojis
 			BACK = '⬅️',
@@ -53,7 +53,10 @@ const command: ICommand = {
 				const removeR = (m: Message) => m.reactions.cache.filter((r) => r.users.cache.has(author.id));
 
 				// filter
-				const filter = (reaction: MessageReaction, user: User) => [BACK, NEXT, DELT].includes(reaction.emoji.name) && reaction.users.cache.first()! === user;
+				const filter = (reaction: MessageReaction, user: User) =>
+					[BACK, NEXT, DELT].includes(reaction.emoji.name)
+					&& user.id === msg.author.id
+					&& user.id !== session?.user?.id;
 
 				// update the embed
 				const update = function(m: Message, page: number) {
