@@ -10,7 +10,7 @@ const command = {
         adminOnly: false,
     },
     execute: (session) => (msg, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b, _c;
+        var _a, _b;
         if (msg.author.id !== '790411185970872320')
             return 'Qué hacés down solo Le Val puede usar eso';
         try {
@@ -23,10 +23,10 @@ const command = {
         }
         finally {
             const entry = args === null || args === void 0 ? void 0 : args.join(' ');
-            const exit = util_1.inspect(eval(typescript_1.transpile(entry))).split(session === null || session === void 0 ? void 0 : session.token).join((_a = session === null || session === void 0 ? void 0 : session.token) === null || _a === void 0 ? void 0 : _a.replace(/.(?=.{25,}$)/g, '#'));
+            const exit = util_1.inspect(eval(typescript_1.transpile(entry)));
             if (exit)
                 return new discord_js_1.MessageEmbed()
-                    .setAuthor((_c = (_b = msg.member) === null || _b === void 0 ? void 0 : _b.nickname) !== null && _c !== void 0 ? _c : msg.author.username, msg.author.displayAvatarURL())
+                    .setAuthor((_b = (_a = msg.member) === null || _a === void 0 ? void 0 : _a.nickname) !== null && _b !== void 0 ? _b : msg.author.username, msg.author.displayAvatarURL())
                     .setColor('RANDOM')
                     .setTitle('Eval')
                     .addField(`Evaluado en:`, `\`\`\`ts\n${session.ws.ping}ms\`\`\``, true)

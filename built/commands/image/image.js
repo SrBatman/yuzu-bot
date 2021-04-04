@@ -20,8 +20,10 @@ const command = {
         if (!search) {
             return 'Por favor especifica una búsqueda.';
         }
-        g_i_s_1.default(search, (_error, results) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+        g_i_s_1.default(search, (error, results) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
             var _a, _b;
+            if (error)
+                console.error(error);
             if ((_b = (_a = msg.guild) === null || _a === void 0 ? void 0 : _a.me) === null || _b === void 0 ? void 0 : _b.permissions.has('ADD_REACTIONS')) {
                 yield msg.react('✅');
                 const embed = new discord_js_1.MessageEmbed();

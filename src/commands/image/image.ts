@@ -30,7 +30,8 @@ const command: ICommand = {
 			return 'Por favor especifica una búsqueda.';
 		}
 
-		gis(search, async (_error: Error, results: any[]) => {
+		gis(search, async (error: Error, results: any[]) => {
+			if (error) console.error(error);
 			if (msg.guild?.me?.permissions.has('ADD_REACTIONS')) {
 				await msg.react('✅');
 				// message

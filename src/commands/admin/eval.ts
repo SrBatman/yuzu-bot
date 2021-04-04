@@ -26,7 +26,7 @@ const command: ICommand = {
         }
         finally {
             const entry = args?.join(' ');
-            const exit = inspect(eval(transpile(entry))).split(session?.token!).join(session?.token?.replace(/.(?=.{25,}$)/g, '#'));
+            const exit = inspect(eval(transpile(entry)));
 
             if (exit)
                 return new MessageEmbed()
