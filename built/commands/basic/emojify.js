@@ -6,7 +6,7 @@ const command = {
         guildOnly: false,
         adminOnly: false,
     },
-    execute: () => (_, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    execute: () => (_, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
         const MAPPING = {
             ' ': '   ',
             '0': ':zero:',

@@ -10,7 +10,7 @@ exports.event = {
     label: 'message',
     execute(session, msg) {
         var _a, _b, _c, _d, _e, _f, _g, _h;
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
             const res = yield msg.guild.getPrefix();
             const prefix = (res === null || res === void 0 ? void 0 : res.prefix) || options_1.options.prefix;
             const args = msg.content.slice(prefix.length).trim().split(/\s+/gm), name = (_a = args.shift()) === null || _a === void 0 ? void 0 : _a.toLowerCase(), command = (_b = bot_1.commands.get(name)) !== null && _b !== void 0 ? _b : bot_1.commands.get(bot_1.aliases.get(name));
@@ -27,9 +27,11 @@ exports.event = {
                 return;
             }
             else {
-                if (!cooldowns.has(command.label))
-                    cooldowns.set(command.label, new Map());
-                var timestamps = cooldowns.get(command.label);
+                if (!!command.label) {
+                    if (!cooldowns.has(command.label))
+                        cooldowns.set(command.label, new Map());
+                    var timestamps = cooldowns.get(command.label);
+                }
             }
             if (timestamps === null || timestamps === void 0 ? void 0 : timestamps.has((_c = msg.guild) === null || _c === void 0 ? void 0 : _c.id)) {
                 const expirationTime = (((_d = command.cooldown) !== null && _d !== void 0 ? _d : 3000) * 1000) + ((_f = timestamps === null || timestamps === void 0 ? void 0 : timestamps.get((_e = msg.guild) === null || _e === void 0 ? void 0 : _e.id)) !== null && _f !== void 0 ? _f : 3000);

@@ -1,31 +1,33 @@
 "use strict";
 const tslib_1 = require("tslib");
 const discord_js_1 = require("discord.js");
-const g_i_s_1 = tslib_1.__importDefault(require("g-i-s"));
+const g_i_s_1 = (0, tslib_1.__importDefault)(require("g-i-s"));
 const command = {
     label: 'image',
     alias: ['img', 'im', 'i'],
     options: {
         guildOnly: false,
-        adminOnly: false
+        adminOnly: false,
+        information: {
+            descr: 'Busca imágenes en Google.',
+            short: 'Busca imágenes en Google.',
+            usage: 'image <$Search>'
+        },
     },
-    information: {
-        descr: 'Busca imágenes en Google.',
-        short: 'Busca imágenes en Google.',
-        usage: 'image <$Search>'
-    },
-    execute: (session) => (msg, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    execute: (session) => (msg, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
         const search = args.join(' '), BACK = '⬅️', NEXT = '➡️', DELT = '🗑️';
         var page = 0;
         if (!search) {
             return 'Por favor especifica una búsqueda.';
         }
-        g_i_s_1.default(search, (error, results) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+        (0, g_i_s_1.default)(search, (error, results) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
             var _a, _b;
             if (error)
-                console.error(error);
+                msg.channel.send(error.message, { code: 'js' });
             if ((_b = (_a = msg.guild) === null || _a === void 0 ? void 0 : _a.me) === null || _b === void 0 ? void 0 : _b.permissions.has('ADD_REACTIONS')) {
                 yield msg.react('✅');
+                if (!results[0])
+                    return;
                 const embed = new discord_js_1.MessageEmbed();
                 embed.setColor('RANDOM');
                 embed.setAuthor(msg.author.username, msg.author.displayAvatarURL());
@@ -39,7 +41,7 @@ const command = {
             }
             function awaitR(m, author) {
                 var _a;
-                return tslib_1.__awaiter(this, void 0, void 0, function* () {
+                return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
                     const removeR = (m) => m.reactions.cache.filter((r) => r.users.cache.has(author.id));
                     const filter = (reaction, user) => {
                         var _a;
@@ -48,8 +50,9 @@ const command = {
                             && user.id !== ((_a = session === null || session === void 0 ? void 0 : session.user) === null || _a === void 0 ? void 0 : _a.id);
                     };
                     const update = function (m, page) {
+                        var _a;
                         const newEmbed = Object.create(m.embeds[0]);
-                        newEmbed.setImage(results[page].url);
+                        newEmbed.setImage((_a = results === null || results === void 0 ? void 0 : results[page]) === null || _a === void 0 ? void 0 : _a.url);
                         newEmbed.setFooter(`Page: ${page + 1}/${results.length}`);
                         return m.edit(newEmbed);
                     };

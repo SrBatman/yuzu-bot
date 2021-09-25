@@ -7,7 +7,7 @@ import * as Controller from '../database/controllers/prefix.controller';
 export interface GuildStructure extends Guild {
     addPrefix:(content: string) =>  Promise<IPrefix>;
     getPrefix:() => Promise<IPrefix>;
-    editPrefix:({ prefix, server }: { prefix: string, server: string }) => Promise<IPrefix | null>
+    editPrefix:(prefix: string) => Promise<IPrefix | null>
 }
 
 export default Structures.extend('Guild', Base => {
@@ -27,13 +27,14 @@ export default Structures.extend('Guild', Base => {
             if (output) this.prefix = output.prefix;
             return output ?? { prefix: this.prefix, server: this.id } as IPrefix;
         }
-        public async editPrefix({ prefix, server }: { prefix: string, server: string }) {
+        public async editPrefix(prefix: string) {
             const toUpdate = await this.getPrefix();
             if (toUpdate) {
-                const output = await Controller.edit(toUpdate, { prefix, server });
-                this.prefix = output.prefix;
+                const output = await Controller.edit(toUpdate, prefix, this.id);
+                this.prefix = output?.prefix ?? this.prefix;
                 return output;
             }
+            return null;
         }
     };
 });

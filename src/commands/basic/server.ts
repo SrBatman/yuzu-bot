@@ -6,11 +6,11 @@ const command: ICommand = {
     options: {
         guildOnly: true,
         adminOnly: false,
-    },
-    information: {
-        descr: 'Busca información acerca del servidor.',
-        short: 'Ver el servidor.',
-        usage: ''
+        information: {
+            descr: 'Busca información acerca del servidor.',
+            short: 'Ver el servidor.',
+            usage: '',
+        }
     },
     execute: () => (msg) => {
         const status: { readonly [ k: string ]: number } = {

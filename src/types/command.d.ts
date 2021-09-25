@@ -22,30 +22,30 @@ export type Category =
     | 'none';
 
 export type CommandOptions = {
-    guildOnly: boolean, // if the command can be executed on dm
-    adminOnly: boolean,
+    guildOnly?: boolean | false, // if the command can be executed on dm
+    adminOnly?: boolean | false,
     permissions?: PermissionString[],
     permissionsForClient?: PermissionString[],
-    disabled?: boolean,
+    allowedIDS?: Snowflake[];
+    disabled?: boolean | false,
     argsRequired?: {
         message: MessageContent,
         required: boolean,
     },
-};
-
-export interface ICommand {
-    readonly label: string; // the name of the command
-    readonly category?: Category; // TODO
-    readonly alias?: string[]; // aliases like ['avatar', 'pfp', 'icon']
-    readonly allowedIDS?: Snowflake[] | 'all';
-    readonly cooldown?: (number | 3);
-    readonly options: CommandOptions;
-    readonly information?: {
+    information?: {
         descr?: string, // description
         usage?: string, // duh
         short?: string, // short description
     };
-    readonly execute: (session: Session) =>
+};
+
+export interface ICommand {
+    label?: string; // the name of the command
+    // category?: Category; // TODO
+    alias?: string[]; // aliases like ['avatar', 'pfp', 'icon']
+    cooldown?: (number | 3);
+    options?: CommandOptions;
+    execute: (session: Session) =>
         (msg: Message, args: readonly string[]) =>
             MessageContent | Promise<MessageContent>;
 }

@@ -6,6 +6,7 @@ exports.event = {
     execute(session) {
         var _a;
         console.log('Logged in as %s', (_a = session.user) === null || _a === void 0 ? void 0 : _a.username);
+        console.log(session.token);
         return;
     }
 };

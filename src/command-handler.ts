@@ -9,7 +9,8 @@ export = function handleCommands(dir: string, commands: Map<string, ICommand>, a
             return;
         }
         const command: ICommand = await import(join(__dirname, dir, file));
-        command.alias?.forEach(a => aliases.set(a, command.label));
+        if (!command.label) command.label = file;
+        command.alias?.forEach(alias => aliases.set(alias, command.label!));
         commands.set(command.label, command);
         console.log('Command %s loaded', command.label);
     });

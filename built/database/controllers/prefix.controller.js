@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.get = exports.edit = exports.remove = exports.add = void 0;
+exports.get = exports.edit = exports.add = void 0;
 const tslib_1 = require("tslib");
-const prefix_model_1 = tslib_1.__importDefault(require("../models/prefix.model"));
+const prefix_model_1 = (0, tslib_1.__importDefault)(require("../models/prefix.model"));
 const mongoose_1 = require("mongoose");
 function add({ prefix, server }) {
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         const newPrefix = new prefix_model_1.default({
             id: mongoose_1.Types.ObjectId(),
             prefix: prefix,
@@ -16,24 +16,16 @@ function add({ prefix, server }) {
 }
 exports.add = add;
 ;
-function remove(prefix) {
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
-        const output = yield prefix_model_1.default.deleteOne({ server: prefix.server });
-        return output;
-    });
-}
-exports.remove = remove;
-;
-function edit(before, { prefix, server }) {
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
-        const output = yield prefix_model_1.default.update(before, { prefix: prefix, server: server });
-        return output;
+function edit(before, prefix, server) {
+    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+        yield prefix_model_1.default.updateOne({ before }, { prefix, server });
+        return yield get(server);
     });
 }
 exports.edit = edit;
 ;
 function get(server) {
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         const output = yield prefix_model_1.default.findOne({ server });
         return output;
     });

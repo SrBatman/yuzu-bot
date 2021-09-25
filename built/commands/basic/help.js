@@ -10,14 +10,14 @@ const command = {
     options: {
         guildOnly: false,
         adminOnly: false,
+        information: {
+            descr: 'Busca información acerca de un comando - muestra todos los comandos.',
+            short: 'Busca comandos.',
+            usage: '[$Comando]',
+        },
     },
-    information: {
-        descr: 'Busca información acerca de un comando - muestra todos los comandos.',
-        short: 'Busca comandos.',
-        usage: '[$Comando]'
-    },
-    execute: (session) => (msg, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+    execute: (session) => (msg, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
         const search = args.join(' ');
         const base = new discord_js_1.MessageEmbed()
             .setColor('RANDOM')
@@ -31,10 +31,10 @@ const command = {
         if (!search) {
             const info = [...bot_1.commands.values()]
                 .map(cmd => {
-                var _a, _b, _c, _d, _e, _f, _g;
+                var _a, _b, _c, _d, _e, _f, _g, _h, _j;
                 return [
                     `- \`${(_c = `[${cmd.label}] ${(_b = (_a = cmd === null || cmd === void 0 ? void 0 : cmd.alias) === null || _a === void 0 ? void 0 : _a.join(', ')) !== null && _b !== void 0 ? _b : ''}`.trim()) !== null && _c !== void 0 ? _c : cmd.label}\``,
-                    ` ${(_g = (_e = (_d = cmd === null || cmd === void 0 ? void 0 : cmd.information) === null || _d === void 0 ? void 0 : _d.short) !== null && _e !== void 0 ? _e : (_f = cmd.information) === null || _f === void 0 ? void 0 : _f.descr) !== null && _g !== void 0 ? _g : 'Comando sin descripción'}`
+                    ` ${(_j = (_f = (_e = (_d = cmd === null || cmd === void 0 ? void 0 : cmd.options) === null || _d === void 0 ? void 0 : _d.information) === null || _e === void 0 ? void 0 : _e.short) !== null && _f !== void 0 ? _f : (_h = (_g = cmd.options) === null || _g === void 0 ? void 0 : _g.information) === null || _h === void 0 ? void 0 : _h.descr) !== null && _j !== void 0 ? _j : 'Comando sin descripción'}`
                 ];
             });
             return Object.assign(base)
@@ -59,16 +59,17 @@ const command = {
             {
                 name: 'Información y uso del comando',
                 value: [
-                    (_h = (_f = (_e = command.information) === null || _e === void 0 ? void 0 : _e.descr) !== null && _f !== void 0 ? _f : (_g = command.information) === null || _g === void 0 ? void 0 : _g.short) !== null && _h !== void 0 ? _h : 'Comando sin descripción',
-                    ((_j = command.information) === null || _j === void 0 ? void 0 : _j.usage) ? `**${options_1.options.prefix}${command.label} ${!command.options.argsRequired && command.options.argsRequired !== true
-                        ? '<Args>...'
-                        : ''}**`
-                        : `**${options_1.options.prefix}${command.label} ${(_k = command.information) === null || _k === void 0 ? void 0 : _k.usage}**`
+                    (_k = (_g = (_f = (_e = command.options) === null || _e === void 0 ? void 0 : _e.information) === null || _f === void 0 ? void 0 : _f.descr) !== null && _g !== void 0 ? _g : (_j = (_h = command.options) === null || _h === void 0 ? void 0 : _h.information) === null || _j === void 0 ? void 0 : _j.short) !== null && _k !== void 0 ? _k : 'Comando sin descripción',
+                    ((_m = (_l = command.options) === null || _l === void 0 ? void 0 : _l.information) === null || _m === void 0 ? void 0 : _m.usage)
+                        ? `**${options_1.options.prefix}${command.label} ${!command.options.argsRequired && command.options.argsRequired !== true
+                            ? '<Args>...'
+                            : ''}**`
+                        : `**${options_1.options.prefix}${command.label} ${(_p = (_o = command.options) === null || _o === void 0 ? void 0 : _o.information) === null || _p === void 0 ? void 0 : _p.usage}**`
                 ]
             },
             {
                 name: 'Cooldown',
-                value: (_l = command.cooldown) !== null && _l !== void 0 ? _l : 'Sin cooldown'
+                value: (_q = command.cooldown) !== null && _q !== void 0 ? _q : 'Sin cooldown'
             }
         ]);
     })

@@ -4,12 +4,12 @@ const command: ICommand = {
     alias: ['esay', 'shadowsay'],
     options: {
         guildOnly: false,
-        adminOnly: false
-    },
-    information: {
-        descr: 'Hace que el bot diga algo muy malo',
-        short: 'Escribir el siguiente mensaje del bot.',
-        usage: ''
+        adminOnly: false,
+        information: {
+            descr: 'Hace que el bot diga algo muy malo',
+            short: 'Escribir el siguiente mensaje del bot.',
+            usage: ''
+        },
     },
     execute: () => (msg, args) => {
         const text = args.join(' ');

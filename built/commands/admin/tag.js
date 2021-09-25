@@ -1,7 +1,7 @@
 "use strict";
 const tslib_1 = require("tslib");
 const discord_js_1 = require("discord.js");
-const tagController = tslib_1.__importStar(require("../../database/controllers/tag.controller"));
+const tagController = (0, tslib_1.__importStar)(require("../../database/controllers/tag.controller"));
 var Command;
 (function (Command) {
     const OWNERID = '790411185970872320';
@@ -13,12 +13,12 @@ var Command;
             guildOnly: true,
             adminOnly: false
         },
-        execute: (_session) => (msg, args) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+        execute: (_session) => (msg, args) => (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             if (!msg.guild)
                 return;
             const arg = (_a = args === null || args === void 0 ? void 0 : args[0]) === null || _a === void 0 ? void 0 : _a.toLowerCase();
-            const obtain = (content) => tslib_1.__awaiter(this, void 0, void 0, function* () { var _j; return yield tagController.get(content, (_j = msg.guild) === null || _j === void 0 ? void 0 : _j.id); });
+            const obtain = (content) => (0, tslib_1.__awaiter)(this, void 0, void 0, function* () { var _j; return yield tagController.get(content, (_j = msg.guild) === null || _j === void 0 ? void 0 : _j.id); });
             switch (arg) {
                 case 'new':
                 case 'set':

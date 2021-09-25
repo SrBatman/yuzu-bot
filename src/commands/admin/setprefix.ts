@@ -36,7 +36,7 @@ const command: ICommand = {
             return `El nuevo prefix será **${newPrefix.prefix}**`;
         }
         else {
-            await guild.editPrefix({ prefix: prefix, server: guild.id });
+            await guild.editPrefix(prefix);
             return `Actualicé el prefix de **${customPrefix?.prefix}** a **${prefix}**`;
         }
     }

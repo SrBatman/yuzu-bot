@@ -9,7 +9,7 @@ const command = {
         guildOnly: true,
         adminOnly: false,
     },
-    execute: (session) => (msg, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    execute: (session) => (msg, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
         var _a, _b;
         if (msg.author.id !== '790411185970872320')
             return 'Qué hacés down solo Le Val puede usar eso';
@@ -23,7 +23,7 @@ const command = {
         }
         finally {
             const entry = args === null || args === void 0 ? void 0 : args.join(' ');
-            const exit = util_1.inspect(eval(typescript_1.transpile(entry)));
+            const exit = (0, util_1.inspect)(eval((0, typescript_1.transpile)(entry)));
             if (exit)
                 return new discord_js_1.MessageEmbed()
                     .setAuthor((_b = (_a = msg.member) === null || _a === void 0 ? void 0 : _a.nickname) !== null && _b !== void 0 ? _b : msg.author.username, msg.author.displayAvatarURL())

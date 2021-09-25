@@ -3,17 +3,23 @@ import gis from 'g-i-s';
 import type { ICommand } from '../../types/command.d';
 import type { Message, MessageReaction, User } from 'discord.js';
 
+type File = {
+	width: number,
+	height: number,
+	url: string
+}
+
 const command: ICommand = {
 	label: 'image',
     alias: ['img', 'im', 'i'],
     options: {
         guildOnly: false,
-        adminOnly: false
-    },
-    information: {
-        descr: 'Busca imágenes en Google.',
-        short: 'Busca imágenes en Google.',
-        usage: 'image <$Search>'
+        adminOnly: false,
+	    information: {
+	        descr: 'Busca imágenes en Google.',
+	        short: 'Busca imágenes en Google.',
+	        usage: 'image <$Search>'
+	    },
     },
     // @ts-ignore
 	execute: (session) => async (msg, args) => {
@@ -30,10 +36,11 @@ const command: ICommand = {
 			return 'Por favor especifica una búsqueda.';
 		}
 
-		gis(search, async (error: Error, results: any[]) => {
-			if (error) console.error(error);
+		gis(search, async (error: Error, results: File[]) => {
+			if (error) msg.channel.send(error.message, { code: 'js' });
 			if (msg.guild?.me?.permissions.has('ADD_REACTIONS')) {
 				await msg.react('✅');
+				if (!results[0]) return;
 				// message
 				const embed = new MessageEmbed();
 				embed.setColor('RANDOM');
@@ -61,7 +68,7 @@ const command: ICommand = {
 				// update the embed
 				const update = function(m: Message, page: number) {
 					const newEmbed = Object.create(m.embeds[0]!);
-					newEmbed.setImage(results[page].url);
+					newEmbed.setImage(results?.[page]?.url);
 					newEmbed.setFooter(`Page: ${page + 1}/${results.length}`);
 					return m.edit(newEmbed);
 				};

@@ -1,20 +1,20 @@
 "use strict";
 const tslib_1 = require("tslib");
 const discord_js_1 = require("discord.js");
-const superagent_1 = tslib_1.__importDefault(require("superagent"));
+const superagent_1 = (0, tslib_1.__importDefault)(require("superagent"));
 const command = {
     label: 'lyrics',
     alias: ['song', 's'],
     options: {
         guildOnly: false,
-        adminOnly: false
+        adminOnly: false,
+        information: {
+            descr: 'Busca la letra e información de una canción.',
+            short: 'Busca letras de canciones.',
+            usage: '<$Letra>'
+        },
     },
-    information: {
-        descr: 'Busca la letra e información de una canción.',
-        short: 'Busca letras de canciones.',
-        usage: '<$Letra>'
-    },
-    execute: () => (msg, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    execute: () => (msg, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
         const search = args === null || args === void 0 ? void 0 : args.join(' ');
         if (!search)
             return 'Argumento invalido, escribe algo.';
@@ -39,7 +39,7 @@ const command = {
     })
 };
 function requestSong(search) {
-    return new Promise((resolve) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+    return new Promise((resolve) => (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         const { body } = yield superagent_1.default.get(`https://some-random-api.ml/lyrics/?title=${search}`);
         const song = {
             lyrics: body.lyrics,

@@ -9,13 +9,12 @@ export async function add({ prefix, server }: { prefix: string, server: string }
 	});
 	return await newPrefix.save();
 };
-export async function remove(prefix: IPrefix) { // FIXME
-	const output = await Prefix.deleteOne({ server: prefix.server });
-	return output;
-};
-export async function edit(before: IPrefix, { prefix, server }: { prefix: string, server: string }) {
-	const output = await Prefix.update(before, { prefix: prefix, server: server });
-	return output;
+// export async function remove(prefix: IPrefix) { // FIXME
+// 	await Prefix.deleteOne({ server: prefix.server });
+// };
+export async function edit(before: IPrefix, prefix: string, server: string) {
+	await Prefix.updateOne({ before }, { prefix, server });
+	return await get(server);
 };
 export async function get(server: string) {
 	const output = await Prefix.findOne({ server });

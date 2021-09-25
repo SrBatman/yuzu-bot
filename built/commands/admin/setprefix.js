@@ -9,7 +9,7 @@ const command = {
         guildOnly: true,
         adminOnly: false,
     },
-    execute: () => (msg, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    execute: () => (msg, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
         var _a;
         if (args[1])
             return 'No soportamos prefijos multi-línea, ¡lo sentimos!';
@@ -29,7 +29,7 @@ const command = {
             return `El nuevo prefix será **${newPrefix.prefix}**`;
         }
         else {
-            yield guild.editPrefix({ prefix: prefix, server: guild.id });
+            yield guild.editPrefix(prefix);
             return `Actualicé el prefix de **${customPrefix === null || customPrefix === void 0 ? void 0 : customPrefix.prefix}** a **${prefix}**`;
         }
     })

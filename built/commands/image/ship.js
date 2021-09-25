@@ -1,20 +1,20 @@
 "use strict";
 const tslib_1 = require("tslib");
-const canvas_1 = tslib_1.__importDefault(require("canvas"));
+const canvas_1 = (0, tslib_1.__importDefault)(require("canvas"));
 const discord_js_1 = require("discord.js");
 const command = {
     label: 'ship',
     alias: ['love'],
     options: {
         guildOnly: false,
-        adminOnly: false
+        adminOnly: false,
+        information: {
+            descr: 'Te shipea con un usuario o shipea dos usuarios.',
+            short: 'Ship a 2 usuarios.',
+            usage: '',
+        },
     },
-    information: {
-        descr: 'Te shipea con un usuario o shipea dos usuarios.',
-        short: 'Ship a 2 usuarios.',
-        usage: ''
-    },
-    execute: () => (msg) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    execute: () => (msg) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
         var _a;
         var user1 = msg.mentions.users.first();
         var user2 = msg.mentions.users.last();

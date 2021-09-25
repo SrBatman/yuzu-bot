@@ -4,7 +4,7 @@ exports.shardedChannels = exports.shardedGuilds = exports.shardedUsers = void 0;
 const tslib_1 = require("tslib");
 function shardedUsers(client) {
     var _a;
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         const entries = yield ((_a = client.shard) === null || _a === void 0 ? void 0 : _a.broadcastEval('client.users.cache.entries()'));
         const output = new Map();
         for (const [entry] of entries) {
@@ -17,7 +17,7 @@ function shardedUsers(client) {
 exports.shardedUsers = shardedUsers;
 function shardedGuilds(client) {
     var _a;
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         const entries = yield ((_a = client.shard) === null || _a === void 0 ? void 0 : _a.broadcastEval('client.guilds.cache.entries()'));
         const output = new Map();
         for (const [entry] of entries) {
@@ -30,7 +30,7 @@ function shardedGuilds(client) {
 exports.shardedGuilds = shardedGuilds;
 function shardedChannels(client) {
     var _a;
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         const entries = yield ((_a = client.shard) === null || _a === void 0 ? void 0 : _a.broadcastEval('client.channels.cache.entries()'));
         const output = new Map();
         for (const [entry] of entries) {

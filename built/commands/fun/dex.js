@@ -1,20 +1,20 @@
 "use strict";
 const tslib_1 = require("tslib");
 const discord_js_1 = require("discord.js");
-const superagent_1 = tslib_1.__importDefault(require("superagent"));
+const superagent_1 = (0, tslib_1.__importDefault)(require("superagent"));
 const command = {
     label: 'pokedex',
     alias: ['pkm', 'dex', 'poke'],
     options: {
         guildOnly: false,
-        adminOnly: false
+        adminOnly: false,
+        information: {
+            descr: 'Comando para buscar un pokémon por su nombre o id',
+            short: 'Busca pokemones.',
+            usage: '<$Nombre o id>',
+        },
     },
-    information: {
-        descr: 'Comando para buscar un pokémon por su nombre o id',
-        short: 'Busca pokemones.',
-        usage: '<$Nombre o id>'
-    },
-    execute: () => (msg, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    execute: () => (msg, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
         var _a, _b, _c;
         const search = args.join(' ');
         if (!search)
@@ -37,7 +37,7 @@ const command = {
     })
 };
 function getPokemonFromApi(pokemon) {
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
+    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         const pokeAPI = 'https://pokeapi.co/api/v2';
         try {
             const { body } = yield superagent_1.default.get(`${pokeAPI}/pokemon/${pokemon}`);

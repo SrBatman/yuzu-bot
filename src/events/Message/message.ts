@@ -35,10 +35,12 @@ export const event: IEvent = {
 			return;
 		}
 		else {
+			if (!!command.label) {
 			// cooldowns map
-			if (!cooldowns.has(command.label)) cooldowns.set(command.label, new Map<string, number>());
-			// using var because the global scope
-			var timestamps: Map<string, number> | undefined = cooldowns.get(command.label);
+				if (!cooldowns.has(command.label)) cooldowns.set(command.label, new Map<string, number>());
+				// using var because the global scope
+				var timestamps: Map<string, number> | undefined = cooldowns.get(command.label);
+			}
 		}
 		if (timestamps?.has(msg.guild?.id!)) {
 			const expirationTime: number | 3000 = ((command.cooldown ?? 3000) * 1000) + (timestamps?.get(msg.guild?.id!) ?? 3000);

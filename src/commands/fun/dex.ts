@@ -6,12 +6,12 @@ const command: ICommand = {
     alias: ['pkm', 'dex', 'poke'],
     options: {
         guildOnly: false,
-        adminOnly: false
-    },
-    information: {
-        descr: 'Comando para buscar un pokémon por su nombre o id',
-        short: 'Busca pokemones.',
-        usage: '<$Nombre o id>'
+        adminOnly: false,
+        information: {
+            descr: 'Comando para buscar un pokémon por su nombre o id',
+            short: 'Busca pokemones.',
+            usage: '<$Nombre o id>',
+        },
     },
     execute: () => async (msg, args) => {
 

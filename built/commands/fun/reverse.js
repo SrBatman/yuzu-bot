@@ -5,14 +5,14 @@ const command = {
     alias: ['invert'],
     options: {
         guildOnly: false,
-        adminOnly: false
+        adminOnly: false,
+        information: {
+            descr: 'Invierte un texto voltéandolo hacia abajo.',
+            short: 'Invertir textos.',
+            usage: '<$Texto>'
+        },
     },
-    information: {
-        descr: 'Invierte un texto voltéandolo hacia abajo.',
-        short: 'Invertir textos.',
-        usage: '<$Texto>'
-    },
-    execute: () => (_, args) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    execute: () => (_, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
         const MAPPING = '¡"#$%⅋,)(*+\'-˙/0ƖᄅƐㄣϛ9ㄥ86:;<=>¿@∀qƆpƎℲפHIſʞ˥WNOԀQɹS┴∩ΛMX⅄Z[/]^_`ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz{|}~', OFFSET = '!'.charCodeAt(0);
         if (args.length < 1)
             return 'Debes proporcionar el texto para hacerle flip.';

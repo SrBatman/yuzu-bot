@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 let database = undefined;
 if (!database) {
-    mongoose_1.connect(process.env.db, {
+    (0, mongoose_1.connect)(process.env.db, {
         useNewUrlParser: true,
         useFindAndModify: false,
         useCreateIndex: true,
@@ -18,6 +18,6 @@ if (!database) {
     database.on('error', console.error);
 }
 else {
-    mongoose_1.disconnect();
+    (0, mongoose_1.disconnect)();
 }
 console.info('trying to connect to the database...');

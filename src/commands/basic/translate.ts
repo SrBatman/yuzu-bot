@@ -9,11 +9,11 @@ const command: ICommand = {
         disabled: true,
         guildOnly: false,
         adminOnly: false,
-    },
-    information: {
-        descr: 'Traduce al idioma especificado\nAquí los lenguajes disponibles: https://www.science.co.il/language/Locale-codes.php',
-        short: 'Traducir lenguajes.',
-        usage: '<$Lenguaje> <$Texto>'
+        information: {
+            descr: 'Traduce al idioma especificado\nAquí los lenguajes disponibles: https://www.science.co.il/language/Locale-codes.php',
+            short: 'Traducir lenguajes.',
+            usage: '<$Lenguaje> <$Texto>',
+        },
     },
     execute: () => async (msg, args) => {
         const lang = args[0],

@@ -6,12 +6,12 @@ const command: ICommand = {
     alias: ['song', 's'],
     options: {
         guildOnly: false,
-        adminOnly: false
-    },
-    information: {
-        descr: 'Busca la letra e información de una canción.',
-        short: 'Busca letras de canciones.',
-        usage: '<$Letra>'
+        adminOnly: false,
+        information: {
+            descr: 'Busca la letra e información de una canción.',
+            short: 'Busca letras de canciones.',
+            usage: '<$Letra>'
+        },
     },
     execute: () => async (msg, args) => {
 

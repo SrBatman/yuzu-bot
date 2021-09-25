@@ -1,10 +1,11 @@
 import type { ICommand } from '../../types/command';
-const command: ICommand = {
-    label: 'ping',
-    options: {
-        guildOnly: false,
-        adminOnly: false,
-    },
-    execute: () => () => 'Pong!'
-};
-export = command;
+import type { Message, Client } from 'discord.js';
+import { command } from '../base';
+
+@command('ping')
+class cmd implements ICommand {
+    public execute = (_session: Client) => {
+        return (_msg: Message, _args: readonly string[]) => 'Pong!';
+    }
+}
+export = cmd;

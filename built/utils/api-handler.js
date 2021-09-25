@@ -1,6 +1,6 @@
 "use strict";
 const tslib_1 = require("tslib");
-const superagent_1 = tslib_1.__importDefault(require("superagent"));
+const superagent_1 = (0, tslib_1.__importDefault)(require("superagent"));
 const discord_js_1 = require("discord.js");
 const API = 'https://nekos.life/api/v2/';
 const endpoints = [
@@ -25,15 +25,15 @@ const handle = (commands) => endpoints.forEach(cmd => {
         label: commandName,
         options: {
             guildOnly: true,
-            adminOnly: false
-        },
-        information: {
-            descr: `${commandName} command`,
-            usage: `${commandName} [@User]`,
-            short: `${commandName} command`
+            adminOnly: false,
+            information: {
+                descr: `${commandName} command`,
+                usage: `${commandName} [@User]`,
+                short: `${commandName} command`
+            },
         },
         cooldown: 3,
-        execute: (session) => (msg) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+        execute: (session) => (msg) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
             return new discord_js_1.MessageEmbed()
                 .setDescription(getDescription(cmd, msg, session))
                 .setColor('RANDOM')

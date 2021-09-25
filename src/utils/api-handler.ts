@@ -34,12 +34,12 @@ const handle = (commands: Map<string, ICommand>) => endpoints.forEach(cmd => {
 		label: commandName,
 		options: {
 			guildOnly: true,
-			adminOnly: false
-		},
-		information: {
-			descr: `${commandName} command`,
-			usage: `${commandName} [@User]`,
-			short: `${commandName} command`
+			adminOnly: false,
+			information: {
+				descr: `${commandName} command`,
+				usage: `${commandName} [@User]`,
+				short: `${commandName} command`
+			},
 		},
 		cooldown: 3,
 		execute: (session) => async (msg) => new MessageEmbed()

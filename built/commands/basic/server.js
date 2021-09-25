@@ -6,11 +6,11 @@ const command = {
     options: {
         guildOnly: true,
         adminOnly: false,
-    },
-    information: {
-        descr: 'Busca información acerca del servidor.',
-        short: 'Ver el servidor.',
-        usage: ''
+        information: {
+            descr: 'Busca información acerca del servidor.',
+            short: 'Ver el servidor.',
+            usage: '',
+        }
     },
     execute: () => (msg) => {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u;

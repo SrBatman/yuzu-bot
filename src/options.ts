@@ -6,7 +6,7 @@ export type Options = {
 		id: Snowflake
 	},
 	disabledCommands: readonly string[],
-	readonly prefix: '!' | '.',
+	readonly prefix: '!' | '.' | '->',
 	voice: {
 		voiceSupport: boolean,
 	}
@@ -14,13 +14,13 @@ export type Options = {
 
 export const options: Options = {
 	owner: { // TODO
-		username: 'Azul 💧#2189',
-		id: '659611986413355018'
+		username: 'Azul#8348',
+		id: ''
 	},
 	disabledCommands: [
 		'test'
 	],
-	prefix: '!',
+	prefix: '->',
 	voice: {
 		voiceSupport: false
 	}

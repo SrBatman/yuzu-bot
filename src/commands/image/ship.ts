@@ -7,12 +7,12 @@ const command: ICommand = {
     alias: ['love'],
     options: {
         guildOnly: false,
-        adminOnly: false
-    },
-    information: {
-        descr: 'Te shipea con un usuario o shipea dos usuarios.',
-        short: 'Ship a 2 usuarios.',
-        usage: ''
+        adminOnly: false,
+        information: {
+            descr: 'Te shipea con un usuario o shipea dos usuarios.',
+            short: 'Ship a 2 usuarios.',
+            usage: '',
+        },
     },
     execute: () => async (msg) => {
 

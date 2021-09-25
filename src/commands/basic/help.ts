@@ -10,11 +10,11 @@ const command: ICommand = {
     options: {
         guildOnly: false,
         adminOnly: false,
-    },
-    information: {
-        descr: 'Busca información acerca de un comando - muestra todos los comandos.',
-        short: 'Busca comandos.',
-        usage: '[$Comando]'
+        information: {
+            descr: 'Busca información acerca de un comando - muestra todos los comandos.',
+            short: 'Busca comandos.',
+            usage: '[$Comando]',
+        },
     },
     execute: (session) => async (msg, args) => {
         const search = args.join(' ');
@@ -31,7 +31,7 @@ const command: ICommand = {
             const info = [ ...commands.values() ]
                 .map(cmd => [
                         `- \`${`[${cmd.label}] ${cmd?.alias?.join(', ') ?? ''}`.trim() ?? cmd.label}\``,
-                        ` ${cmd?.information?.short ?? cmd.information?.descr ?? 'Comando sin descripción'}`
+                        ` ${cmd?.options?.information?.short ?? cmd.options?.information?.descr ?? 'Comando sin descripción'}`
                     ]
                 );
             return Object.assign(base)
@@ -58,12 +58,12 @@ const command: ICommand = {
                 {
                     name: 'Información y uso del comando',
                     value: [
-                        command.information?.descr ?? command.information?.short ?? 'Comando sin descripción',
-                        command.information?.usage
+                        command.options?.information?.descr ?? command.options?.information?.short ?? 'Comando sin descripción',
+                        command.options?.information?.usage
                             ? `**${options.prefix}${command.label} ${!command.options.argsRequired && command.options.argsRequired !== true
                                 ? '<Args>...'
                                 : ''}**`
-                            : `**${options.prefix}${command.label} ${command.information?.usage}**`
+                            : `**${options.prefix}${command.label} ${command.options?.information?.usage}**`
                     ]
                 },
                 {
