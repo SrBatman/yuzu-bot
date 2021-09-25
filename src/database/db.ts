@@ -3,7 +3,7 @@ import { connection, connect, disconnect, Connection } from 'mongoose';
 let database: Connection | undefined = undefined;
 
 if (!database) {
-    connect(process.env.db!, {
+    connect(process.env.DB!, {
         // keeping alive the host :(
         useNewUrlParser: true,
         useFindAndModify: false,
