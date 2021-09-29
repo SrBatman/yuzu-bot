@@ -11,8 +11,9 @@ exports.event = {
     execute(session, msg) {
         var _a, _b, _c, _d, _e, _f, _g, _h;
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const res = yield msg.guild.getPrefix();
-            const prefix = (res === null || res === void 0 ? void 0 : res.prefix) || options_1.options.prefix;
+            const prefix = msg.guild
+                ? (yield msg.guild.getPrefix()).prefix
+                : options_1.options.prefix;
             const args = msg.content.slice(prefix.length).trim().split(/\s+/gm), name = (_a = args.shift()) === null || _a === void 0 ? void 0 : _a.toLowerCase(), command = (_b = bot_1.commands.get(name)) !== null && _b !== void 0 ? _b : bot_1.commands.get(bot_1.aliases.get(name));
             const error = validateCommandExecution(msg, command === null || command === void 0 ? void 0 : command.options);
             if (!msg.content.startsWith(prefix) || msg.author.bot) {

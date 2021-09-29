@@ -14,8 +14,10 @@ const cooldowns = new Map<string, Map<string, number>>();
 export const event: IEvent = {
 	label: 'message',
 	async execute(session: Client, msg: Message): Promise<void> {
-		const res    = await (msg.guild as GuildStructure).getPrefix();
-		const prefix = res?.prefix || options.prefix;
+		// get the custom prefix from de database
+		const prefix  = msg.guild  // if dm
+					  ? (await (msg.guild as GuildStructure).getPrefix()).prefix
+					  : options.prefix; // if not
 
 		// arguments, ej: .command args0 args1 args2 ...
 		const args    = msg.content.slice(prefix.length).trim().split(/\s+/gm),
