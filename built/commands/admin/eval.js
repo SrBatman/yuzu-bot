@@ -1,5 +1,4 @@
 "use strict";
-const tslib_1 = require("tslib");
 const discord_js_1 = require("discord.js");
 const typescript_1 = require("typescript");
 const util_1 = require("util");
@@ -9,7 +8,7 @@ const command = {
         guildOnly: true,
         adminOnly: false,
     },
-    execute: (session) => (msg, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
+    execute: (session) => async (msg, args) => {
         var _a, _b;
         if (msg.author.id !== '790411185970872320')
             return 'Qué hacés down solo Le Val puede usar eso';
@@ -19,7 +18,7 @@ const command = {
         }
         catch (err) {
             if (err instanceof (String || Error || TypeError || RangeError || EvalError))
-                msg.channel.send(['Error', err], { code: 'js' });
+                msg.channel.send({ content: 'Error ' + err });
         }
         finally {
             const entry = args === null || args === void 0 ? void 0 : args.join(' ');
@@ -36,6 +35,6 @@ const command = {
             else
                 return 'Escribe algo.';
         }
-    })
+    }
 };
 module.exports = command;

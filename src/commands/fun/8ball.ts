@@ -1,4 +1,4 @@
-import type { ICommand } from '../../types/command';
+import type { ICommand } from '../../typing/command.d';
 import { MessageEmbed } from 'discord.js';
 
 const rpts = ['Sí', 'No', 'Tal vez', 'No sé', '¡Claro!', 'Podría ser', 'Es poco probable', 'Quizás'];
@@ -24,7 +24,7 @@ const command: ICommand = {
                 .addField(String.raw`\🎱 8ball`, '\u200b')
                 .setThumbnail(msg.author.displayAvatarURL())
                 .addField('Tu pregunta fue:', question)
-                .addField('Mi respuesta es:', rpts[Math.floor(Math.random() * rpts.length)]);
+                .addField('Mi respuesta es:', rpts[Math.floor(Math.random() * rpts.length)] ?? 'Ninguna');
     }
 };
 export = command;

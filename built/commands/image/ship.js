@@ -14,23 +14,22 @@ const command = {
             usage: '',
         },
     },
-    execute: () => (msg) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
-        var _a;
+    execute: () => async (msg) => {
         var user1 = msg.mentions.users.first();
         var user2 = msg.mentions.users.last();
         if (!user1 && !user2)
             return 'Mencione a un usuario.';
         else if (user1 === user2)
             user1 = msg.author;
-        const avatar1 = yield canvas_1.default.loadImage(user1.displayAvatarURL({
+        const avatar1 = await canvas_1.default.loadImage(user1.displayAvatarURL({
             format: 'png',
             dynamic: false
         }));
-        const avatar2 = yield canvas_1.default.loadImage(user2.displayAvatarURL({
+        const avatar2 = await canvas_1.default.loadImage(user2.displayAvatarURL({
             format: 'png',
             dynamic: false
         }));
-        const heartIm = yield canvas_1.default.loadImage('https://media.discordapp.net/attachments/744038841916194897/757760642072707152/corazon.png?width=475&height=475');
+        const heartIm = await canvas_1.default.loadImage('https://media.discordapp.net/attachments/744038841916194897/757760642072707152/corazon.png?width=475&height=475');
         const shipname = [
             ...user1.username
                 .slice(0, Math.floor(user1.username.length / 2)),
@@ -57,13 +56,18 @@ const command = {
         ctx.drawImage(avatar2, 800 - 25 - 200, 25, 200, 200);
         ctx.drawImage(heartIm, 325, 50, 125, 125);
         const attachment = new discord_js_1.MessageAttachment(canvas.toBuffer(), 'avatar.png');
-        return new discord_js_1.MessageEmbed()
-            .setAuthor((_a = msg.member) === null || _a === void 0 ? void 0 : _a.displayName, msg.author.displayAvatarURL())
-            .attachFiles([attachment])
+        const embed = new discord_js_1.MessageEmbed()
+            .setAuthor(msg.author.username, msg.author.displayAvatarURL())
             .setColor('RANDOM')
-            .setDescription([reply(randnum), `Nombre del ship: **${shipname}**`, `El porcentaje de amor con ésta persona es **${randnum * 5}%**`, bar.join('')])
+            .setDescription(`
+                ${reply(randnum)}
+                Nombre del ship: **${shipname}**
+                El porcentaje de amor con ésta persona es **${randnum * 5}%**
+                ${bar.join('')}
+            `)
             .setImage('attachment://avatar.png');
-    })
+        return { embeds: [embed], files: [attachment] };
+    }
 };
 function reply(randnum) {
     switch (randnum) {

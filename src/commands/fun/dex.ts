@@ -1,4 +1,4 @@
-import type { ICommand } from '../../types/command';
+import type { ICommand } from '../../typing/command.d';
 import { MessageEmbed } from 'discord.js';
 import superagent from 'superagent';
 const command: ICommand = {
@@ -26,14 +26,25 @@ const command: ICommand = {
             return 'No se pudo encontrar información sobre el pokémon.';
 
         return new MessageEmbed()
-            .setAuthor(msg.member?.displayName, msg.author.displayAvatarURL())
+            .setAuthor(msg.member?.displayName ?? 'Sin registro', msg.author.displayAvatarURL())
             .setTitle(`${poke.name[0]?.toUpperCase() + poke.name.slice(1)} #${poke.id}`)
             .setColor('RANDOM')
             .setFooter('Thanks to PokéAPI for existing!', 'https://pokeapi.co/static/pokeapi_256.888baca4.png')
-            .setDescription(poke.stats.map(value => `${value.stat.name}: \`${value.base_stat}\``))
-            .addField('Abilities', poke.abilities.map((ab: IPokemonAbility) => ab.ability.name), true)
-            .addField('Types', poke.types.map((tp: IPokemonType) => tp.type.name), true)
-            .addField('More', [`**Weight**: ${parsePokemonWeight(poke.weight)}kg`, `**Height**: ${poke.height}cm`], true)
+            .setDescription(poke.stats.map(value => `${value.stat.name}: \`${value.base_stat}\``).join('\n'))
+            .addFields([
+                {
+                    name: 'Abilities',
+                    value: poke.abilities.map((ab: IPokemonAbility) => ab.ability.name).join(' ')
+                },
+                {
+                    name: 'Types',
+                    value: poke.types.map((tp: IPokemonType) => tp.type.name).join(' ')
+                },
+                {
+                    name: 'Etc',
+                    value: [`**Weight**: ${parsePokemonWeight(poke.weight)}kg`, `**Height**: ${poke.height}cm`].join('\n')
+                }
+            ])
             .setImage(poke.sprites.front_default)
             .setThumbnail(poke.sprites.front_shiny);
     }

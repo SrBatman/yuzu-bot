@@ -1,12 +1,11 @@
 "use strict";
-const tslib_1 = require("tslib");
 const command = {
     label: 'emojify',
     options: {
         guildOnly: false,
         adminOnly: false,
     },
-    execute: () => (_, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
+    execute: () => async (_, args) => {
         const MAPPING = {
             ' ': '   ',
             '0': ':zero:',
@@ -29,6 +28,6 @@ const command = {
             .split('')
             .map(c => MAPPING[c] || c)
             .join('');
-    })
+    }
 };
 module.exports = command;

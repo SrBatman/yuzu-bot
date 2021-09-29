@@ -1,5 +1,5 @@
 import { MessageEmbed } from 'discord.js';
-import { ICommand } from '../../types/command';
+import { ICommand } from '../../typing/command.d';
 import { default as translate } from '@vitalets/google-translate-api';
 
 const command: ICommand = {

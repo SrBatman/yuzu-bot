@@ -1,4 +1,4 @@
-import type { ICommand } from '../../types/command';
+import type { ICommand } from '../../typing/command.d';
 import { MessageEmbed, Util } from 'discord.js';
 import superagent from 'superagent';
 const command: ICommand = {
@@ -33,7 +33,7 @@ const command: ICommand = {
         if (song.lyrics.length > 2048) {
             for (const line of Util.splitMessage(song.lyrics)) {
                 embed.setFooter(line);
-                msg.channel.send(embed);
+                msg.channel.send({ embeds: [ embed ] });
             }
             return;
         }

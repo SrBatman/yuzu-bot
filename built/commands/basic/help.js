@@ -1,9 +1,7 @@
 "use strict";
-const tslib_1 = require("tslib");
 const discord_js_1 = require("discord.js");
 const bot_1 = require("../../bot");
 const options_1 = require("../../options");
-require("../../structures/Guild");
 const command = {
     label: 'help',
     alias: ['h'],
@@ -16,18 +14,16 @@ const command = {
             usage: '[$Comando]',
         },
     },
-    execute: (session) => (msg, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
+    cooldown: 5,
+    execute: (session) => async (msg, args) => {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
         const search = args.join(' ');
         const base = new discord_js_1.MessageEmbed()
             .setColor('RANDOM')
             .setThumbnail(msg.author.displayAvatarURL())
             .setTimestamp()
-            .setAuthor(msg.guild ? (_a = msg.member) === null || _a === void 0 ? void 0 : _a.displayName : msg.author.username, msg.author.displayAvatarURL())
-            .setDescription([
-            'Comando de ayuda para pelotudos',
-            `El prefix del bot es ${!msg.guild ? options_1.options.prefix : (yield msg.guild.getPrefix()).prefix}`
-        ]);
+            .setAuthor(msg.author.username, msg.author.displayAvatarURL())
+            .setDescription(`El prefix del bot es ${options_1.options.prefix}`);
         if (!search) {
             const info = [...bot_1.commands.values()]
                 .map(cmd => {
@@ -38,9 +34,9 @@ const command = {
                 ];
             });
             return Object.assign(base)
-                .setTitle(String.raw `\👾 Comandos de ${(_b = session.user) === null || _b === void 0 ? void 0 : _b.tag}`)
+                .setTitle(String.raw `\👾 Comandos de ${(_a = session.user) === null || _a === void 0 ? void 0 : _a.tag}`)
                 .setColor('RANDOM')
-                .setDescription([base.description, ...info]);
+                .setDescription([base.description, ...info].join('\n'));
         }
         const command = bot_1.commands.get(search);
         if (!command)
@@ -50,7 +46,7 @@ const command = {
             .addFields([
             {
                 name: 'Nombre del comando',
-                value: command.label
+                value: (_b = command.label) !== null && _b !== void 0 ? _b : '???'
             },
             {
                 name: 'Alias',
@@ -61,13 +57,13 @@ const command = {
                 value: [
                     (_h = (_e = (_d = (_c = command.options) === null || _c === void 0 ? void 0 : _c.information) === null || _d === void 0 ? void 0 : _d.descr) !== null && _e !== void 0 ? _e : (_g = (_f = command.options) === null || _f === void 0 ? void 0 : _f.information) === null || _g === void 0 ? void 0 : _g.short) !== null && _h !== void 0 ? _h : 'Comando sin descripción',
                     (_l = (_k = (_j = command.options) === null || _j === void 0 ? void 0 : _j.information) === null || _k === void 0 ? void 0 : _k.usage) !== null && _l !== void 0 ? _l : 'Comando sin información.'
-                ]
+                ].join('\n')
             },
             {
                 name: 'Cooldown',
-                value: (_m = command.cooldown) !== null && _m !== void 0 ? _m : 3
+                value: `${(_m = command.cooldown) !== null && _m !== void 0 ? _m : 3}`
             }
         ]);
-    })
+    }
 };
 module.exports = command;

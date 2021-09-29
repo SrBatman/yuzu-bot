@@ -1,7 +1,9 @@
-import { Util } from 'discord.js';
+import { Util, Permissions } from 'discord.js';
 import * as tagController from '../../database/controllers/tag.controller';
 import type { TextChannel } from 'discord.js';
-import type { ICommand } from '../../types/command';
+import type { ICommand } from '../../typing/command';
+
+// import { SlashCommandBuilder as CommandBuilder } from '@discordjs/builders';
 
 namespace Command {
     type Argument = // the arguments passed
@@ -27,7 +29,28 @@ namespace Command {
         (arg instanceof String) && arg === ('add' || 'set' || 'new' || 'remove' || 'delete' || 'edit' || 'list' || 'nsfw' || 'global' || 'merge' || 'owner' || 'origin');
 
     export const command: ICommand = {
-        
+        // data: new CommandBuilder()
+        //     .setDescription('Usa tags.')
+        //     .setName('tag')
+        //     .addSubcommand(subcommand =>
+        //         subcommand
+        //             .setName('add')
+        //             .setDescription('Adds a new tag.')
+        //             .addUserOption(opt => opt.setName('name').setDescription('The name that trigger the tag.'))
+        //             .addUserOption(opt => opt.setName('content').setDescription('The content.'))
+        //     )
+        //     .addSubcommand(subcommand =>
+        //         subcommand
+        //             .setName('delete')
+        //             .setDescription('deleted content.')
+        //             .addUserOption(opt => opt.setName('name').setDescription('The tag to delete.'))
+        //     )
+        //     .addSubcommand(subcommand =>
+        //         subcommand
+        //             .setName('delete')
+        //             .setDescription('deleted content.')
+        //             .addUserOption(opt => opt.setName('name').setDescription('The tag to delete.'))
+        //     ),
     	label: 'tag',
         alias: ['t'],
 		options: {
@@ -35,7 +58,6 @@ namespace Command {
 	        adminOnly: false
 	    },
         execute: (_session) => async (msg, args) => {
-
             if (!msg.guild) return;
 
             const arg = args?.[0]?.toLowerCase() as Argument;
@@ -86,7 +108,7 @@ namespace Command {
 
                     } else if (tag) {
 
-                        if ((tag.user !== msg.author.id) || !msg.member?.permissions.has('ADMINISTRATOR')) {
+                        if ((tag.user !== msg.author.id) || !msg.member?.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
 
                             if (msg.author.id !== OWNERID) {
                                 msg.channel.send('No sos dueño de ese tag');
@@ -176,7 +198,7 @@ namespace Command {
                     const list = Util.splitMessage(`'TAGS': #\n${tags.map(tag => tag.name).join(', ')}`);
 
                     for (const tagsInList of list)
-                        msg.channel.send(tagsInList, { code: 'ml' });
+                        msg.channel.send({ content: tagsInList });
 
                     break;
                 }
@@ -236,7 +258,7 @@ namespace Command {
 
                     } else if (tag) {
 
-                        if (tag.user !== msg.author.id && !msg.member?.permissions.has('ADMINISTRATOR')) {
+                        if (tag.user !== msg.author.id && !msg.member?.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
 
                             msg.channel.send('No sos dueño de ese tag');
 
@@ -295,7 +317,7 @@ namespace Command {
                         } else {
 
                             if (tag?.global && tag?.nsfw) msg.channel.send('Ha habido un fallo en el sistema');
-                            msg.channel.send(tag?.content, { files: tag.attachments });
+                            msg.channel.send({ content: tag?.content, files: tag.attachments });
 
                         }
                     }

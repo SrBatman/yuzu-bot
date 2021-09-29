@@ -20,25 +20,23 @@ const handle = (commands) => endpoints.forEach(cmd => {
         return desc;
     }
     const commandName = cmd.slice(4, cmd.length);
-    console.log('Loaded command %s', commandName);
+    console.log('\x1b[33m%s\x1b[0m', `Loaded command ${commandName}`);
     commands.set(commandName, {
         label: commandName,
         options: {
             guildOnly: true,
             adminOnly: false,
             information: {
-                descr: `command for giving a ${commandName} to someone`,
+                descr: `Command for giving a ${commandName} to someone`,
                 usage: `[@User]`,
-                short: `command for giving a ${commandName}`
+                short: `Command for giving a ${commandName}`
             },
         },
         cooldown: 3,
-        execute: (session) => (msg) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
-            return new discord_js_1.MessageEmbed()
-                .setDescription(getDescription(cmd, msg, session))
-                .setColor('RANDOM')
-                .setImage((yield superagent_1.default.get(API + cmd)).body.url);
-        })
+        execute: (session) => async (msg) => new discord_js_1.MessageEmbed()
+            .setDescription(getDescription(cmd, msg, session))
+            .setColor('RANDOM')
+            .setImage((await superagent_1.default.get(API + cmd)).body.url)
     });
 });
 module.exports = handle;

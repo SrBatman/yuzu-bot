@@ -1,5 +1,4 @@
 "use strict";
-const tslib_1 = require("tslib");
 const command = {
     label: 'reverse',
     alias: ['invert'],
@@ -12,7 +11,7 @@ const command = {
             usage: '<$Texto>'
         },
     },
-    execute: () => (_, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
+    execute: () => async (_, args) => {
         const MAPPING = '¡"#$%⅋,)(*+\'-˙/0ƖᄅƐㄣϛ9ㄥ86:;<=>¿@∀qƆpƎℲפHIſʞ˥WNOԀQɹS┴∩ΛMX⅄Z[/]^_`ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz{|}~', OFFSET = '!'.charCodeAt(0);
         if (args.length < 1)
             return 'Debes proporcionar el texto para hacerle flip.';
@@ -22,6 +21,6 @@ const command = {
             .map(c => { var _a; return (_a = MAPPING[c]) !== null && _a !== void 0 ? _a : ' '; })
             .reverse()
             .join('');
-    })
+    }
 };
 module.exports = command;

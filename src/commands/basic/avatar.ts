@@ -1,4 +1,4 @@
-import type { ICommand } from '../../types/command';
+import type { ICommand } from '../../typing/command.d';
 import { MessageEmbed } from 'discord.js';
 const command: ICommand = {
 	label: 'avatar',
@@ -22,7 +22,7 @@ const command: ICommand = {
     		.setDescription([
     			`[Referencia](https://www.google.com/searchbyimage?image_url=${avatar})`,
     			`[Avatar URL](${avatar})`
-    		])
+    		].join('\n'))
 			.setImage(avatar);
     }
 };

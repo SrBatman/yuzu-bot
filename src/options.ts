@@ -3,7 +3,7 @@ import type { Snowflake } from 'discord.js';
 export type Options = {
 	owner: {
 		username: string,
-		id: Snowflake
+		id: Snowflake //TODO
 	},
 	disabledCommands: readonly string[],
 	readonly prefix: '!' | '.' | '->',

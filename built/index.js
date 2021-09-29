@@ -6,5 +6,5 @@ const manager = new discord_js_1.ShardingManager('./built/bot.js', {
     token: process.env.TOKEN,
     mode: 'worker',
 });
-manager.on('shardCreate', shard => console.log('Launched shard %d', shard.id));
-manager.spawn('auto', 15000, -1);
+manager.on('shardCreate', shard => console.log('\x1b[32m%s\x1b[0m', `Launched shard ${shard.id}`));
+manager.spawn();

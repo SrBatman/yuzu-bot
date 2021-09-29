@@ -1,4 +1,4 @@
-import type { ICommand } from '../../types/command';
+import type { ICommand } from '../../typing/command.d';
 const command: ICommand = {
     label: 'edited',
     options: {

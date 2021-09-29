@@ -23,7 +23,7 @@ const command = {
             .setDescription([
             `[Referencia](https://www.google.com/searchbyimage?image_url=${avatar})`,
             `[Avatar URL](${avatar})`
-        ])
+        ].join('\n'))
             .setImage(avatar);
     }
 };

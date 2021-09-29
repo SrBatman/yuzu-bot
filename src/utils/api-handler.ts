@@ -1,7 +1,7 @@
 import superagent from 'superagent';
 import { MessageEmbed } from 'discord.js';
 import type { Client, Message } from 'discord.js';
-import type { ICommand } from '../types/command.d';
+import type { ICommand } from '../typing/command.d';
 
 
 const API = 'https://nekos.life/api/v2/';
@@ -28,7 +28,7 @@ const handle = (commands: Map<string, ICommand>) => endpoints.forEach(cmd => {
 	}
 
 	const commandName = cmd.slice(4, cmd.length);
-	console.log('Loaded command %s', commandName);
+	console.log('\x1b[33m%s\x1b[0m', `Loaded command ${commandName}`);
 
 	commands.set(commandName, {
 		label: commandName,
@@ -36,9 +36,9 @@ const handle = (commands: Map<string, ICommand>) => endpoints.forEach(cmd => {
 			guildOnly: true,
 			adminOnly: false,
 			information: {
-				descr: `command for giving a ${commandName} to someone`,
+				descr: `Command for giving a ${commandName} to someone`,
 				usage: `[@User]`,
-				short: `command for giving a ${commandName}`
+				short: `Command for giving a ${commandName}`
 			},
 		},
 		cooldown: 3,

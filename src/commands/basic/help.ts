@@ -1,9 +1,8 @@
-import type { ICommand } from '../../types/command';
-import type { GuildStructure } from '../../structures/Guild';
+import type { ICommand } from '../../typing/command.d';
 import { MessageEmbed } from 'discord.js';
 import { commands } from '../../bot';
 import { options } from '../../options';
-import '../../structures/Guild';
+
 const command: ICommand = {
 	label: 'help',
 	alias: ['h'],
@@ -16,17 +15,15 @@ const command: ICommand = {
             usage: '[$Comando]',
         },
     },
+    cooldown: 5,
     execute: (session) => async (msg, args) => {
         const search = args.join(' ');
         const base = new MessageEmbed()
             .setColor('RANDOM')
             .setThumbnail(msg.author.displayAvatarURL())
             .setTimestamp()
-            .setAuthor(msg.guild ? msg.member?.displayName : msg.author.username, msg.author.displayAvatarURL())
-            .setDescription([
-                'Comando de ayuda para pelotudos',
-                `El prefix del bot es ${!msg.guild ? options.prefix : (await (msg.guild as GuildStructure).getPrefix()).prefix}`
-            ]);
+            .setAuthor(msg.author.username, msg.author.displayAvatarURL())
+            .setDescription(`El prefix del bot es ${options.prefix}`);
         if (!search) {
             const info = [ ...commands.values() ]
                 .map(cmd => [
@@ -37,7 +34,7 @@ const command: ICommand = {
             return Object.assign(base)
                 .setTitle(String.raw`\👾 Comandos de ${session.user?.tag}`)
                 .setColor('RANDOM')
-                .setDescription([ base.description!, ...info ]);
+                .setDescription([ base.description!, ...info ].join('\n'));
         }
         const command = commands.get(search) as ICommand;
 
@@ -49,7 +46,7 @@ const command: ICommand = {
             .addFields([
                 {
                     name: 'Nombre del comando',
-                    value: command.label
+                    value: command.label ?? '???'
                 },
                 {
                     name: 'Alias',
@@ -60,11 +57,11 @@ const command: ICommand = {
                     value: [
                         command.options?.information?.descr ?? command.options?.information?.short ?? 'Comando sin descripción',
                         command.options?.information?.usage ?? 'Comando sin información.'
-                    ]
+                    ].join('\n')
                 },
                 {
                     name: 'Cooldown',
-                    value: command.cooldown ?? 3
+                    value: `${command.cooldown ?? 3}`
                 }
             ]);
     }

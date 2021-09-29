@@ -2,16 +2,16 @@ import type { Client as Session,
     StringResolvable,
     APIMessageContentResolvable,
     MessageOptions,
+    MessagePayload,
     MessageAdditions,
     PermissionString,
     Message, 
     Snowflake } from 'discord.js';
-import type { SlashCommandBuilder } from '@discordjs/builders'
 export type MessageContent =
-    | MessageOptions & { split?: false }
-    | MessageAdditions
-    | StringResolvable
-    | APIMessageContentResolvable;
+    | MessageOptions
+    | MessagePayload
+    | string
+    | MessageEmbed
 
 export type Category =
     | 'fun'
@@ -40,7 +40,6 @@ export type CommandOptions = {
 };
 
 export interface ICommand {
-    data?: SlashCommandBuilder;
     label?: string; // the name of the command
     // category?: Category; // TODO
     alias?: string[]; // aliases like ['avatar', 'pfp', 'icon']

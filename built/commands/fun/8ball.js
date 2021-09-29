@@ -9,6 +9,7 @@ const command = {
         adminOnly: false
     },
     execute: () => (msg, args) => {
+        var _a;
         const question = args.join(' ');
         if (!question)
             return 'Por favor preguntame algo.';
@@ -19,7 +20,7 @@ const command = {
             .addField(String.raw `\🎱 8ball`, '\u200b')
             .setThumbnail(msg.author.displayAvatarURL())
             .addField('Tu pregunta fue:', question)
-            .addField('Mi respuesta es:', rpts[Math.floor(Math.random() * rpts.length)]);
+            .addField('Mi respuesta es:', (_a = rpts[Math.floor(Math.random() * rpts.length)]) !== null && _a !== void 0 ? _a : 'Ninguna');
     }
 };
 module.exports = command;

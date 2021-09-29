@@ -1,4 +1,4 @@
-import type { ICommand } from '../../types/command';
+import type { ICommand } from '../../typing/command.d';
 import type { Image } from 'canvas';
 import { default as Canvas } from  'canvas';
 import { MessageEmbed, MessageAttachment } from 'discord.js';
@@ -85,12 +85,17 @@ const command: ICommand = {
         ctx.drawImage(heartIm, 325, 50, 125, 125);
 
         const attachment = new MessageAttachment(canvas.toBuffer(), 'avatar.png');
-        return new MessageEmbed()
-            .setAuthor(msg.member?.displayName, msg.author.displayAvatarURL())
-            .attachFiles([ attachment ])
+        const embed = new MessageEmbed()
+            .setAuthor(msg.author.username, msg.author.displayAvatarURL())
             .setColor('RANDOM')
-            .setDescription([reply(randnum), `Nombre del ship: **${shipname}**`, `El porcentaje de amor con ésta persona es **${randnum * 5}%**`, bar.join('')])
+            .setDescription(`
+                ${reply(randnum)}
+                Nombre del ship: **${shipname}**
+                El porcentaje de amor con ésta persona es **${randnum * 5}%**
+                ${bar.join('')}
+            `)
             .setImage('attachment://avatar.png');
+        return { embeds: [ embed ], files: [ attachment ] }
     }
 };
 export = command;

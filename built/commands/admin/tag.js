@@ -13,17 +13,17 @@ var Command;
             guildOnly: true,
             adminOnly: false
         },
-        execute: (_session) => (msg, args) => (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+        execute: (_session) => async (msg, args) => {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             if (!msg.guild)
                 return;
             const arg = (_a = args === null || args === void 0 ? void 0 : args[0]) === null || _a === void 0 ? void 0 : _a.toLowerCase();
-            const obtain = (content) => (0, tslib_1.__awaiter)(this, void 0, void 0, function* () { var _j; return yield tagController.get(content, (_j = msg.guild) === null || _j === void 0 ? void 0 : _j.id); });
+            const obtain = async (content) => { var _a; return await tagController.get(content, (_a = msg.guild) === null || _a === void 0 ? void 0 : _a.id); };
             switch (arg) {
                 case 'new':
                 case 'set':
                 case 'add': {
-                    const tag = yield obtain(args === null || args === void 0 ? void 0 : args[1]);
+                    const tag = await obtain(args === null || args === void 0 ? void 0 : args[1]);
                     const content = (_b = args === null || args === void 0 ? void 0 : args.slice(2)) === null || _b === void 0 ? void 0 : _b.join(' ');
                     if (!(args === null || args === void 0 ? void 0 : args[1])) {
                         msg.channel.send('Por favor debes especificar un nombre para tu tag');
@@ -33,7 +33,7 @@ var Command;
                             msg.channel.send('Escribe algo, no puedo guardar tags vacíos');
                             return;
                         }
-                        const output = yield tagController.add(msg.guild.id, msg.author.id, content !== null && content !== void 0 ? content : ' ', args === null || args === void 0 ? void 0 : args[1], msg.attachments.map(att => att.url));
+                        const output = await tagController.add(msg.guild.id, msg.author.id, content !== null && content !== void 0 ? content : ' ', args === null || args === void 0 ? void 0 : args[1], msg.attachments.map(att => att.url));
                         msg.channel.send(`Añadí el tag ${output.name}`);
                     }
                     else {
@@ -45,12 +45,12 @@ var Command;
                 }
                 case 'delete':
                 case 'remove': {
-                    const tag = yield obtain(args === null || args === void 0 ? void 0 : args[1]);
+                    const tag = await obtain(args === null || args === void 0 ? void 0 : args[1]);
                     if (!(args === null || args === void 0 ? void 0 : args[1])) {
                         msg.channel.send('Por favor debes especificar un tag para borrar');
                     }
                     else if (tag) {
-                        if ((tag.user !== msg.author.id) || !((_c = msg.member) === null || _c === void 0 ? void 0 : _c.permissions.has('ADMINISTRATOR'))) {
+                        if ((tag.user !== msg.author.id) || !((_c = msg.member) === null || _c === void 0 ? void 0 : _c.permissions.has(discord_js_1.Permissions.FLAGS.ADMINISTRATOR))) {
                             if (msg.author.id !== OWNERID) {
                                 msg.channel.send('No sos dueño de ese tag');
                                 return;
@@ -60,7 +60,7 @@ var Command;
                             msg.channel.send('El tag es global y no se puede eliminar');
                             return;
                         }
-                        yield tagController.remove(msg.guild.id, msg.author.id, args === null || args === void 0 ? void 0 : args[1]);
+                        await tagController.remove(msg.guild.id, msg.author.id, args === null || args === void 0 ? void 0 : args[1]);
                         msg.channel.send(`Removí el tag ${args[0]}`);
                         return;
                     }
@@ -68,7 +68,7 @@ var Command;
                 }
                 case 'give':
                 case 'gift': {
-                    const tag = yield obtain(args === null || args === void 0 ? void 0 : args[1]);
+                    const tag = await obtain(args === null || args === void 0 ? void 0 : args[1]);
                     const target = msg.mentions.users.first();
                     if (!target) {
                         msg.channel.send('No encontré ese usuario');
@@ -83,7 +83,7 @@ var Command;
                     break;
                 }
                 case 'edit': {
-                    const tag = yield obtain(args === null || args === void 0 ? void 0 : args[1]);
+                    const tag = await obtain(args === null || args === void 0 ? void 0 : args[1]);
                     const content = (_e = args === null || args === void 0 ? void 0 : args.slice(2)) === null || _e === void 0 ? void 0 : _e.join(' ');
                     if (!(args === null || args === void 0 ? void 0 : args[1])) {
                         msg.channel.send('Por favor debes especificar un tag para editar');
@@ -96,7 +96,7 @@ var Command;
                             msg.channel.send('Por favor debes especificar el contenido del tag');
                         }
                         else {
-                            const output = yield tagController.edit(tag, {
+                            const output = await tagController.edit(tag, {
                                 content: content !== null && content !== void 0 ? content : '',
                                 attachments: msg.attachments.map(att => att.url)
                             });
@@ -109,14 +109,14 @@ var Command;
                     break;
                 }
                 case 'list': {
-                    const tags = yield tagController.find(msg.guild.id, (_g = (_f = msg.mentions.users.first()) === null || _f === void 0 ? void 0 : _f.id) !== null && _g !== void 0 ? _g : msg.author.id);
+                    const tags = await tagController.find(msg.guild.id, (_g = (_f = msg.mentions.users.first()) === null || _f === void 0 ? void 0 : _f.id) !== null && _g !== void 0 ? _g : msg.author.id);
                     const list = discord_js_1.Util.splitMessage(`'TAGS': #\n${tags.map(tag => tag.name).join(', ')}`);
                     for (const tagsInList of list)
-                        msg.channel.send(tagsInList, { code: 'ml' });
+                        msg.channel.send({ content: tagsInList });
                     break;
                 }
                 case 'global': {
-                    const tag = yield obtain(args === null || args === void 0 ? void 0 : args[1]);
+                    const tag = await obtain(args === null || args === void 0 ? void 0 : args[1]);
                     if (!(args === null || args === void 0 ? void 0 : args[0])) {
                         msg.channel.send('Error inesperado');
                     }
@@ -125,14 +125,14 @@ var Command;
                     }
                     else if (tag) {
                         if (!tag.global) {
-                            const output = yield tagController.edit(tag, {
+                            const output = await tagController.edit(tag, {
                                 content: tag.content,
                                 attachments: msg.attachments.map(att => att.url)
                             }, true, false);
                             msg.channel.send(`Edité el tag ${output === null || output === void 0 ? void 0 : output.name} para que se pueda usar en todos los servidores`);
                         }
                         else {
-                            const output = yield tagController.edit(tag, {
+                            const output = await tagController.edit(tag, {
                                 content: tag.content,
                                 attachments: msg.attachments.map(att => att.url)
                             }, false, false);
@@ -145,19 +145,19 @@ var Command;
                     break;
                 }
                 case 'nsfw': {
-                    const tag = yield obtain(args === null || args === void 0 ? void 0 : args[1]);
+                    const tag = await obtain(args === null || args === void 0 ? void 0 : args[1]);
                     if (!(args === null || args === void 0 ? void 0 : args[1])) {
                         msg.channel.send('Por favor debes especificar el tag que querés volver nsfw');
                     }
                     else if (tag) {
-                        if (tag.user !== msg.author.id && !((_h = msg.member) === null || _h === void 0 ? void 0 : _h.permissions.has('ADMINISTRATOR'))) {
+                        if (tag.user !== msg.author.id && !((_h = msg.member) === null || _h === void 0 ? void 0 : _h.permissions.has(discord_js_1.Permissions.FLAGS.ADMINISTRATOR))) {
                             msg.channel.send('No sos dueño de ese tag');
                         }
                         else if (tag.global) {
                             msg.channel.send('No se puede mostrar un tag global si es nsfw');
                         }
                         else {
-                            const output = yield tagController.edit(tag, { content: tag.content, attachments: tag.attachments }, false, true);
+                            const output = await tagController.edit(tag, { content: tag.content, attachments: tag.attachments }, false, true);
                             msg.channel.send(`Edité el tag ${output === null || output === void 0 ? void 0 : output.name} para que se pueda usar solo en canales nsfw`);
                         }
                     }
@@ -167,7 +167,7 @@ var Command;
                     break;
                 }
                 case 'owner': {
-                    const tag = yield obtain(args === null || args === void 0 ? void 0 : args[1]);
+                    const tag = await obtain(args === null || args === void 0 ? void 0 : args[1]);
                     if (!(args === null || args === void 0 ? void 0 : args[1])) {
                         msg.channel.send('Por favor debes especificar el tag del que querés saber');
                     }
@@ -180,7 +180,7 @@ var Command;
                     break;
                 }
                 default: {
-                    const tag = yield tagController.get(args === null || args === void 0 ? void 0 : args[0], msg.guild.id);
+                    const tag = await tagController.get(args === null || args === void 0 ? void 0 : args[0], msg.guild.id);
                     if (!isArgument(arg)) {
                         if (!tag) {
                             msg.channel.send('No se ha encontrado el tag');
@@ -191,13 +191,13 @@ var Command;
                         else {
                             if ((tag === null || tag === void 0 ? void 0 : tag.global) && (tag === null || tag === void 0 ? void 0 : tag.nsfw))
                                 msg.channel.send('Ha habido un fallo en el sistema');
-                            msg.channel.send(tag === null || tag === void 0 ? void 0 : tag.content, { files: tag.attachments });
+                            msg.channel.send({ content: tag === null || tag === void 0 ? void 0 : tag.content, files: tag.attachments });
                         }
                     }
                     break;
                 }
             }
-        })
+        }
     };
 })(Command || (Command = {}));
 module.exports = Command.command;

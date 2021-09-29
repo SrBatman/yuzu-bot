@@ -1,4 +1,4 @@
-import type { ICommand } from '../../types/command';
+import type { ICommand } from '../../typing/command.d';
 import { MessageEmbed } from 'discord.js';
 import { transpile } from 'typescript';
 import { inspect } from 'util';
@@ -9,7 +9,7 @@ const command: ICommand = {
         adminOnly: false,
     },
     execute: (session) => async (msg, args) => {
-    	if (msg.author.id !== '790411185970872320')
+    	if (msg.author.id !== '790411185970872320') //TODO
     		return 'Qué hacés down solo Le Val puede usar eso';
         try {
 
@@ -19,10 +19,7 @@ const command: ICommand = {
         catch (err: unknown) {
 
             if (err instanceof (String || Error || TypeError || RangeError || EvalError))
-                msg.channel.send(
-                    ['Error', err],
-                    { code: 'js' }
-                );
+                msg.channel.send({ content: 'Error '+err });
         }
         finally {
             const entry = args?.join(' ');
