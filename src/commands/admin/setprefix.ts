@@ -22,7 +22,7 @@ const command: ICommand = {
         if (!prefix && customPrefix?.prefix)
             return `El prefix es **${customPrefix?.prefix}**`;
 
-        if (!prefix)
+        if (!prefix) //todo
             return `El prefix no ha sido cambiado aún así que es **${options.prefix}**`;
 
         if (!guild)
@@ -31,7 +31,7 @@ const command: ICommand = {
         if (!msg.member?.permissions.has('ADMINISTRATOR'))
             return 'No tenés permisos para hacer eso, down.';
 
-        if (!customPrefix?.prefix) {
+        if (!customPrefix || !customPrefix.prefix || customPrefix.prefix === options.prefix) {
             const newPrefix: IPrefix = await guild.addPrefix(prefix);
             return `El nuevo prefix será **${newPrefix.prefix}**`;
         }

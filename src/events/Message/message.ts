@@ -2,6 +2,7 @@ import type { Message } from 'discord.js';
 import type { GuildStructure } from '../../structures/Guild';
 import type { CommandOptions, MessageContent } from '../../types/command';
 import type { IEvent } from '../../types/event';
+import type { Client } from 'discord.js';
 
 import { options } from '../../options';
 import { aliases, commands } from '../../bot';
@@ -12,7 +13,7 @@ const cooldowns = new Map<string, Map<string, number>>();
 
 export const event: IEvent = {
 	label: 'message',
-	async execute(session, msg: Message): Promise<void> {
+	async execute(session: Client, msg: Message): Promise<void> {
 		const res    = await (msg.guild as GuildStructure).getPrefix();
 		const prefix = res?.prefix || options.prefix;
 

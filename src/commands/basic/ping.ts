@@ -1,11 +1,21 @@
 import type { ICommand } from '../../types/command';
-import type { Message, Client } from 'discord.js';
-import { command } from '../base';
+import { SlashCommandBuilder as CommandBuilder } from '@discordjs/builders';
 
-@command('ping')
-class cmd implements ICommand {
-    public execute = (_session: Client) => {
-        return (_msg: Message, _args: readonly string[]) => 'Pong!';
-    }
-}
-export = cmd;
+const command: ICommand = {
+    data: new CommandBuilder()
+        .setDescription('Ping')
+        .setName('ping'),
+    label: 'ping',
+    alias: ['pfp', 'pic'],
+    options: {
+        guildOnly: false,
+        adminOnly: false,
+        information: {
+            descr: 'Ping',
+            short: 'Ping',
+            usage: ''
+        },
+    },
+    execute: () => () => 'Pong!'
+};
+export = command;

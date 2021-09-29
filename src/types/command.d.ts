@@ -6,7 +6,7 @@ import type { Client as Session,
     PermissionString,
     Message, 
     Snowflake } from 'discord.js';
-
+import type { SlashCommandBuilder } from '@discordjs/builders'
 export type MessageContent =
     | MessageOptions & { split?: false }
     | MessageAdditions
@@ -40,6 +40,7 @@ export type CommandOptions = {
 };
 
 export interface ICommand {
+    data?: SlashCommandBuilder;
     label?: string; // the name of the command
     // category?: Category; // TODO
     alias?: string[]; // aliases like ['avatar', 'pfp', 'icon']

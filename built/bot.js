@@ -1,19 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.session = exports.events = exports.aliases = exports.commands = void 0;
+exports.session = exports.events = exports.aliases = exports.scommands = exports.commands = void 0;
 const tslib_1 = require("tslib");
 const discord_js_1 = (0, tslib_1.__importDefault)(require("discord.js"));
 const command_handler_1 = (0, tslib_1.__importDefault)(require("./command-handler"));
 const event_handler_1 = (0, tslib_1.__importDefault)(require("./event-handler"));
+const slashcommand_handler_1 = (0, tslib_1.__importDefault)(require("./slashcommand-handler"));
 const api_handler_1 = (0, tslib_1.__importDefault)(require("./utils/api-handler"));
 require("./database/db");
 require("./structures/Guild");
 require("process");
-exports.commands = new Map(), exports.aliases = new Map(), exports.events = new Map(), exports.session = new discord_js_1.default.Client();
+const token = process.env.TOKEN;
+exports.commands = new discord_js_1.default.Collection(), exports.scommands = new discord_js_1.default.Collection(), exports.aliases = new discord_js_1.default.Collection(), exports.events = new discord_js_1.default.Collection(), exports.session = new discord_js_1.default.Client();
 (0, event_handler_1.default)('/events', exports.session, exports.events);
-(0, command_handler_1.default)('/commands', exports.commands, exports.aliases);
+(0, command_handler_1.default)('/commands', exports.commands, exports.aliases, exports.scommands);
+(0, slashcommand_handler_1.default)(exports.scommands);
 (0, api_handler_1.default)(exports.commands);
-const token = process.env.token;
 if (token)
     exports.session.login(token);
 exports.session.on('error', (error) => console.error(error));

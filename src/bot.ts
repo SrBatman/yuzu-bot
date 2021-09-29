@@ -4,22 +4,25 @@ import type { IEvent } from './types/event';
 import Discord from 'discord.js';
 import handleCommands from './command-handler';
 import handleEvents from './event-handler';
+import handleSlashCommands from './slashcommand-handler';
 import handleAPICommands from './utils/api-handler';
 
 import './database/db';
 import './structures/Guild';
 import 'process';
 
-export const commands = new Map<string, ICommand>(),
-	         aliases  = new Map<string, string>(),
-	         events   = new Map<string, IEvent>(),
-	         session  = new Discord.Client();
+const token = process.env.TOKEN;
+
+export const commands  = new Discord.Collection<string, ICommand>(),
+	         scommands = new Discord.Collection<string, any>(),
+             aliases   = new Discord.Collection<string, string>(),
+             events    = new Discord.Collection<string, IEvent>(),
+             session   = new Discord.Client();
 
 handleEvents('/events', session, events);
-handleCommands('/commands', commands, aliases);
+handleCommands('/commands', commands, aliases, scommands);
+handleSlashCommands(scommands);
 handleAPICommands(commands);
-
-const token = process.env.token;
 
 if (token) session.login(token);
 

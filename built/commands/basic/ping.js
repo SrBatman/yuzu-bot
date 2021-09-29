@@ -1,14 +1,20 @@
 "use strict";
-const tslib_1 = require("tslib");
-const base_1 = require("../base");
-let cmd = class cmd {
-    constructor() {
-        this.execute = (_session) => {
-            return (_msg, _args) => 'Pong!';
-        };
-    }
+const builders_1 = require("@discordjs/builders");
+const command = {
+    data: new builders_1.SlashCommandBuilder()
+        .setDescription('Ping')
+        .setName('ping'),
+    label: 'ping',
+    alias: ['pfp', 'pic'],
+    options: {
+        guildOnly: false,
+        adminOnly: false,
+        information: {
+            descr: 'Ping',
+            short: 'Ping',
+            usage: ''
+        },
+    },
+    execute: () => () => 'Pong!'
 };
-cmd = (0, tslib_1.__decorate)([
-    (0, base_1.command)('ping')
-], cmd);
-module.exports = cmd;
+module.exports = command;
