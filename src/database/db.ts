@@ -1,6 +1,6 @@
 import { connection, connect, disconnect, Connection } from 'mongoose';
 
-let database: Connection | undefined = undefined;
+var database: Connection | undefined = undefined;
 
 if (!database) {
     connect(process.env.DB!, {

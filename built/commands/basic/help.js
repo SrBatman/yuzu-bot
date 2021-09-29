@@ -17,7 +17,7 @@ const command = {
         },
     },
     execute: (session) => (msg, args) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
         const search = args.join(' ');
         const base = new discord_js_1.MessageEmbed()
             .setColor('RANDOM')
@@ -31,10 +31,10 @@ const command = {
         if (!search) {
             const info = [...bot_1.commands.values()]
                 .map(cmd => {
-                var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+                var _a, _b, _c, _d, _e, _f, _g;
                 return [
-                    `- \`${(_c = `[${cmd.label}] ${(_b = (_a = cmd === null || cmd === void 0 ? void 0 : cmd.alias) === null || _a === void 0 ? void 0 : _a.join(', ')) !== null && _b !== void 0 ? _b : ''}`.trim()) !== null && _c !== void 0 ? _c : cmd.label}\``,
-                    ` ${(_j = (_f = (_e = (_d = cmd === null || cmd === void 0 ? void 0 : cmd.options) === null || _d === void 0 ? void 0 : _d.information) === null || _e === void 0 ? void 0 : _e.short) !== null && _f !== void 0 ? _f : (_h = (_g = cmd.options) === null || _g === void 0 ? void 0 : _g.information) === null || _h === void 0 ? void 0 : _h.descr) !== null && _j !== void 0 ? _j : 'Comando sin descripción'}`
+                    `- \`${(_a = `[${cmd.label}] ${(cmd === null || cmd === void 0 ? void 0 : cmd.alias) ? cmd.alias.join(', ') : ''}`.trim()) !== null && _a !== void 0 ? _a : cmd.label}\``,
+                    ` ${(_g = (_d = (_c = (_b = cmd === null || cmd === void 0 ? void 0 : cmd.options) === null || _b === void 0 ? void 0 : _b.information) === null || _c === void 0 ? void 0 : _c.short) !== null && _d !== void 0 ? _d : (_f = (_e = cmd.options) === null || _e === void 0 ? void 0 : _e.information) === null || _f === void 0 ? void 0 : _f.descr) !== null && _g !== void 0 ? _g : 'Comando sin descripción'}`
                 ];
             });
             return Object.assign(base)
@@ -54,22 +54,18 @@ const command = {
             },
             {
                 name: 'Alias',
-                value: (_d = (_c = command.alias) === null || _c === void 0 ? void 0 : _c.join(', ')) !== null && _d !== void 0 ? _d : 'Sin alias'
+                value: !command.alias ? 'sin alias' : command.alias.length > 0 ? command.alias.join(' ') : 'sin alias'
             },
             {
                 name: 'Información y uso del comando',
                 value: [
-                    (_k = (_g = (_f = (_e = command.options) === null || _e === void 0 ? void 0 : _e.information) === null || _f === void 0 ? void 0 : _f.descr) !== null && _g !== void 0 ? _g : (_j = (_h = command.options) === null || _h === void 0 ? void 0 : _h.information) === null || _j === void 0 ? void 0 : _j.short) !== null && _k !== void 0 ? _k : 'Comando sin descripción',
-                    ((_m = (_l = command.options) === null || _l === void 0 ? void 0 : _l.information) === null || _m === void 0 ? void 0 : _m.usage)
-                        ? `**${options_1.options.prefix}${command.label} ${!command.options.argsRequired && command.options.argsRequired !== true
-                            ? '<Args>...'
-                            : ''}**`
-                        : `**${options_1.options.prefix}${command.label} ${(_p = (_o = command.options) === null || _o === void 0 ? void 0 : _o.information) === null || _p === void 0 ? void 0 : _p.usage}**`
+                    (_h = (_e = (_d = (_c = command.options) === null || _c === void 0 ? void 0 : _c.information) === null || _d === void 0 ? void 0 : _d.descr) !== null && _e !== void 0 ? _e : (_g = (_f = command.options) === null || _f === void 0 ? void 0 : _f.information) === null || _g === void 0 ? void 0 : _g.short) !== null && _h !== void 0 ? _h : 'Comando sin descripción',
+                    (_l = (_k = (_j = command.options) === null || _j === void 0 ? void 0 : _j.information) === null || _k === void 0 ? void 0 : _k.usage) !== null && _l !== void 0 ? _l : 'Comando sin información.'
                 ]
             },
             {
                 name: 'Cooldown',
-                value: (_q = command.cooldown) !== null && _q !== void 0 ? _q : 'Sin cooldown'
+                value: (_m = command.cooldown) !== null && _m !== void 0 ? _m : 3
             }
         ]);
     })

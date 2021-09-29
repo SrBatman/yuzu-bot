@@ -36,9 +36,9 @@ const handle = (commands: Map<string, ICommand>) => endpoints.forEach(cmd => {
 			guildOnly: true,
 			adminOnly: false,
 			information: {
-				descr: `${commandName} command`,
-				usage: `${commandName} [@User]`,
-				short: `${commandName} command`
+				descr: `command for giving a ${commandName} to someone`,
+				usage: `[@User]`,
+				short: `command for giving a ${commandName}`
 			},
 		},
 		cooldown: 3,

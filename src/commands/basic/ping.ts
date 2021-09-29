@@ -6,7 +6,7 @@ const command: ICommand = {
         .setDescription('Ping')
         .setName('ping'),
     label: 'ping',
-    alias: ['pfp', 'pic'],
+    alias: [],
     options: {
         guildOnly: false,
         adminOnly: false,

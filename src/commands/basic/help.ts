@@ -30,7 +30,7 @@ const command: ICommand = {
         if (!search) {
             const info = [ ...commands.values() ]
                 .map(cmd => [
-                        `- \`${`[${cmd.label}] ${cmd?.alias?.join(', ') ?? ''}`.trim() ?? cmd.label}\``,
+                        `- \`${`[${cmd.label}] ${cmd?.alias ? cmd.alias.join(', ') : ''}`.trim() ?? cmd.label}\``,
                         ` ${cmd?.options?.information?.short ?? cmd.options?.information?.descr ?? 'Comando sin descripción'}`
                     ]
                 );
@@ -53,22 +53,18 @@ const command: ICommand = {
                 },
                 {
                     name: 'Alias',
-                    value: command.alias?.join(', ') ?? 'Sin alias'
+                    value: !command.alias ? 'sin alias' : command.alias.length > 0 ? command.alias.join(' ') : 'sin alias'
                 },
                 {
                     name: 'Información y uso del comando',
                     value: [
                         command.options?.information?.descr ?? command.options?.information?.short ?? 'Comando sin descripción',
-                        command.options?.information?.usage
-                            ? `**${options.prefix}${command.label} ${!command.options.argsRequired && command.options.argsRequired !== true
-                                ? '<Args>...'
-                                : ''}**`
-                            : `**${options.prefix}${command.label} ${command.options?.information?.usage}**`
+                        command.options?.information?.usage ?? 'Comando sin información.'
                     ]
                 },
                 {
                     name: 'Cooldown',
-                    value: command.cooldown ?? 'Sin cooldown'
+                    value: command.cooldown ?? 3
                 }
             ]);
     }
