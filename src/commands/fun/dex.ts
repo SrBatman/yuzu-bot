@@ -19,8 +19,8 @@ const command: ICommand = {
         if (!search)
             return 'Debes ingresar más información del pokémon para buscarlo.';
 
-        const target: IPokemonTarget = parseMessageToPokemon(search);
-        const poke: IPokemon | undefined = await getPokemonFromApi(target.specie) ?? await getPokemonFromApi(target.id);
+        const target = parseMessageToPokemon(search);
+        const poke = await getPokemonFromApi(target.specie) ?? await getPokemonFromApi(target.id);
 
         if (!poke)
             return 'No se pudo encontrar información sobre el pokémon.';
@@ -49,14 +49,12 @@ const command: ICommand = {
             .setThumbnail(poke.sprites.front_shiny);
     }
 };
-export = command;
-// FUNCTIONS
-
 async function getPokemonFromApi(pokemon: string | number): Promise<IPokemon | undefined> {
     const pokeAPI = 'https://pokeapi.co/api/v2';
     try {
         const { body } = await superagent.get(`${pokeAPI}/pokemon/${pokemon}`);
-        return body as IPokemon;
+        const outp = <IPokemon> body;
+        return outp;
     } // ts-ignore
     catch (err: unknown) { // new feature lol
         console.error('Query to PokeAPI rejected!\n %s', err);
@@ -139,3 +137,5 @@ type IPokemonTarget = {
     shiny: boolean,
     mega: boolean
 };
+
+export = command;

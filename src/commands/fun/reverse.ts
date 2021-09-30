@@ -17,7 +17,7 @@ const command: ICommand = {
 
         if (args.length < 1)
             return 'Debes proporcionar el texto para hacerle flip.';
-    
+
         return args.join(' ')
                    .split('')
                    .map(c => c.charCodeAt(0) - OFFSET)

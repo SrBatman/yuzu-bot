@@ -51,7 +51,7 @@ namespace Command {
                 return 'No tenés permisos para hacer eso, down.';
 
             if (!customPrefix || !customPrefix.prefix || customPrefix.prefix === options.prefix) {
-                const newPrefix: IPrefix = await addPrefix(prefix, msg.guild);
+                const newPrefix = await addPrefix(prefix, msg.guild);
                 return `El nuevo prefix será **${newPrefix.prefix}**`;
             }
             else {

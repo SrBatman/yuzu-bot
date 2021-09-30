@@ -1,4 +1,5 @@
 import { Util, Permissions } from 'discord.js';
+import { options } from '../../options';
 import * as tagController from '../../database/controllers/tag.controller';
 import type { TextChannel } from 'discord.js';
 import type { ICommand } from '../../typing/command';
@@ -19,38 +20,13 @@ namespace Command {
         | 'list'
         | 'nsfw'
         | 'global'
-        | 'merge'
-        | 'owner'
-        | 'origin';
+        | 'owner';
 
-    const OWNERID: string = '790411185970872320'
-
+    const OWNERID = options.owner;
     const isArgument = (arg: unknown): arg is Argument =>
-        (arg instanceof String) && arg === ('add' || 'set' || 'new' || 'remove' || 'delete' || 'edit' || 'list' || 'nsfw' || 'global' || 'merge' || 'owner' || 'origin');
+        (arg instanceof String) && arg === ('add' || 'set' || 'new' || 'remove' || 'delete' || 'edit' || 'list' || 'nsfw' || 'global' || 'owner');
 
     export const command: ICommand = {
-        // data: new CommandBuilder()
-        //     .setDescription('Usa tags.')
-        //     .setName('tag')
-        //     .addSubcommand(subcommand =>
-        //         subcommand
-        //             .setName('add')
-        //             .setDescription('Adds a new tag.')
-        //             .addUserOption(opt => opt.setName('name').setDescription('The name that trigger the tag.'))
-        //             .addUserOption(opt => opt.setName('content').setDescription('The content.'))
-        //     )
-        //     .addSubcommand(subcommand =>
-        //         subcommand
-        //             .setName('delete')
-        //             .setDescription('deleted content.')
-        //             .addUserOption(opt => opt.setName('name').setDescription('The tag to delete.'))
-        //     )
-        //     .addSubcommand(subcommand =>
-        //         subcommand
-        //             .setName('delete')
-        //             .setDescription('deleted content.')
-        //             .addUserOption(opt => opt.setName('name').setDescription('The tag to delete.'))
-        //     ),
     	label: 'tag',
         alias: ['t'],
 		options: {
@@ -60,11 +36,10 @@ namespace Command {
         execute: (_session) => async (msg, args) => {
             if (!msg.guild) return;
 
-            const arg = args?.[0]?.toLowerCase() as Argument;
+            const arg = <Argument | undefined | string> args?.[0]?.toLowerCase();
             const obtain = async (content?: string) => await tagController.get(content!, msg.guild?.id);
 
             switch (arg) {
-
                 case 'new':
                 case 'set':
                 case 'add': {
@@ -304,7 +279,7 @@ namespace Command {
 
                     const tag = await tagController.get(args?.[0]!, msg.guild.id);
 
-                    if (!isArgument(arg as string)) {
+                    if (!isArgument(arg)) {
 
                         if (!tag) {
 

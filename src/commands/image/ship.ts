@@ -1,5 +1,4 @@
 import type { ICommand } from '../../typing/command.d';
-import type { Image } from 'canvas';
 import { default as Canvas } from  'canvas';
 import { MessageEmbed, MessageAttachment } from 'discord.js';
 const command: ICommand = {
@@ -22,7 +21,7 @@ const command: ICommand = {
         if (!user1 && !user2) return 'Mencione a un usuario.';
         else if (user1 === user2) user1 = msg.author;
 
-        const avatar1: Image = await Canvas.loadImage(
+        const avatar1 = await Canvas.loadImage(
             user1.displayAvatarURL(
                 {
                     format: 'png',
@@ -30,7 +29,7 @@ const command: ICommand = {
                 }
             )
         );
-        const avatar2: Image = await Canvas.loadImage(
+        const avatar2 = await Canvas.loadImage(
             user2.displayAvatarURL(
                 {
                     format: 'png',
@@ -38,7 +37,7 @@ const command: ICommand = {
                 }
             )
         );
-        const heartIm: Image = await Canvas.loadImage(
+        const heartIm = await Canvas.loadImage(
             'https://media.discordapp.net/attachments/744038841916194897/757760642072707152/corazon.png?width=475&height=475'
         );
         const shipname = [
@@ -98,7 +97,6 @@ const command: ICommand = {
         return { embeds: [ embed ], files: [ attachment ] }
     }
 };
-export = command;
 function reply(randnum: number): string {
 
     switch (randnum) {
@@ -150,3 +148,4 @@ function reply(randnum: number): string {
             break;
     }
 }
+export = command;

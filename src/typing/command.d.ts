@@ -7,11 +7,6 @@ import type { Client as Session,
     PermissionString,
     Message, 
     Snowflake } from 'discord.js';
-export type MessageContent =
-    | MessageOptions
-    | MessagePayload
-    | string
-    | MessageEmbed
 
 export type Category =
     | 'fun'

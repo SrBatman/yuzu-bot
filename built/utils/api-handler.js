@@ -20,7 +20,7 @@ const handle = (commands) => endpoints.forEach(cmd => {
         return desc;
     }
     const commandName = cmd.slice(4, cmd.length);
-    console.log('\x1b[33m%s\x1b[0m', `Loaded command ${commandName}`);
+    console.log('\x1b[34m%s\x1b[0m', `Loaded command ${commandName}`);
     commands.set(commandName, {
         label: commandName,
         options: {

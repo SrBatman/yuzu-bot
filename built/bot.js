@@ -2,20 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.events = exports.aliases = exports.commands = void 0;
 const tslib_1 = require("tslib");
-const discord_js_1 = (0, tslib_1.__importStar)(require("discord.js"));
+const discord_js_1 = require("discord.js");
 const api_handler_1 = (0, tslib_1.__importDefault)(require("./utils/api-handler"));
 const fs_1 = require("fs");
 const path_1 = require("path");
 require("process");
-require("dotenv/config");
 require("./database/db");
 const token = process.env.TOKEN;
 exports.commands = new Map(), exports.aliases = new Map(), exports.events = new Map();
-const session = new discord_js_1.default.Client({
+const session = new discord_js_1.Client({
     intents: [
         discord_js_1.Intents.FLAGS.GUILDS,
         discord_js_1.Intents.FLAGS.GUILD_MESSAGES,
-        discord_js_1.Intents.FLAGS.DIRECT_MESSAGES
+        discord_js_1.Intents.FLAGS.DIRECT_MESSAGES,
+        discord_js_1.Intents.FLAGS.DIRECT_MESSAGE_TYPING,
+        discord_js_1.Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+        discord_js_1.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS
     ]
 });
 handleEvents('/events', session);
@@ -31,10 +33,10 @@ function handleEvents(folder, s) {
             handleEvents((0, path_1.join)(folder, file), s);
             return;
         }
-        const { event } = await Promise.resolve().then(() => (0, tslib_1.__importStar)(require((0, path_1.join)(__dirname, folder, file))));
+        const event = await Promise.resolve().then(() => (0, tslib_1.__importStar)(require((0, path_1.join)(__dirname, folder, file))));
         s.on(event.label, (...args) => event.execute(...args));
         exports.events.set(event.label, event);
-        console.log('\x1b[31m%s\x1b[0m', `Event ${event.label} loaded!`);
+        console.log('\x1b[34m%s\x1b[0m', `Event ${event.label} loaded!`);
     });
 }
 function handleCommands(folder, commands, aliases) {
@@ -52,4 +54,3 @@ function handleCommands(folder, commands, aliases) {
         console.log('\x1b[34m%s\x1b[0m', `Command ${command.label} loaded`);
     });
 }
-;

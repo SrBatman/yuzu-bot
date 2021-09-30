@@ -1,16 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.options = void 0;
-exports.options = {
-    owner: {
-        username: 'Azul#8348',
-        id: ''
-    },
-    disabledCommands: [
-        'test'
-    ],
-    prefix: '->',
-    voice: {
-        voiceSupport: false
-    }
-};
+var options;
+(function (options) {
+    options["owner"] = "830318264907202561";
+    options["prefix"] = "!";
+})(options = exports.options || (exports.options = {}));
+;

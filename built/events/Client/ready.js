@@ -1,7 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.event = void 0;
-exports.event = {
+const event = {
     label: 'ready',
     async execute(session) {
         var _a;
@@ -11,3 +9,4 @@ exports.event = {
     },
     once: true
 };
+module.exports = event;

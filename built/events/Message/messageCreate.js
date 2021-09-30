@@ -1,19 +1,18 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.event = void 0;
 const tslib_1 = require("tslib");
 const options_1 = require("../../options");
 const bot_1 = require("../../bot");
 const discord_js_1 = require("discord.js");
 const Controller = (0, tslib_1.__importStar)(require("../../database/controllers/prefix.controller"));
 const cooldowns = new Map();
-exports.event = {
+const event = {
     label: 'messageCreate',
     async execute(msg) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
-        console.log('Event messageCreate called');
         const session = msg.client;
-        const prefix = msg.guild ? (_b = (_a = (await Controller.get(msg.guild.id))) === null || _a === void 0 ? void 0 : _a.prefix) !== null && _b !== void 0 ? _b : options_1.options.prefix : options_1.options.prefix;
+        const prefix = msg.guild
+            ? (_b = (_a = (await Controller.get(msg.guild.id))) === null || _a === void 0 ? void 0 : _a.prefix) !== null && _b !== void 0 ? _b : options_1.options.prefix
+            : options_1.options.prefix;
         const args = msg.content.slice(prefix.length).trim().split(/\s+/gm), name = (_c = args.shift()) === null || _c === void 0 ? void 0 : _c.toLowerCase(), command = (_d = bot_1.commands.get(name)) !== null && _d !== void 0 ? _d : bot_1.commands.get(bot_1.aliases.get(name));
         const error = validateCommandExecution(msg, command === null || command === void 0 ? void 0 : command.options);
         if (!msg.content.startsWith(prefix) || msg.author.bot) {
@@ -47,13 +46,14 @@ exports.event = {
         timestamps === null || timestamps === void 0 ? void 0 : timestamps.set((_k = msg.guild) === null || _k === void 0 ? void 0 : _k.id, Date.now());
         const output = await command.execute(session)(msg, args);
         if (output) {
-            var response = {};
-            if (output instanceof discord_js_1.MessageEmbed)
-                response.embeds = [output];
-            else
-                response.content = output;
-            const sended = await msg.channel.send(response);
-            console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
+            if (output instanceof discord_js_1.MessageEmbed) {
+                const sended = await msg.channel.send({ embeds: [output] });
+                console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
+            }
+            else {
+                const sended = await msg.channel.send({ content: output });
+                console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
+            }
         }
     }
 };
@@ -69,6 +69,7 @@ function validateCommandExecution(msg, commandOptions) {
         return commandOptions.argsRequired.message;
     if (commandOptions.guildOnly && !msg.guild)
         return 'Ese comando solo se puede ejecutar dentro de un servidor';
-    if (commandOptions.adminOnly && msg.author.id !== owner.id)
+    if (commandOptions.adminOnly && msg.author.id !== owner)
         return 'No sos el dueño del bot';
 }
+module.exports = event;

@@ -2,7 +2,7 @@ import Tag, { ITag } from '../models/tag.model';
 import { Types } from 'mongoose';
 
 export async function add(server: string, user: string, content: string, name: string, attachments?: string[]): Promise<ITag> {
-	const newTag: ITag = new Tag({
+	const newTag = new Tag({
 		id: Types.ObjectId(),
 		server: server,
 		user: user,

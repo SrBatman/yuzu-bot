@@ -2,7 +2,7 @@ import Prefix, { IPrefix } from '../models/prefix.model';
 import { Types } from 'mongoose';
 
 export async function add({ prefix, server }: { prefix: string, server: string }) {
-	const newPrefix: IPrefix = new Prefix({
+	const newPrefix = new Prefix({
 		id: Types.ObjectId(),
 		prefix: prefix,
 		server: server

@@ -25,8 +25,8 @@ const command: ICommand = {
         if (!text)
             return 'No especificaste un texto válido.';
 
-        const translated = await translate(text, { from: 'auto', to: lang })
-        .catch((err: Error) => console.error(err));
+        const translated = <{ text: string }> await translate(text, { from: 'auto', to: lang })
+            .catch((err: Error) => console.error(err));
         return new MessageEmbed()
             .setColor('RANDOM')
             .setAuthor(msg.author.username, msg.author.displayAvatarURL())

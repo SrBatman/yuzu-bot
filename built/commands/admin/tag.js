@@ -1,11 +1,12 @@
 "use strict";
 const tslib_1 = require("tslib");
 const discord_js_1 = require("discord.js");
+const options_1 = require("../../options");
 const tagController = (0, tslib_1.__importStar)(require("../../database/controllers/tag.controller"));
 var Command;
 (function (Command) {
-    const OWNERID = '790411185970872320';
-    const isArgument = (arg) => (arg instanceof String) && arg === ('add' || 'set' || 'new' || 'remove' || 'delete' || 'edit' || 'list' || 'nsfw' || 'global' || 'merge' || 'owner' || 'origin');
+    const OWNERID = options_1.options.owner;
+    const isArgument = (arg) => (arg instanceof String) && arg === ('add' || 'set' || 'new' || 'remove' || 'delete' || 'edit' || 'list' || 'nsfw' || 'global' || 'owner');
     Command.command = {
         label: 'tag',
         alias: ['t'],

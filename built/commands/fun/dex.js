@@ -51,7 +51,8 @@ async function getPokemonFromApi(pokemon) {
     const pokeAPI = 'https://pokeapi.co/api/v2';
     try {
         const { body } = await superagent_1.default.get(`${pokeAPI}/pokemon/${pokemon}`);
-        return body;
+        const outp = body;
+        return outp;
     }
     catch (err) {
         console.error('Query to PokeAPI rejected!\n %s', err);
