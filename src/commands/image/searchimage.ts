@@ -50,7 +50,7 @@ const command: ICommand = {
 		const message = await msg.channel.send({ embeds: [ baseEmbed ], components: [ row ] });
 		// collector
 		const filter = (i: MessageComponentInteraction) => (i.customId === 'Back' || i.customId === 'Next') && i.user.id === msg.author.id;
-		const collector = message.channel.createMessageComponentCollector({ filter, time: 15000 });
+		const collector = message.channel.createMessageComponentCollector({ filter, time: 60 * 1});
 
 		collector.on('collect', async i => {
 			const embed = <MessageEmbed> Object.assign(baseEmbed);
