@@ -1,7 +1,16 @@
-import type { Client as Session,
+import type {
+    Client as Session,
 	PermissionString,
 	Message,
-	Snowflake } from 'discord.js';
+	Snowflake,
+    MessageOptions
+} from 'discord.js';
+
+export type MessageContent =
+| string
+| MessageEmbed
+| MessageOptions
+| undefined;
 
 export type Category =
 | 'fun'

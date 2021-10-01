@@ -54,7 +54,6 @@ function handleCommands(folder: string, commands: Map<string, ICommand>, aliases
 			return;
 		}
 		const command = <ICommand> await import(join(__dirname, folder, file));
-
 		command.alias?.forEach(alias => aliases.set(alias, command.label ?? file));
 		commands.set(command.label ?? file, command);
 		console.log('\x1b[34m%s\x1b[0m', `Loaded command ${command.label}`);
