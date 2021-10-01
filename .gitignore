@@ -14,4 +14,4 @@ start.bat
 install.bat
 
 # github check
-built/
+/built
