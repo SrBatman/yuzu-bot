@@ -3,9 +3,9 @@ const command = {
     label: 'emojify',
     options: {
         guildOnly: false,
-        adminOnly: false,
+        adminOnly: false
     },
-    execute: () => async (_, args) => {
+    execute: () => (_, args) => {
         const MAPPING = {
             ' ': '   ',
             '0': ':zero:',

@@ -10,19 +10,18 @@ async function add({ prefix, server }) {
         prefix: prefix,
         server: server
     });
-    return await newPrefix.save();
+    const output = await newPrefix.save();
+    return output;
 }
 exports.add = add;
-;
 async function edit(before, prefix, server) {
     await prefix_model_1.default.updateOne({ before }, { prefix, server });
-    return await get(server);
+    const output = await get(server);
+    return output;
 }
 exports.edit = edit;
-;
 async function get(server) {
     const output = await prefix_model_1.default.findOne({ server });
     return output;
 }
 exports.get = get;
-;

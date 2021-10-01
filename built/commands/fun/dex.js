@@ -11,8 +11,8 @@ const command = {
         information: {
             descr: 'Comando para buscar un pokémon por su nombre o id',
             short: 'Busca pokemones.',
-            usage: '<$Nombre o id>',
-        },
+            usage: '<$Nombre o id>'
+        }
     },
     execute: () => async (msg, args) => {
         var _a, _b, _c, _d;
@@ -20,7 +20,7 @@ const command = {
         if (!search)
             return 'Debes ingresar más información del pokémon para buscarlo.';
         const target = parseMessageToPokemon(search);
-        const poke = (_a = await getPokemonFromApi(target.specie)) !== null && _a !== void 0 ? _a : await getPokemonFromApi(target.id);
+        const poke = (_a = await getPokemonFromApi(target.id)) !== null && _a !== void 0 ? _a : await getPokemonFromApi(target.specie);
         if (!poke)
             return 'No se pudo encontrar información sobre el pokémon.';
         return new discord_js_1.MessageEmbed()
@@ -28,7 +28,7 @@ const command = {
             .setTitle(`${((_d = poke.name[0]) === null || _d === void 0 ? void 0 : _d.toUpperCase()) + poke.name.slice(1)} #${poke.id}`)
             .setColor('RANDOM')
             .setFooter('Thanks to PokéAPI for existing!', 'https://pokeapi.co/static/pokeapi_256.888baca4.png')
-            .setDescription(poke.stats.map(value => `${value.stat.name}: \`${value.base_stat}\``).join('\n'))
+            .setDescription(poke.stats.map(value => `${value.stat.name}: \`${value.baseStat}\``).join('\n'))
             .addFields([
             {
                 name: 'Abilities',
@@ -43,39 +43,40 @@ const command = {
                 value: [`**Weight**: ${parsePokemonWeight(poke.weight)}kg`, `**Height**: ${poke.height}cm`].join('\n')
             }
         ])
-            .setImage(poke.sprites.front_default)
-            .setThumbnail(poke.sprites.front_shiny);
+            .setImage(poke.sprites.frontDefault)
+            .setThumbnail(poke.sprites.frontShiny);
     }
 };
 async function getPokemonFromApi(pokemon) {
     const pokeAPI = 'https://pokeapi.co/api/v2';
     try {
         const { body } = await superagent_1.default.get(`${pokeAPI}/pokemon/${pokemon}`);
-        const outp = body;
-        return outp;
+        return body;
     }
     catch (err) {
-        console.error('Query to PokeAPI rejected!\n %s', err);
-        return;
+        return undefined;
     }
 }
 function parseMessageToPokemon(message) {
-    const data = {
-        id: 0,
-        specie: '',
+    const base = {
         shiny: false,
         mega: false
     };
     if (!isNaN(parseInt(message)))
-        data.id = parseInt(message);
+        return Object.assign(base, {
+            id: parseInt(message),
+            specie: ''
+        });
     else
-        data.specie = message.toLowerCase();
-    return data;
+        return Object.assign(base, {
+            id: 0,
+            specie: message.toLowerCase()
+        });
 }
 function parsePokemonWeight(weight) {
-    var strWeight = weight.toString();
+    let strWeight = weight.toString();
     const len = strWeight.length;
-    if (len == 1)
+    if (len === 1)
         strWeight = `0.${strWeight}`;
     else if (len >= 2)
         strWeight = strWeight.slice(0, len - 1);

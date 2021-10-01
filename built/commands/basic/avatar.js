@@ -10,7 +10,7 @@ const command = {
             descr: 'Busca el avatar de un usuario.',
             short: 'Busca avatares.',
             usage: '[@Mención]'
-        },
+        }
     },
     execute: () => (msg) => {
         var _a;

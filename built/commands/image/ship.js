@@ -11,12 +11,12 @@ const command = {
         information: {
             descr: 'Te shipea con un usuario o shipea dos usuarios.',
             short: 'Ship a 2 usuarios.',
-            usage: '',
-        },
+            usage: ''
+        }
     },
     execute: () => async (msg) => {
-        var user1 = msg.mentions.users.first();
-        var user2 = msg.mentions.users.last();
+        let user1 = msg.mentions.users.first();
+        const user2 = msg.mentions.users.last();
         if (!user1 && !user2)
             return 'Mencione a un usuario.';
         else if (user1 === user2)
@@ -38,12 +38,10 @@ const command = {
         ].join('');
         const randnum = Math.round(Math.random() * 20);
         const bar = new Array(20);
-        for (var i = randnum - 1; i >= 0; i--) {
+        for (let i = randnum - 1; i >= 0; i--)
             bar.push('█');
-        }
-        for (var i = 20 - randnum - 1; i >= 0; i--) {
+        for (let i = 20 - randnum - 1; i >= 0; i--)
             bar.push(' .');
-        }
         const canvas = canvas_1.default.createCanvas(800, 300);
         const ctx = canvas.getContext('2d');
         ctx.beginPath();
@@ -60,11 +58,11 @@ const command = {
             .setAuthor(msg.author.username, msg.author.displayAvatarURL())
             .setColor('RANDOM')
             .setDescription(`
-                ${reply(randnum)}
-                Nombre del ship: **${shipname}**
-                El porcentaje de amor con ésta persona es **${randnum * 5}%**
-                ${bar.join('')}
-            `)
+			${reply(randnum)}
+			Nombre del ship: **${shipname}**
+			El porcentaje de amor con ésta persona es **${randnum * 5}%**
+			${bar.join('')}
+			`)
             .setImage('attachment://avatar.png');
         return { embeds: [embed], files: [attachment] };
     }

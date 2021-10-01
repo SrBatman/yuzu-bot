@@ -1,6 +1,6 @@
 {
   "name": "kbot",
-  "version": "3.4.3",
+  "version": "4.4.3",
   "description": "sample bot using Discord.js",
   "main": "index.js",
   "dependencies": {
@@ -18,11 +18,16 @@
   "devDependencies": {
     "@types/mongoose": "^5.11.97",
     "@types/node": "^16.10.1",
-    "@types/superagent": "^4.1.13"
+    "@types/superagent": "^4.1.13",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
+    "eslint": "^7.32.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:typescript": "tsc"
+    "test:typescript": "tsc",
+    "lint": "eslint . --ext .ts",
+    "fix": "eslint . --fix ."
   },
   "repository": {
     "url": "https://github.com/Le-Val/k1ssbot",

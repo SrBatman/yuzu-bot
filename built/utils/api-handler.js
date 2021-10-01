@@ -10,14 +10,15 @@ const endpoints = [
     'img/tickle',
     'img/pat',
     'img/cuddle',
-    'img/punch',
+    'img/punch'
 ];
 const handle = (commands) => endpoints.forEach(cmd => {
     function getDescription(command, msg, session) {
         var _a;
-        const action = command.slice(4, command.length), author = msg.author, member = (_a = msg.mentions.users.first()) !== null && _a !== void 0 ? _a : session.user;
-        const desc = `${author} received a ${action} from ${member}`;
-        return desc;
+        const action = command.slice(4, command.length);
+        const author = msg.author;
+        const member = (_a = msg.mentions.users.first()) !== null && _a !== void 0 ? _a : session.user;
+        return `${author} received a ${action} from ${member}`;
     }
     const commandName = cmd.slice(4, cmd.length);
     console.log('\x1b[34m%s\x1b[0m', `Loaded command ${commandName}`);
@@ -30,7 +31,7 @@ const handle = (commands) => endpoints.forEach(cmd => {
                 descr: `Command for giving a ${commandName} to someone`,
                 usage: `[@User]`,
                 short: `Command for giving a ${commandName}`
-            },
+            }
         },
         cooldown: 3,
         execute: (session) => async (msg) => new discord_js_1.MessageEmbed()

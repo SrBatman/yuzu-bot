@@ -12,11 +12,12 @@ const command = {
         information: {
             descr: 'Traduce al idioma especificado\nAquí los lenguajes disponibles: https://www.science.co.il/language/Locale-codes.php',
             short: 'Traducir lenguajes.',
-            usage: '<$Lenguaje> <$Texto>',
-        },
+            usage: '<$Lenguaje> <$Texto>'
+        }
     },
     execute: () => async (msg, args) => {
-        const lang = args[0], text = args.slice(1).join(' ');
+        const lang = args[0];
+        const text = args.slice(1).join(' ');
         if (!lang)
             return 'Necesitas especificar a qué idioma vas a traducir el texto, usa **help translate** para poder ayudarte.';
         if (!text)

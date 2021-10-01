@@ -6,6 +6,6 @@ const mongoose_1 = (0, tslib_1.__importDefault)(require("mongoose"));
 exports.PrefixSchema = new mongoose_1.default.Schema({
     id: mongoose_1.default.Schema.Types.ObjectId,
     prefix: String,
-    server: String,
+    server: String
 });
 exports.default = mongoose_1.default.model('Prefix', exports.PrefixSchema, 'prefixes');

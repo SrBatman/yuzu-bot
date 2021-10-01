@@ -12,7 +12,7 @@ const command = {
             descr: 'Busca la letra e información de una canción.',
             short: 'Busca letras de canciones.',
             usage: '<$Letra>'
-        },
+        }
     },
     execute: () => async (msg, args) => {
         const search = args === null || args === void 0 ? void 0 : args.join(' ');
@@ -32,22 +32,19 @@ const command = {
             }
             return;
         }
-        else {
+        else
             embed.setFooter(song.lyrics);
-        }
         return embed;
     }
 };
-function requestSong(search) {
-    return new Promise(async (resolve) => {
-        const { body } = await superagent_1.default.get(`https://some-random-api.ml/lyrics/?title=${search}`);
-        const song = {
-            lyrics: body.lyrics,
-            author: body.author,
-            title: body.title,
-            icon: body.thumbnail.genius
-        };
-        resolve(song);
-    });
+async function requestSong(search) {
+    const { body } = await superagent_1.default.get(`https://some-random-api.ml/lyrics/?title=${search}`);
+    const song = {
+        lyrics: body.lyrics,
+        author: body.author,
+        title: body.title,
+        icon: body.thumbnail.genius
+    };
+    return song;
 }
 module.exports = command;

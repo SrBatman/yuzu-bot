@@ -12,7 +12,8 @@ export async function add(server: string, user: string, content: string, name: s
 		global: false,
 		nsfw: false
 	});
-	return await newTag.save();
+	const output = await newTag.save();
+	return output;
 }
 
 export async function remove(server: string, user: string, name: string): Promise<ITag | null> {
@@ -20,7 +21,7 @@ export async function remove(server: string, user: string, name: string): Promis
 	return output;
 }
 
-export async function pass(tag: ITag, { server, user }: { server: string, user: string }, nsfw = false, global = false) {
+export async function pass(tag: ITag, { server, user }: { server: string, user: string }, nsfw = false, global = false): Promise<ITag | null> {
 	const finded = {
 		server: tag.server,
 		user: tag.user,
@@ -32,7 +33,7 @@ export async function pass(tag: ITag, { server, user }: { server: string, user: 
 		global: global,
 		nsfw: nsfw
 	};
-	const output = Tag.findOneAndUpdate(finded, edited, { new: true });
+	const output = await Tag.findOneAndUpdate(finded, edited, { new: true });
 	return output;
 }
 
@@ -48,7 +49,7 @@ export async function edit(tag: ITag, { content, attachments }: { content: strin
 		global: global,
 		nsfw: nsfw
 	};
-	const output = Tag.findOneAndUpdate(finded, edited, { new: true });
+	const output = await Tag.findOneAndUpdate(finded, edited, { new: true });
 	return output;
 }
 

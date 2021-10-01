@@ -1,20 +1,15 @@
 import type { Client as Session,
-    StringResolvable,
-    APIMessageContentResolvable,
-    MessageOptions,
-    MessagePayload,
-    MessageAdditions,
-    PermissionString,
-    Message, 
-    Snowflake } from 'discord.js';
+	PermissionString,
+	Message,
+	Snowflake } from 'discord.js';
 
 export type Category =
-    | 'fun'
-    | 'util'
-    | 'moderation'
-    | 'admin'
-    | 'owner'
-    | 'none';
+| 'fun'
+| 'util'
+| 'moderation'
+| 'admin'
+| 'owner'
+| 'none';
 
 export type CommandOptions = {
     guildOnly?: boolean | false, // if the command can be executed on dm
@@ -41,6 +36,6 @@ export interface ICommand {
     cooldown?: (number | 3);
     options?: CommandOptions;
     execute: (session: Session) =>
-        (msg: Message, args: readonly string[]) =>
-            MessageContent | Promise<MessageContent>;
+    (msg: Message, args: readonly string[]) =>
+    MessageContent | Promise<MessageContent>;
 }

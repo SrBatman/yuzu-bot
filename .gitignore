@@ -10,6 +10,5 @@ npm-debug.log*
 tsconfig.tsbuildinfo
 
 # aditional checks
-start
 start.bat
 install.bat

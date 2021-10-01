@@ -8,7 +8,7 @@ const command = {
             descr: 'Wtf',
             short: '._.XD',
             usage: ''
-        },
+        }
     },
     execute: () => (msg) => msg.channel.send('Hola!').then(m => m.edit('   ‫  Hola    ‫  '))
 };

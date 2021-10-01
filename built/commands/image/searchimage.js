@@ -12,14 +12,13 @@ const command = {
             descr: 'Busca imágenes en Google.',
             short: 'Busca imágenes en Google.',
             usage: 'image <$Search>'
-        },
-    },
-    execute: () => async (msg, args) => {
-        const search = args.join(' ');
-        if (!search) {
-            return 'Por favor especifica una búsqueda.';
         }
-        (0, g_i_s_1.default)(search, async (error, results) => {
+    },
+    execute: () => (msg, args) => {
+        const search = args.join(' ');
+        if (!search)
+            return 'Por favor especifica una búsqueda.';
+        (0, g_i_s_1.default)(search, (error, results) => {
             if (error)
                 msg.channel.send({ content: error.message });
             if (results[0])
@@ -27,9 +26,10 @@ const command = {
                     .setColor('RANDOM')
                     .setAuthor(msg.author.username, msg.author.displayAvatarURL())
                     .setImage(results[0].url);
-            return;
+            else
+                return undefined;
         });
-        return;
+        return undefined;
     }
 };
 module.exports = command;

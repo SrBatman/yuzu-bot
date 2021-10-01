@@ -15,7 +15,8 @@ async function add(server, user, content, name, attachments) {
         global: false,
         nsfw: false
     });
-    return await newTag.save();
+    const output = await newTag.save();
+    return output;
 }
 exports.add = add;
 async function remove(server, user, name) {
@@ -35,7 +36,7 @@ async function pass(tag, { server, user }, nsfw = false, global = false) {
         global: global,
         nsfw: nsfw
     };
-    const output = tag_model_1.default.findOneAndUpdate(finded, edited, { new: true });
+    const output = await tag_model_1.default.findOneAndUpdate(finded, edited, { new: true });
     return output;
 }
 exports.pass = pass;
@@ -51,7 +52,7 @@ async function edit(tag, { content, attachments }, global = false, nsfw = false)
         global: global,
         nsfw: nsfw
     };
-    const output = tag_model_1.default.findOneAndUpdate(finded, edited, { new: true });
+    const output = await tag_model_1.default.findOneAndUpdate(finded, edited, { new: true });
     return output;
 }
 exports.edit = edit;
