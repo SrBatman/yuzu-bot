@@ -72,18 +72,16 @@ const command: ICommand = {
 			const tag = await obtain(args?.[1]);
 
 			if (tag) {
-				if (tag.user !== msg.author.id || !msg.member?.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
-					if (msg.author.id !== OWNERID) {
-						msg.channel.send('No sos dueño de ese tag');
-						return;
-					}
+				if (tag.user !== msg.author.id || !msg.member?.permissions.has(Permissions.FLAGS.ADMINISTRATOR) || msg.author.id !== OWNERID) {
+					msg.channel.send('No sos dueño de ese tag');
+					return;
 				}
 				else if (tag.global && msg.author.id !== OWNERID) {
 					msg.channel.send('El tag es global y no se puede eliminar');
 					return;
 				}
 				await tagController.remove(msg.guild.id, msg.author.id, args?.[1]);
-				msg.channel.send(`Removí el tag ${args[0]}`);
+				msg.channel.send(`Removí el tag ${args[1]}`);
 			}
 
 			break;
@@ -149,7 +147,7 @@ const command: ICommand = {
 
 		case 'global': {
 			if (!args?.[1]) {
-				msg.channel.send('Por favor debes especificar un tag para convertir.');
+				msg.channel.send('Por favor debes especificar un tag para convertir');
 				return;
 			}
 			const tag = await obtain(args?.[1]);
@@ -161,15 +159,12 @@ const command: ICommand = {
 				msg.channel.send('No sos dueño del bot');
 
 			if (tag)
-				// TODO
 				if (!tag.global) {
-
 					const output = await tagController.edit(tag, {
 						content: tag.content,
 						attachments: msg.attachments.map(att => att.url)
 					}, true, false);
 					msg.channel.send(`Edité el tag ${output?.name} para que se pueda usar en todos los servidores`);
-
 				}
 				else {
 					const output = await tagController.edit(tag, {
@@ -185,7 +180,7 @@ const command: ICommand = {
 
 		case 'nsfw': {
 			if (!args?.[1]) {
-				msg.channel.send('Por favor debes especificar un tag para convertir.');
+				msg.channel.send('Por favor debes especificar un tag para convertir');
 				return;
 			}
 			const tag = await obtain(args?.[1]);
@@ -211,7 +206,7 @@ const command: ICommand = {
 
 		case 'owner': {
 			if (!args?.[1]) {
-				msg.channel.send('Por favor debes especificar un tag.');
+				msg.channel.send('Por favor debes especificar un tag');
 				return;
 			}
 			const tag = await obtain(args?.[1]);
@@ -224,22 +219,29 @@ const command: ICommand = {
 			break;
 		}
 
-		default: {
+		default:
 			if (!isArgument(arg) && args?.[0]) {
+				const tagGlobal = await tagController.get(args?.[0]);
 				const tag = await tagController.get(args?.[0], msg.guild.id);
-				if (!tag)
-					msg.channel.send('No se ha encontrado el tag');
 
-				else if (tag?.nsfw && !(msg.channel as TextChannel).nsfw) // eslint-disable-line
+				if (!tagGlobal) {
+					msg.channel.send('No se ha encontrado el tag');
+					return;
+				}
+				else if (!tag) {
+					msg.channel.send('No se ha encontrado el tag');
+					return;
+				}
+
+				if (tag?.nsfw && !(msg.channel as TextChannel).nsfw) { // eslint-disable-line
 					msg.channel.send('Contenido nsfw, lo sentimos pero no se puede mostrar en éste canal :underage:');
+				}
 
 				else {
-					if (tag?.global && tag?.nsfw) msg.channel.send('Ha habido un fallo en el sistema');
 					msg.channel.send({ content: tag?.content, files: tag.attachments });
 				}
 			}
 			break;
-		}
 		}
 	}
 };

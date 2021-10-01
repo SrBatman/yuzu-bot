@@ -8,10 +8,3 @@ npm-debug.log*
 
 # typescript checks
 tsconfig.tsbuildinfo
-
-# aditional checks
-start.bat
-install.bat
-
-# github check
-/built
