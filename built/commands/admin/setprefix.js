@@ -24,7 +24,12 @@ const command = {
     alias: ['setprefix'],
     options: {
         guildOnly: true,
-        adminOnly: false
+        adminOnly: false,
+        information: {
+            descr: 'Establece u edita el prefijo del servidor.',
+            short: 'Configurar prefijos.',
+            usage: '[prefix]'
+        }
     },
     execute: () => async (msg, args) => {
         var _a;

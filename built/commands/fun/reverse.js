@@ -8,14 +8,14 @@ const command = {
         information: {
             descr: 'Invierte un texto voltéandolo hacia abajo.',
             short: 'Invertir textos.',
-            usage: '<$Texto>'
+            usage: '<Texto>'
         }
     },
     execute: () => (_, args) => {
         const MAPPING = '¡"#$%⅋,)(*+\'-˙/0ƖᄅƐㄣϛ9ㄥ86:;<=>¿@∀qƆpƎℲפHIſʞ˥WNOԀQɹS┴∩ΛMX⅄Z[/]^_`ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz{|}~';
         const OFFSET = '!'.charCodeAt(0);
         if (args.length < 1)
-            return 'Debes proporcionar el texto para hacerle flip.';
+            return 'Escribe algo';
         return args.join(' ')
             .split('')
             .map(c => c.charCodeAt(0) - OFFSET)

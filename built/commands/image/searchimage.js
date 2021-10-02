@@ -11,7 +11,7 @@ const command = {
         information: {
             descr: 'Busca imágenes en Google.',
             short: 'Busca imágenes en Google.',
-            usage: 'image <$Search>'
+            usage: '<Search>'
         }
     },
     execute: () => async (msg, args) => {
@@ -41,7 +41,7 @@ const command = {
         let query = 1;
         const message = await msg.channel.send({ embeds: [baseEmbed], components: [row] });
         const filter = (i) => (i.customId === 'Back' || i.customId === 'Next') && i.user.id === msg.author.id;
-        const collector = message.channel.createMessageComponentCollector({ filter, time: 15000 });
+        const collector = message.channel.createMessageComponentCollector({ filter, time: 60 * 1000 });
         collector.on('collect', async (i) => {
             var _a, _b, _c, _d;
             const embed = Object.assign(baseEmbed);

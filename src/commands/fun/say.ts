@@ -8,13 +8,13 @@ const command: ICommand = {
 		information: {
 			descr: 'Hace que el bot diga algo muy malo',
 			short: 'Escribir el siguiente mensaje del bot.',
-			usage: ''
+			usage: '<Texto>'
 		}
 	},
 	execute: () => (msg, args) => {
 		const text = args.join(' ');
 		if (!text)
-			return 'Escribí el contenido del mensaje o te revoleo a piñas.';
+			return 'Escribí el contenido del mensaje o te revoleo a piñas';
 		msg.delete();
 		return text;
 	}

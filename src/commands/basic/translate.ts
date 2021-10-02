@@ -11,7 +11,7 @@ const command: ICommand = {
 		information: {
 			descr: 'Traduce al idioma especificado\nAquí los lenguajes disponibles: https://www.science.co.il/language/Locale-codes.php',
 			short: 'Traducir lenguajes.',
-			usage: '<$Lenguaje> <$Texto>'
+			usage: '<Lenguaje> <Texto>'
 		}
 	},
 	execute: () => async (msg, args) => {

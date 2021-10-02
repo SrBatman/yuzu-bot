@@ -8,7 +8,7 @@ const command: ICommand = {
 		information: {
 			descr: 'Invierte un texto voltéandolo hacia abajo.',
 			short: 'Invertir textos.',
-			usage: '<$Texto>'
+			usage: '<Texto>'
 		}
 	},
 	execute: () => (_, args) => {
@@ -16,7 +16,7 @@ const command: ICommand = {
 		const OFFSET  = '!'.charCodeAt(0); // Start with the character '!'
 
 		if (args.length < 1)
-			return 'Debes proporcionar el texto para hacerle flip.';
+			return 'Escribe algo';
 
 		return args.join(' ')
 			.split('')

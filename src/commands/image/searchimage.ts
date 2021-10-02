@@ -16,7 +16,7 @@ const command: ICommand = {
 		information: {
 			descr: 'Busca imágenes en Google.',
 			short: 'Busca imágenes en Google.',
-			usage: 'image <$Search>'
+			usage: '<Search>'
 		}
 	},
 	execute: () => async (msg, args): Promise<MessageContent> => {
@@ -50,7 +50,7 @@ const command: ICommand = {
 		const message = await msg.channel.send({ embeds: [ baseEmbed ], components: [ row ] });
 		// collector
 		const filter = (i: MessageComponentInteraction) => (i.customId === 'Back' || i.customId === 'Next') && i.user.id === msg.author.id;
-		const collector = message.channel.createMessageComponentCollector({ filter, time: 60 * 1});
+		const collector = message.channel.createMessageComponentCollector({ filter, time: 60 * 1000});
 
 		collector.on('collect', async i => {
 			const embed = <MessageEmbed> Object.assign(baseEmbed);

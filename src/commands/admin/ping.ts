@@ -11,6 +11,6 @@ const command: ICommand = {
 			usage: ''
 		}
 	},
-	execute: () => () => 'Pong!'
+	execute: (session) => () => `ping! 🏓 ${Math.floor(session.ws.ping)}ms`
 };
 export = command;

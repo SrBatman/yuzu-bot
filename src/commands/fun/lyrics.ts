@@ -10,7 +10,7 @@ const command: ICommand = {
 		information: {
 			descr: 'Busca la letra e información de una canción.',
 			short: 'Busca letras de canciones.',
-			usage: '<$Letra>'
+			usage: '<Letra>'
 		}
 	},
 	execute: () => async (msg, args) => {

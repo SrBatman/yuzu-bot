@@ -9,7 +9,7 @@ const command: ICommand = {
 		information: {
 			descr: 'Busca información acerca del servidor.',
 			short: 'Ver el servidor.',
-			usage: ''
+			usage: '...'
 		}
 	},
 	execute: () => (msg) => {

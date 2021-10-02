@@ -10,7 +10,12 @@ const command = {
     alias: ['t'],
     options: {
         guildOnly: true,
-        adminOnly: false
+        adminOnly: false,
+        information: {
+            descr: 'Crea, edita, borra o modifica tags.',
+            short: ':eyes:',
+            usage: '[add(name, content) | remove(name) | give(name, @user) | edit(name, content) | list() | nsfw(name) | global(name) | owner(name)] [search] ...'
+        }
     },
     execute: () => async (msg, args) => {
         var _a, _b, _c, _d, _e, _f, _g, _h;
@@ -55,7 +60,7 @@ const command = {
                         msg.channel.send('No sos dueño de ese tag');
                         return;
                     }
-                    else if (tag.global && msg.author.id !== OWNERID) {
+                    if (tag.global && msg.author.id !== OWNERID) {
                         msg.channel.send('El tag es global y no se puede eliminar');
                         return;
                     }
@@ -190,9 +195,8 @@ const command = {
                     if ((tag === null || tag === void 0 ? void 0 : tag.nsfw) && !msg.channel.nsfw) {
                         msg.channel.send('Contenido nsfw, lo sentimos pero no se puede mostrar en éste canal :underage:');
                     }
-                    else {
+                    else
                         msg.channel.send({ content: tag === null || tag === void 0 ? void 0 : tag.content, files: tag.attachments });
-                    }
                 }
                 break;
         }

@@ -3,9 +3,17 @@ const command = {
     label: 'emojify',
     options: {
         guildOnly: false,
-        adminOnly: false
+        adminOnly: false,
+        information: {
+            descr: 'Reemplaza texto por emotes.',
+            short: 'Reemplaza texto por emotes',
+            usage: '<Texto>'
+        }
     },
     execute: () => (_, args) => {
+        const text = args.join(' ');
+        if (!text)
+            return 'Escribe algo';
         const MAPPING = {
             ' ': '   ',
             '0': ':zero:',
@@ -24,10 +32,7 @@ const command = {
             '*': ':asterisk:'
         };
         'abcdefghijklmnopqrstuvwxyz'.split('').forEach(c => { MAPPING[c] = MAPPING[c.toUpperCase()] = ` :regional_indicator_${c}:`; });
-        return args.join(' ')
-            .split('')
-            .map(c => MAPPING[c] || c)
-            .join('');
+        return text.split('').map(c => MAPPING[c] || c).join('');
     }
 };
 module.exports = command;

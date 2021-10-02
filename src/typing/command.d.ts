@@ -1,9 +1,9 @@
 import type {
-    Client as Session,
+	Client as Session,
 	PermissionString,
 	Message,
 	Snowflake,
-    MessageOptions
+	MessageOptions
 } from 'discord.js';
 
 export type MessageContent =

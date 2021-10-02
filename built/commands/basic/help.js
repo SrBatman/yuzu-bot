@@ -12,7 +12,7 @@ const command = {
         information: {
             descr: 'Busca información acerca de un comando - muestra todos los comandos.',
             short: 'Busca comandos.',
-            usage: '[$Comando]'
+            usage: '[Comando]'
         }
     },
     cooldown: 5,
