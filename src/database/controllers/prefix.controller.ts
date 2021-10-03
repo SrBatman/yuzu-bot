@@ -11,7 +11,7 @@ export async function add({ prefix, server }: { prefix: string, server: string }
 	return output;
 }
 export async function edit(before: IPrefix, prefix: string, server: string): Promise<IPrefix | null> {
-	await Prefix.findOneAndUpdate(before, { prefix, server }, { new: true });
+	await Prefix.findOneAndUpdate({ prefix: before.prefix, server: before.server }, { prefix, server }, { new: true });
 	const output = await get(server);
 	return output;
 }
