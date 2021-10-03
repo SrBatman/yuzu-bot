@@ -8,15 +8,15 @@ const cooldowns = new Map();
 const event = {
     label: 'messageCreate',
     async execute(msg) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         var timestamps;
         const session = msg.client;
-        const prefix = msg.guild ? (_b = (_a = (await Controller.get(msg.guild.id))) === null || _a === void 0 ? void 0 : _a.prefix) !== null && _b !== void 0 ? _b : options_1.default.prefix : options_1.default.prefix;
+        const prefix = await getPrefix(msg.guild);
         const args = msg.content.slice(prefix.length).trim().split(/\s+/gm);
-        const name = (_c = args.shift()) === null || _c === void 0 ? void 0 : _c.toLowerCase();
-        const command = (_d = bot_1.commandFiles.get(name)) !== null && _d !== void 0 ? _d : bot_1.commandFiles.get(bot_1.commandAliases.get(name));
+        const name = (_a = args.shift()) === null || _a === void 0 ? void 0 : _a.toLowerCase();
+        const command = (_b = bot_1.commandFiles.get(name)) !== null && _b !== void 0 ? _b : bot_1.commandFiles.get(bot_1.commandAliases.get(name));
         const error = validateCommandExecution(msg, command === null || command === void 0 ? void 0 : command.options);
-        const regMention = new RegExp(`^<@!?${(_e = session.user) === null || _e === void 0 ? void 0 : _e.id}>( |)$`);
+        const regMention = new RegExp(`^<@!?${(_c = session.user) === null || _c === void 0 ? void 0 : _c.id}>( |)$`);
         if (msg.content.match(regMention)) {
             msg.channel.send(`Mi prefix es ${prefix}`);
             return;
@@ -38,9 +38,9 @@ const event = {
                 cooldowns.set(command.label, new Map());
             timestamps = cooldowns.get(command.label);
         }
-        if ((_f = msg.guild) === null || _f === void 0 ? void 0 : _f.id)
-            if (timestamps === null || timestamps === void 0 ? void 0 : timestamps.has((_g = msg.guild) === null || _g === void 0 ? void 0 : _g.id)) {
-                const expirationTime = ((_h = command.cooldown) !== null && _h !== void 0 ? _h : 3) * 1000 + (timestamps === null || timestamps === void 0 ? void 0 : timestamps.get((_j = msg.guild) === null || _j === void 0 ? void 0 : _j.id));
+        if ((_d = msg.guild) === null || _d === void 0 ? void 0 : _d.id)
+            if (timestamps === null || timestamps === void 0 ? void 0 : timestamps.has((_e = msg.guild) === null || _e === void 0 ? void 0 : _e.id)) {
+                const expirationTime = ((_f = command.cooldown) !== null && _f !== void 0 ? _f : 3) * 1000 + (timestamps === null || timestamps === void 0 ? void 0 : timestamps.get((_g = msg.guild) === null || _g === void 0 ? void 0 : _g.id));
                 if (Date.now() < expirationTime) {
                     const timeLeft = new Date(expirationTime - Date.now()).getSeconds();
                     msg.channel.send(`estoy re caliente como para poder ejecutar más comandos \\🔥\nEspera **${timeLeft}** antes volver a usar **${command.label}**`);
@@ -48,7 +48,7 @@ const event = {
                 }
             }
         if (msg.guild) {
-            setTimeout(() => { var _a; return timestamps === null || timestamps === void 0 ? void 0 : timestamps.delete((_a = msg.guild) === null || _a === void 0 ? void 0 : _a.id); }, ((_k = command.cooldown) !== null && _k !== void 0 ? _k : 3) * 1000);
+            setTimeout(() => { var _a; return timestamps === null || timestamps === void 0 ? void 0 : timestamps.delete((_a = msg.guild) === null || _a === void 0 ? void 0 : _a.id); }, ((_h = command.cooldown) !== null && _h !== void 0 ? _h : 3) * 1000);
             timestamps === null || timestamps === void 0 ? void 0 : timestamps.set(msg.guild.id, Date.now());
         }
         const output = await command.execute(session)(msg, args);
@@ -79,5 +79,14 @@ function validateCommandExecution(msg, commandOptions) {
         return 'No sos el dueño del bot';
     else
         return undefined;
+}
+async function getPrefix(guild) {
+    if (guild) {
+        const output = await Controller.get(guild.id);
+        if (!output)
+            return options_1.default.prefix;
+        return output.prefix;
+    }
+    return options_1.default.prefix;
 }
 module.exports = event;

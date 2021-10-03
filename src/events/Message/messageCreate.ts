@@ -1,4 +1,4 @@
-import type { Message, MessageOptions, MessagePayload } from 'discord.js';
+import type { Message, MessageOptions, MessagePayload, Guild } from 'discord.js';
 import type { CommandOptions } from '../../typing/command.d';
 import type { IEvent } from '../../typing/event.d';
 
@@ -7,6 +7,8 @@ import { MessageEmbed } from 'discord.js';
 import * as Controller from '../../database/controllers/prefix.controller';
 import options from '../../options';
 
+
+
 const cooldowns = new Map<string, Map<string, number>>();
 
 const event: IEvent = {
@@ -14,7 +16,7 @@ const event: IEvent = {
 	async execute(msg: Message): Promise<void> {
 		var timestamps: Map<string, number> | undefined;
 		const session = msg.client;
-		const prefix = msg.guild ? (await Controller.get(msg.guild.id))?.prefix ?? options.prefix : options.prefix;
+		const prefix = await getPrefix(msg.guild as Guild | undefined);
 		// arguments, ej: .command args0 args1 args2 ...
 		const args = msg.content.slice(prefix.length).trim().split(/\s+/gm);
 		const name = <string> args.shift()?.toLowerCase();
@@ -98,5 +100,15 @@ function validateCommandExecution(msg: Message, commandOptions?: CommandOptions)
 
 	else
 		return undefined;
+}
+async function getPrefix(guild?: Guild) {
+	if (guild) {
+		const output = await Controller.get(guild.id);
+		if (!output)
+			return options.prefix;
+		
+		return output.prefix;
+	}
+	return options.prefix;
 }
 export = event;

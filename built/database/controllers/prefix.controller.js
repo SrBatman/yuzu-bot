@@ -15,7 +15,7 @@ async function add({ prefix, server }) {
 }
 exports.add = add;
 async function edit(before, prefix, server) {
-    await prefix_model_1.default.updateOne({ before }, { prefix, server });
+    await prefix_model_1.default.findOneAndUpdate({ before }, { prefix, server });
     const output = await get(server);
     return output;
 }
