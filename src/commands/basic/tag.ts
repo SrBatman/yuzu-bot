@@ -95,7 +95,7 @@ const command: ICommand = {
 		case 'give':
 		case 'gift': {
 			if (!args?.[1]) {
-				msg.channel.send('Por favor debes especificar un tag para regalar.');
+				msg.channel.send('Por favor debes especificar un tag para regalar');
 				return;
 			}
 			const tag = await obtain(args?.[1]);

@@ -28,17 +28,18 @@ const command: ICommand = {
 				.map(c => [
 					`- \`${`[${c.label}] ${c?.alias ? c.alias.join(', ') : ''}`.trim() ?? c.label}\``,
 					` ${c?.options?.information?.short ?? c.options?.information?.descr ?? 'Comando sin descripción'}`
-				]
-				);
-			return Object.assign(base)
+				]);
+
+			const commandEmbed = Object.assign(base)
 				.setTitle(String.raw`\👾 Comandos de ${session.user?.tag}`)
 				.setColor('RANDOM')
 				.setDescription([ base.description ?? 'sin descripción...', ...info ].join('\n'));
+			return commandEmbed;
 		}
-		const cmd = commands.get(search) as ICommand;
+		const cmd = <ICommand> commands.get(search);
 
 		if (!cmd)
-			return 'No encontré ese comando.';
+			return 'No encontré ese comando';
 
 		return Object.assign(base)
 			.setTitle('Información del comando.')

@@ -13,7 +13,7 @@ const endpoints: readonly string[] = [
 	'img/cuddle',
 	'img/punch'
 ];
-const handle = (commands: Map<string, ICommand>): void => endpoints.forEach(cmd => {
+const handle = (commands: Map<string, ICommand | string>): void => endpoints.forEach(cmd => {
 	function getDescription(command: string, msg: Message, session: Client): string {
 		const action = command.slice(4, command.length);
 		const author = msg.author;
@@ -22,7 +22,7 @@ const handle = (commands: Map<string, ICommand>): void => endpoints.forEach(cmd 
 		return `${author} received a ${action} from ${member}`;
 	}
 	const commandName = cmd.slice(4, cmd.length);
-	console.log('\x1b[34m%s\x1b[0m', `Loaded command ${commandName}`);
+	console.log('Loaded command %s', commandName);
 
 	commands.set(commandName, {
 		label: commandName,

@@ -21,7 +21,7 @@ const handle = (commands) => endpoints.forEach(cmd => {
         return `${author} received a ${action} from ${member}`;
     }
     const commandName = cmd.slice(4, cmd.length);
-    console.log('\x1b[34m%s\x1b[0m', `Loaded command ${commandName}`);
+    console.log('Loaded command %s', commandName);
     commands.set(commandName, {
         label: commandName,
         options: {

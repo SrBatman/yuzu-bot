@@ -17,10 +17,10 @@ const command = {
     execute: () => async (msg, args) => {
         const search = args.join(' ');
         if (!search)
-            return 'Por favor especifica una búsqueda.';
+            return 'Por favor especifica una búsqueda';
         const results = await image(search);
         if (!results[1])
-            return 'No he encontrado resultados.';
+            return 'No he encontrado resultados';
         const row = new discord_js_1.MessageActionRow()
             .addComponents([
             new discord_js_1.MessageButton()

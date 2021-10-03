@@ -19,10 +19,10 @@ const command: ICommand = {
 		const text = args.slice(1).join(' ');
 
 		if (!lang)
-			return 'Necesitas especificar a qué idioma vas a traducir el texto, usa **help translate** para poder ayudarte.';
+			return 'Necesitas especificar a qué idioma vas a traducir el texto, usa **help translate** para poder ayudarte';
 
 		if (!text)
-			return 'No especificaste un texto válido.';
+			return 'No especificaste un texto válido';
 
 		const translated = <{ text: string }> await translate(text, { from: 'auto', to: lang })
 			.catch((err: Error) => console.error(err));

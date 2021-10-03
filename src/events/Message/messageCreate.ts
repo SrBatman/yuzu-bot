@@ -1,11 +1,11 @@
-import type { Message } from 'discord.js';
+import type { Message, MessageOptions, MessagePayload } from 'discord.js';
 import type { CommandOptions } from '../../typing/command.d';
 import type { IEvent } from '../../typing/event.d';
 
-import options from '../../options';
-import { commandAliases as aliases, commandFiles as commands } from '../../bot';
+import { commandFiles as commands, commandAliases as aliases } from '../../bot';
 import { MessageEmbed } from 'discord.js';
 import * as Controller from '../../database/controllers/prefix.controller';
+import options from '../../options';
 
 const cooldowns = new Map<string, Map<string, number>>();
 
@@ -14,25 +14,35 @@ const event: IEvent = {
 	async execute(msg: Message): Promise<void> {
 		var timestamps: Map<string, number> | undefined;
 		const session = msg.client;
-		const prefix  = msg.guild ? (await Controller.get(msg.guild.id))?.prefix ?? options.prefix : options.prefix;
+		const prefix = msg.guild ? (await Controller.get(msg.guild.id))?.prefix ?? options.prefix : options.prefix;
 		// arguments, ej: .command args0 args1 args2 ...
-		const args    = msg.content.slice(prefix.length).trim().split(/\s+/gm);
-		const name    = <string> args.shift()?.toLowerCase(); // command name
+		const args = msg.content.slice(prefix.length).trim().split(/\s+/gm);
+		const name = <string> args.shift()?.toLowerCase();
 		const command = commands.get(name) ?? commands.get(aliases.get(name) as string);
-
 		const error = validateCommandExecution(msg, command?.options);
-		if (!msg.content.startsWith(prefix) || msg.author.bot)
-			return;
 
-		else if (!command) {
-			msg.channel.send('Ese comando no existe.');
+		const regMention = new RegExp(`^<@!?${session.user?.id}>( |)$`);
+
+		if (msg.content.match(regMention)) {
+			msg.channel.send(`Mi prefix es ${prefix}`);
 			return;
 		}
-		else if (error) {
+
+		if (msg.author.bot)
+			return;
+
+		if (!msg.content.startsWith(prefix))
+			return;
+
+		if (!command) {
+			msg.channel.send('Ese comando no existe \\🔒');
+			return;
+		}
+		if (error) {
 			msg.channel.send(error);
 			return;
 		}
-		else if (command.label) {
+		if (command.label) {
 			// cooldowns map
 			if (!cooldowns.has(command.label)) cooldowns.set(command.label, new Map<string, number>());
 			timestamps = cooldowns.get(command.label);
@@ -47,19 +57,19 @@ const event: IEvent = {
 					return;
 				}
 			}
-		if (msg.guild?.id) {
+		if (msg.guild) {
 			setTimeout(() => timestamps?.delete(msg.guild?.id as string), (command.cooldown ?? 3) * 1000);
-			timestamps?.set(msg.guild?.id, Date.now());
+			timestamps?.set(msg.guild.id, Date.now());
 		}
-		const output = <string | MessageEmbed> await command.execute(session)(msg, args);
+		const output = <string | MessageEmbed | MessageOptions | MessagePayload> await command.execute(session)(msg, args);
 
 		if (output)
-			if (output instanceof MessageEmbed){
+			if (output instanceof MessageEmbed) {
 				const sended = await msg.channel.send({ embeds: [ output ] });
 				console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
 			}
 			else {
-				const sended = await msg.channel.send({ content: output });
+				const sended = await msg.channel.send(output);
 				console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
 			}
 	}

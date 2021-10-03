@@ -12,9 +12,7 @@ const command = {
         var _a;
         const question = args.join(' ');
         if (!question)
-            return 'Por favor preguntame algo.';
-        if (question[question.length - 1] !== '?')
-            return 'Tu pregunta debe terminar con `?`';
+            return 'Por favor pregúntame algo';
         return new discord_js_1.MessageEmbed()
             .setColor('RANDOM')
             .addField(String.raw `\🎱 8ball`, '\u200b')

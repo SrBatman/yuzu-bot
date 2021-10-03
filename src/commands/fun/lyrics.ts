@@ -18,12 +18,12 @@ const command: ICommand = {
 		const search = args?.join(' ');
 
 		if (!search)
-			return 'Argumento invalido, escribe algo.';
+			return 'Argumento invalido, escribe algo';
 
 		const song = await requestSong(search);
 
 		if (!song)
-			return 'No pude encontrar esa canción master.';
+			return 'No pude encontrar esa canción master';
 
 		const embed = new MessageEmbed()
 			.setTitle(song.title)

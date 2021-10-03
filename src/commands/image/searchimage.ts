@@ -22,11 +22,11 @@ const command: ICommand = {
 	execute: () => async (msg, args): Promise<MessageContent> => {
 		const search = args.join(' ');
 		if (!search)
-			return 'Por favor especifica una búsqueda.';
+			return 'Por favor especifica una búsqueda';
 
 		const results = await image(search);
 		if (!results[1])
-			return 'No he encontrado resultados.';
+			return 'No he encontrado resultados';
 
 		const row = new MessageActionRow()
 			.addComponents([

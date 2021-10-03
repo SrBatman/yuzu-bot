@@ -17,9 +17,9 @@ const command = {
         const arg = args[0];
         if (arg === 'set') {
             if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has(discord_js_1.Permissions.FLAGS.MANAGE_EMOJIS_AND_STICKERS)))
-                return 'No tienes permisos suficientes para hacer eso.';
+                return 'No tienes permisos suficientes para hacer eso';
             if (!((_c = (_b = msg.guild) === null || _b === void 0 ? void 0 : _b.me) === null || _c === void 0 ? void 0 : _c.permissions.has(discord_js_1.Permissions.FLAGS.MANAGE_EMOJIS_AND_STICKERS)))
-                return 'No tengo permisos.';
+                return 'No tengo permisos';
             const [, name, url] = args;
             const roles = msg.mentions.roles;
             if (!name)
@@ -31,9 +31,9 @@ const command = {
         }
         if (arg === 'del') {
             if (!((_e = msg.member) === null || _e === void 0 ? void 0 : _e.permissions.has([discord_js_1.Permissions.FLAGS.MANAGE_EMOJIS_AND_STICKERS, discord_js_1.Permissions.FLAGS.ADMINISTRATOR])))
-                return 'No tienes permisos suficientes para hacer eso.';
+                return 'No tienes permisos suficientes para hacer eso';
             if (!((_g = (_f = msg.guild) === null || _f === void 0 ? void 0 : _f.me) === null || _g === void 0 ? void 0 : _g.permissions.has(discord_js_1.Permissions.FLAGS.MANAGE_EMOJIS_AND_STICKERS)))
-                return 'No tengo permisos.';
+                return 'No tengo permisos';
             const [, name] = args;
             const emoji = await ((_h = msg.guild) === null || _h === void 0 ? void 0 : _h.emojis.cache.find(e => e.name === name));
             if (!emoji)

@@ -19,9 +19,9 @@ const command = {
         const lang = args[0];
         const text = args.slice(1).join(' ');
         if (!lang)
-            return 'Necesitas especificar a qué idioma vas a traducir el texto, usa **help translate** para poder ayudarte.';
+            return 'Necesitas especificar a qué idioma vas a traducir el texto, usa **help translate** para poder ayudarte';
         if (!text)
-            return 'No especificaste un texto válido.';
+            return 'No especificaste un texto válido';
         const translated = await (0, google_translate_api_1.default)(text, { from: 'auto', to: lang })
             .catch((err) => console.error(err));
         return new discord_js_1.MessageEmbed()

@@ -6,9 +6,7 @@ const discord_js_1 = require("discord.js");
 const api_handler_1 = (0, tslib_1.__importDefault)(require("./utils/api-handler"));
 const fs_1 = require("fs");
 const path_1 = require("path");
-require("process");
 require("./database/db");
-const token = process.env.TOKEN;
 exports.commandFiles = new Map();
 exports.commandAliases = new Map();
 exports.eventFiles = new Map();
@@ -22,13 +20,12 @@ const session = new discord_js_1.Client({
         discord_js_1.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS
     ]
 });
+session.login();
+session.on('error', console.error);
+session.on('unhandledPromiseRejection', console.error);
 handleEvents('/events', exports.eventFiles, session);
 handleCommands('/commands', exports.commandFiles, exports.commandAliases);
 (0, api_handler_1.default)(exports.commandFiles);
-if (token)
-    session.login(token);
-session.on('error', console.error);
-session.on('unhandledPromiseRejection', console.error);
 function handleEvents(folder, events, s) {
     (0, fs_1.readdirSync)((0, path_1.join)(__dirname, folder)).forEach(async (file) => {
         if (!file.endsWith('.js')) {
@@ -36,14 +33,14 @@ function handleEvents(folder, events, s) {
             return;
         }
         const event = await Promise.resolve().then(() => (0, tslib_1.__importStar)(require((0, path_1.join)(__dirname, folder, file))));
-        s.on(event.label, (...args) => event.execute(...args));
+        s[event.once ? 'once' : 'on'](event.label, (...args) => event.execute(...args));
         events.set(event.label, event);
-        console.log('\x1b[34m%s\x1b[0m', `Loaded Event ${event.label}`);
+        console.log('Loaded event %s', event.label);
     });
 }
 function handleCommands(folder, commands, aliases) {
     (0, fs_1.readdirSync)((0, path_1.join)(__dirname, folder)).forEach(async (file) => {
-        var _a, _b;
+        var _a, _b, _c;
         if (!file.endsWith('.js')) {
             handleCommands((0, path_1.join)(folder, file), commands, aliases);
             return;
@@ -51,6 +48,6 @@ function handleCommands(folder, commands, aliases) {
         const command = await Promise.resolve().then(() => (0, tslib_1.__importStar)(require((0, path_1.join)(__dirname, folder, file))));
         (_a = command.alias) === null || _a === void 0 ? void 0 : _a.forEach(alias => { var _a; return aliases.set(alias, (_a = command.label) !== null && _a !== void 0 ? _a : file); });
         commands.set((_b = command.label) !== null && _b !== void 0 ? _b : file, command);
-        console.log('\x1b[34m%s\x1b[0m', `Loaded command ${command.label}`);
+        console.log('Loaded command %s', (_c = command.label) !== null && _c !== void 0 ? _c : file);
     });
 }

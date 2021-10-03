@@ -30,12 +30,12 @@ const command = {
             {
                 name: 'Roles',
                 value: `${(_m = msg.guild) === null || _m === void 0 ? void 0 : _m.roles.cache.filter(x => !x.managed).filter(x => x.name !== '@everyone').map(x => x.toString()).slice(0, 15).join(' ')}...`,
-                inline: true
+                inline: false
             },
             {
                 name: 'Creada',
                 value: (_o = msg.guild) === null || _o === void 0 ? void 0 : _o.createdAt.toLocaleString('es'),
-                inline: true
+                inline: false
             },
             {
                 name: 'Bots',
@@ -48,7 +48,7 @@ const command = {
                 inline: true
             },
             {
-                name: 'Canales',
+                name: 'Channelsw',
                 value: `**Text**: ${channels.text}\n**Voice**: ${channels.voice}`,
                 inline: true
             }

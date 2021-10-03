@@ -34,14 +34,15 @@ const command = {
                     ` ${(_g = (_d = (_c = (_b = c === null || c === void 0 ? void 0 : c.options) === null || _b === void 0 ? void 0 : _b.information) === null || _c === void 0 ? void 0 : _c.short) !== null && _d !== void 0 ? _d : (_f = (_e = c.options) === null || _e === void 0 ? void 0 : _e.information) === null || _f === void 0 ? void 0 : _f.descr) !== null && _g !== void 0 ? _g : 'Comando sin descripción'}`
                 ];
             });
-            return Object.assign(base)
+            const commandEmbed = Object.assign(base)
                 .setTitle(String.raw `\👾 Comandos de ${(_a = session.user) === null || _a === void 0 ? void 0 : _a.tag}`)
                 .setColor('RANDOM')
                 .setDescription([(_b = base.description) !== null && _b !== void 0 ? _b : 'sin descripción...', ...info].join('\n'));
+            return commandEmbed;
         }
         const cmd = bot_1.commandFiles.get(search);
         if (!cmd)
-            return 'No encontré ese comando.';
+            return 'No encontré ese comando';
         return Object.assign(base)
             .setTitle('Información del comando.')
             .addFields([

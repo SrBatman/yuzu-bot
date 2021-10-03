@@ -17,10 +17,10 @@ const command = {
     execute: () => async (msg, args) => {
         const search = args === null || args === void 0 ? void 0 : args.join(' ');
         if (!search)
-            return 'Argumento invalido, escribe algo.';
+            return 'Argumento invalido, escribe algo';
         const song = await requestSong(search);
         if (!song)
-            return 'No pude encontrar esa canción master.';
+            return 'No pude encontrar esa canción master';
         const embed = new discord_js_1.MessageEmbed()
             .setTitle(song.title)
             .setAuthor(song.author, song.icon)

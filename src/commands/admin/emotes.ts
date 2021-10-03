@@ -18,10 +18,10 @@ const command: ICommand = {
 
 		if (arg === 'set') {
 			if (!msg.member?.permissions.has(Permissions.FLAGS.MANAGE_EMOJIS_AND_STICKERS))
-				return 'No tienes permisos suficientes para hacer eso.';
+				return 'No tienes permisos suficientes para hacer eso';
 
 			if (!msg.guild?.me?.permissions.has(Permissions.FLAGS.MANAGE_EMOJIS_AND_STICKERS))
-				return 'No tengo permisos.';
+				return 'No tengo permisos';
 
 			const [ , name, url ] = args;
 			const roles = msg.mentions.roles;
@@ -37,10 +37,10 @@ const command: ICommand = {
 		}
 		if (arg === 'del') {
 			if (!msg.member?.permissions.has([Permissions.FLAGS.MANAGE_EMOJIS_AND_STICKERS, Permissions.FLAGS.ADMINISTRATOR]))
-				return 'No tienes permisos suficientes para hacer eso.';
+				return 'No tienes permisos suficientes para hacer eso';
 
 			if (!msg.guild?.me?.permissions.has(Permissions.FLAGS.MANAGE_EMOJIS_AND_STICKERS))
-				return 'No tengo permisos.';
+				return 'No tengo permisos';
 
 			const [ , name ] = args;
 			const emoji = await msg.guild?.emojis.cache.find(e => e.name === name);

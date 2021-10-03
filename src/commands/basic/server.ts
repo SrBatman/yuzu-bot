@@ -34,12 +34,12 @@ const command: ICommand = {
 						.map(x => x.toString())
 						.slice(0, 15)
 						.join(' ')}...`,
-					inline: true
+					inline: false
 				},
 				{
 					name: 'Creada',
 					value: <string> msg.guild?.createdAt.toLocaleString('es'),
-					inline: true
+					inline: false
 				},
 				{
 					name: 'Bots',
@@ -52,7 +52,7 @@ const command: ICommand = {
 					inline: true
 				},
 				{
-					name: 'Canales',
+					name: 'Channelsw',
 					value: `**Text**: ${channels.text}\n**Voice**: ${channels.voice}`,
 					inline: true
 				}

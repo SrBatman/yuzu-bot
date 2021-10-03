@@ -12,10 +12,7 @@ const command: ICommand = {
 		const question = args.join(' ');
 
 		if (!question)
-			return 'Por favor preguntame algo.';
-
-		if (question[question.length -1] !== '?')
-			return 'Tu pregunta debe terminar con `?`';
+			return 'Por favor pregúntame algo';
 
 		return new MessageEmbed()
 			.setColor('RANDOM')
