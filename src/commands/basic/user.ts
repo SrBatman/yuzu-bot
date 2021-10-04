@@ -12,7 +12,7 @@ const command: ICommand = {
 			usage: '[@Mención]'
 		}
 	},
-	execute: (session) => async (msg, args) => {
+	execute: (session) => (msg, args) => {
 		const search = args.join(' ');
 		const target = msg.mentions.users.first();
 

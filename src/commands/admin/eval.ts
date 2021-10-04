@@ -2,7 +2,7 @@ import type { ICommand } from '../../typing/command.d';
 import { MessageEmbed } from 'discord.js';
 import { transpile } from 'typescript';
 import { inspect } from 'util';
-import options from '../../options';
+import Options from '../../options';
 const command: ICommand = {
 	label: 'eval',
 	options: {
@@ -10,7 +10,7 @@ const command: ICommand = {
 		adminOnly: false
 	},
 	execute: (session) => (msg, args) => {
-		if (msg.author.id !== options.owner)
+		if (msg.author.id !== Options.Owner)
 			return 'Qué hacés down solo Le Val puede usar eso';
 
 		const entry = args?.join(' ');

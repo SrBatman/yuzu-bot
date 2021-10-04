@@ -42,12 +42,12 @@ const command = {
         if (!prefix && (customPrefix === null || customPrefix === void 0 ? void 0 : customPrefix.prefix))
             return `El prefix es **${customPrefix === null || customPrefix === void 0 ? void 0 : customPrefix.prefix}**`;
         if (!prefix)
-            return `El prefix no ha sido cambiado aún así que es **${options_1.default.prefix}**`;
+            return `El prefix no ha sido cambiado aún así que es **${options_1.default.Prefix}**`;
         if (!msg.guild)
             return 'No encontré los datos del servidor, ¿Probaste en ejecutar el comando dentro de un servidor?';
         if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has(discord_js_1.Permissions.FLAGS.ADMINISTRATOR)))
             return 'No tenés permisos para hacer eso, down.';
-        if (!customPrefix || !customPrefix.prefix || customPrefix.prefix === options_1.default.prefix) {
+        if (!customPrefix || !customPrefix.prefix || customPrefix.prefix === options_1.default.Prefix) {
             const newPrefix = await addPrefix(prefix, msg.guild);
             return `El nuevo prefix será **${newPrefix.prefix}**`;
         }

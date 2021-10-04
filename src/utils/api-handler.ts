@@ -1,6 +1,6 @@
 import superagent from 'superagent';
 import { MessageEmbed } from 'discord.js';
-import type { Client, Message } from 'discord.js';
+import type { Client, Message, User } from 'discord.js';
 import type { ICommand } from '../typing/command.d';
 
 const API = 'https://nekos.life/api/v2/';
@@ -17,7 +17,7 @@ const handle = (commands: Map<string, ICommand | string>): void => endpoints.for
 	function getDescription(command: string, msg: Message, session: Client): string {
 		const action = command.slice(4, command.length);
 		const author = msg.author;
-		const member = msg.mentions.users.first() ?? session.user;
+		const member = msg.mentions.users.first() ?? <User> session.user;
 
 		return `${author} received a ${action} from ${member}`;
 	}

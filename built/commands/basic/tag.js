@@ -3,7 +3,7 @@ const tslib_1 = require("tslib");
 const discord_js_1 = require("discord.js");
 const tagController = (0, tslib_1.__importStar)(require("../../database/controllers/tag.controller"));
 const options_1 = (0, tslib_1.__importDefault)(require("../../options"));
-const OWNERID = options_1.default.owner;
+const OWNERID = options_1.default.Owner;
 const isArgument = (arg) => arg instanceof String && arg === ('add' || 'set' || 'new' || 'remove' || 'delete' || 'edit' || 'list' || 'nsfw' || 'global' || 'owner');
 const command = {
     label: 'tag',

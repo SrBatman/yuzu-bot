@@ -3,7 +3,7 @@ import type { IPrefix } from '../../database/models/prefix.model';
 import type { Guild } from 'discord.js';
 import { Permissions } from 'discord.js';
 import * as Controller from '../../database/controllers/prefix.controller';
-import options from '../../options';
+import Options from '../../options';
 async function addPrefix(content: string, guild: Guild): Promise<IPrefix> {
 	const output = await Controller.add({ prefix: content, server: guild.id });
 	return output;
@@ -44,7 +44,7 @@ const command: ICommand = {
 			return `El prefix es **${customPrefix?.prefix}**`;
 
 		if (!prefix) //todo
-			return `El prefix no ha sido cambiado aún así que es **${options.prefix}**`;
+			return `El prefix no ha sido cambiado aún así que es **${Options.Prefix}**`;
 
 		if (!msg.guild)
 			return 'No encontré los datos del servidor, ¿Probaste en ejecutar el comando dentro de un servidor?';
@@ -52,7 +52,7 @@ const command: ICommand = {
 		if (!msg.member?.permissions.has(Permissions.FLAGS.ADMINISTRATOR))
 			return 'No tenés permisos para hacer eso, down.';
 
-		if (!customPrefix || !customPrefix.prefix || customPrefix.prefix === options.prefix) {
+		if (!customPrefix || !customPrefix.prefix || customPrefix.prefix === Options.Prefix) {
 			const newPrefix = await addPrefix(prefix, msg.guild);
 			return `El nuevo prefix será **${newPrefix.prefix}**`;
 		}

@@ -1,6 +1,5 @@
-enum options // eslint-disable-line
-{
-	owner = '830318264907202561',
-	prefix = '!'
+enum Options { //eslint-disable-line
+	Owner = '830318264907202561',
+	Prefix = '!'
 }
-export = options;
+export = Options;

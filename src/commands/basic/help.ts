@@ -1,7 +1,7 @@
 import type { ICommand } from '../../typing/command.d';
 import { MessageEmbed } from 'discord.js';
-import { commandFiles as commands } from '../../bot';
-import options from '../../options';
+import { commands } from '../../bot';
+import Options from '../../options';
 const command: ICommand = {
 	label: 'help',
 	alias: ['h'],
@@ -22,7 +22,7 @@ const command: ICommand = {
 			.setThumbnail(msg.author.displayAvatarURL())
 			.setTimestamp()
 			.setAuthor(msg.author.username, msg.author.displayAvatarURL())
-			.setDescription(`El prefix del bot es ${options.prefix}`);
+			.setDescription(`El prefix del bot es ${Options.Prefix}`);
 		if (!search) {
 			const info = [ ...commands.values() ]
 				.map(c => [

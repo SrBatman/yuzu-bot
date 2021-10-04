@@ -1,7 +1,7 @@
 "use strict";
-var options;
-(function (options) {
-    options["owner"] = "830318264907202561";
-    options["prefix"] = "!";
-})(options || (options = {}));
-module.exports = options;
+var Options;
+(function (Options) {
+    Options["Owner"] = "830318264907202561";
+    Options["Prefix"] = "!";
+})(Options || (Options = {}));
+module.exports = Options;

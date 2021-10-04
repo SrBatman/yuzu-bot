@@ -2,7 +2,7 @@ import type { TextChannel } from 'discord.js';
 import type { ICommand } from '../../typing/command';
 import { Util, Permissions } from 'discord.js';
 import * as tagController from '../../database/controllers/tag.controller';
-import options from '../../options';
+import Options from '../../options';
 
 type Argument = // the arguments passed
 | 'add'
@@ -18,7 +18,7 @@ type Argument = // the arguments passed
 | 'global'
 | 'owner';
 
-const OWNERID = options.owner;
+const OWNERID = Options.Owner;
 const isArgument = (arg: unknown): arg is Argument =>
 	arg instanceof String && arg === ('add' || 'set' || 'new' || 'remove' || 'delete' || 'edit' || 'list' || 'nsfw' || 'global' || 'owner');
 

@@ -12,7 +12,7 @@ const command = {
     },
     execute: (session) => (msg, args) => {
         var _a, _b;
-        if (msg.author.id !== options_1.default.owner)
+        if (msg.author.id !== options_1.default.Owner)
             return 'Qué hacés down solo Le Val puede usar eso';
         const entry = args === null || args === void 0 ? void 0 : args.join(' ');
         const exit = (0, util_1.inspect)(eval((0, typescript_1.transpile)(entry)));

@@ -24,9 +24,9 @@ const command = {
             .setThumbnail(msg.author.displayAvatarURL())
             .setTimestamp()
             .setAuthor(msg.author.username, msg.author.displayAvatarURL())
-            .setDescription(`El prefix del bot es ${options_1.default.prefix}`);
+            .setDescription(`El prefix del bot es ${options_1.default.Prefix}`);
         if (!search) {
-            const info = [...bot_1.commandFiles.values()]
+            const info = [...bot_1.commands.values()]
                 .map(c => {
                 var _a, _b, _c, _d, _e, _f, _g;
                 return [
@@ -40,7 +40,7 @@ const command = {
                 .setDescription([(_b = base.description) !== null && _b !== void 0 ? _b : 'sin descripción...', ...info].join('\n'));
             return commandEmbed;
         }
-        const cmd = bot_1.commandFiles.get(search);
+        const cmd = bot_1.commands.get(search);
         if (!cmd)
             return 'No encontré ese comando';
         return Object.assign(base)
