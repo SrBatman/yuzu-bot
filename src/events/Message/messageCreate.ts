@@ -23,9 +23,6 @@ const event: IEvent = {
 
 		const regMention = new RegExp(`^<@!?${session.user?.id}>( |)$`);
 
-		if (!msg.guild?.me?.permissions.has(Permissions.FLAGS.SEND_MESSAGES))
-			return;
-
 		if (msg.content.match(regMention)) {
 			msg.channel.send(`Mi prefix es ${prefix}`);
 			return;
@@ -66,7 +63,11 @@ const event: IEvent = {
 		}
 		try {
 			const output = <string | MessageEmbed | MessageOptions | MessagePayload | undefined> await command.execute(session)(msg, args);
-			if (output)
+			if (output) {
+
+				if (!msg.guild?.me?.permissions.has(Permissions.FLAGS.SEND_MESSAGES))
+					return;
+
 				if (output instanceof MessageEmbed) {
 					const sended = await msg.channel.send({ embeds: [ output ] });
 					console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
@@ -75,6 +76,7 @@ const event: IEvent = {
 					const sended = await msg.channel.send(output);
 					console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
 				}
+			}
 		}
 		catch (err: unknown) {
 			console.error(err);

@@ -17,8 +17,6 @@ const event = {
         const command = (_b = bot_1.commands.get(name)) !== null && _b !== void 0 ? _b : bot_1.commands.get(bot_1.aliases.get(name));
         const error = await validateCommandExecution(msg, options_1.default.Owner, command === null || command === void 0 ? void 0 : command.options);
         const regMention = new RegExp(`^<@!?${(_c = session.user) === null || _c === void 0 ? void 0 : _c.id}>( |)$`);
-        if (!((_e = (_d = msg.guild) === null || _d === void 0 ? void 0 : _d.me) === null || _e === void 0 ? void 0 : _e.permissions.has(discord_js_1.Permissions.FLAGS.SEND_MESSAGES)))
-            return;
         if (msg.content.match(regMention)) {
             msg.channel.send(`Mi prefix es ${prefix}`);
             return;
@@ -40,9 +38,9 @@ const event = {
                 cooldowns.set(command.label, new Map());
             timestamps = cooldowns.get(command.label);
         }
-        if ((_f = msg.guild) === null || _f === void 0 ? void 0 : _f.id)
-            if (timestamps === null || timestamps === void 0 ? void 0 : timestamps.has((_g = msg.guild) === null || _g === void 0 ? void 0 : _g.id)) {
-                const expirationTime = ((_h = command.cooldown) !== null && _h !== void 0 ? _h : 3) * 1000 + (timestamps === null || timestamps === void 0 ? void 0 : timestamps.get((_j = msg.guild) === null || _j === void 0 ? void 0 : _j.id));
+        if ((_d = msg.guild) === null || _d === void 0 ? void 0 : _d.id)
+            if (timestamps === null || timestamps === void 0 ? void 0 : timestamps.has((_e = msg.guild) === null || _e === void 0 ? void 0 : _e.id)) {
+                const expirationTime = ((_f = command.cooldown) !== null && _f !== void 0 ? _f : 3) * 1000 + (timestamps === null || timestamps === void 0 ? void 0 : timestamps.get((_g = msg.guild) === null || _g === void 0 ? void 0 : _g.id));
                 if (Date.now() < expirationTime) {
                     const timeLeft = new Date(expirationTime - Date.now()).getSeconds();
                     msg.channel.send(`estoy re caliente como para poder ejecutar más comandos \\🔥\nEspera **${timeLeft}** antes volver a usar **${command.label}**`);
@@ -50,12 +48,14 @@ const event = {
                 }
             }
         if (msg.guild) {
-            setTimeout(() => { var _a; return timestamps === null || timestamps === void 0 ? void 0 : timestamps.delete((_a = msg.guild) === null || _a === void 0 ? void 0 : _a.id); }, ((_k = command.cooldown) !== null && _k !== void 0 ? _k : 3) * 1000);
+            setTimeout(() => { var _a; return timestamps === null || timestamps === void 0 ? void 0 : timestamps.delete((_a = msg.guild) === null || _a === void 0 ? void 0 : _a.id); }, ((_h = command.cooldown) !== null && _h !== void 0 ? _h : 3) * 1000);
             timestamps === null || timestamps === void 0 ? void 0 : timestamps.set(msg.guild.id, Date.now());
         }
         try {
             const output = await command.execute(session)(msg, args);
-            if (output)
+            if (output) {
+                if (!((_k = (_j = msg.guild) === null || _j === void 0 ? void 0 : _j.me) === null || _k === void 0 ? void 0 : _k.permissions.has(discord_js_1.Permissions.FLAGS.SEND_MESSAGES)))
+                    return;
                 if (output instanceof discord_js_1.MessageEmbed) {
                     const sended = await msg.channel.send({ embeds: [output] });
                     console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
@@ -64,6 +64,7 @@ const event = {
                     const sended = await msg.channel.send(output);
                     console.log('Sended message "%s" of id: %s executed with prefix %s', sended.content, sended.id, prefix);
                 }
+            }
         }
         catch (err) {
             console.error(err);

@@ -1,5 +1,6 @@
-import { connection, connect, disconnect, Connection } from 'mongoose';
-import 'process';
+import type { Connection } from 'mongoose';
+import { connection, connect, disconnect } from 'mongoose';
+
 let database: Connection | undefined = undefined;
 
 if (!database) {

@@ -1,12 +1,11 @@
 import type { ICommand, MessageContent } from '../../typing/command.d';
 import type { MessageComponentInteraction } from 'discord.js';
-import { MessageEmbed, MessageActionRow, MessageButton, Message } from 'discord.js';
-import { default as google } from 'g-i-s';
-type File = {
-	width: number,
-	height: number,
-	url: string
-}
+import { MessageEmbed, MessageActionRow, MessageButton, Message, Permissions } from 'discord.js';
+
+// images
+import type { DuckDuckGoImage } from 'duckduckgo-images-api';
+import { image_search as imageSearch } from 'duckduckgo-images-api';
+
 const command: ICommand = {
 	label: 'image',
 	alias: ['img', 'im', 'i'],
@@ -22,10 +21,18 @@ const command: ICommand = {
 	execute: () => async (msg, args): Promise<MessageContent> => {
 
 		const search = args.join(' ');
+
 		if (!search)
 			return 'Por favor especifica una búsqueda';
 
+		if (msg.guild?.me?.permissions.has(Permissions.FLAGS.ADD_REACTIONS))
+			await msg.react('✅');
+
 		const results = await image(search);
+
+		if (!results)
+			return 'No he encontrado resultados';
+
 		if (!results[1])
 			return 'No he encontrado resultados';
 
@@ -49,7 +56,7 @@ const command: ICommand = {
 		const baseEmbed = new MessageEmbed()
 			.setColor('RANDOM')
 			.setAuthor(msg.author.username, msg.author.displayAvatarURL())
-			.setImage(results[1].url)
+			.setImage(results[1].image)
 			.setFooter('Page: 1 (first)');
 
 		let query = 1;
@@ -81,7 +88,7 @@ const command: ICommand = {
 							.setStyle('PRIMARY')
 						]);
 				if (results[query] && results[1])
-					await i.update({ embeds: [ embed.setImage(results[query]?.url ?? results[1].url).setFooter(`Page: ${query}/${results.length}`) ], components: [ newRow ] });
+					await i.update({ embeds: [ embed.setImage(results[query]?.image ?? results[1].image).setFooter(`Page: ${query}/${results.length}`) ], components: [ newRow ] });
 			}
 			else if (i.customId === 'Next' && message.id === i.message.id) {
 				query++;
@@ -103,7 +110,7 @@ const command: ICommand = {
 							.setStyle('PRIMARY')
 					]);
 				if (results[query] && results[1])
-					await i.update({ embeds: [ embed.setImage(results[query]?.url ?? results[1].url).setFooter(`Page: ${query}/${results.length}`) ], components: [ newRow ] });
+					await i.update({ embeds: [ embed.setImage(results[query]?.image ?? results[1].image).setFooter(`Page: ${query}/${results.length}`) ], components: [ newRow ] });
 			}
 			else if (i.customId === 'ExactMatch' && message.id === i.message.id) {
 				const m = await msg.reply(`Please send a number beetween 0 and ${results.length}`);
@@ -135,7 +142,7 @@ const command: ICommand = {
 						msg.channel.send({ content: 'No se encontró la página' });
 						return;
 					}
-					embed.setImage(response.url);
+					embed.setImage(response.image);
 					embed.setFooter(`Page: ${query}/${results.length}`);
 					await message.edit({ embeds: [ embed ], components: [ newRow ] });
 					return;
@@ -145,15 +152,9 @@ const command: ICommand = {
 		});
 	}
 };
-function image(search: string): Promise<File[]> {
-	return new Promise((resolve, reject) => {
-		google(search, (error: Error, results: File[]) => {
-			if (error) {
-				reject(error);
-				return;
-			}
-			if (results) resolve([ ...results.filter(f => f) ]);
-		});
-	});
+async function image(search: string): Promise<DuckDuckGoImage[] | undefined> {
+	const results = await imageSearch({ query: search, moderate: true, iterations: 50, retries: 50 });
+	if (results) return [ ...results.filter(f => f) ];
+	else return undefined;
 }
 export = command;
