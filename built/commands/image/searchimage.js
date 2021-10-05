@@ -121,12 +121,12 @@ const command = {
                 const messageCollector = m.channel.createMessageCollector({ filter, time: 15 * 1000 });
                 messageCollector.on('collect', async (m) => {
                     const selection = parseInt(m.content);
-                    query = selection;
-                    const response = results[query];
+                    const response = results[selection];
                     if (!response) {
                         msg.channel.send({ content: 'No se encontró la página' });
                         return;
                     }
+                    query = selection;
                     embed.setImage(response.image);
                     embed.setFooter(`Page: ${query}/${results.length}`);
                     await message.edit({ embeds: [embed], components: [newRow] });
