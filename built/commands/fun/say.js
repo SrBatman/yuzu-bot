@@ -15,6 +15,8 @@ const command = {
         const text = args.join(' ');
         if (!text)
             return 'Escribí el contenido del mensaje o te revoleo a piñas';
+        if (text.split(' ').some(l => l === '@everyone' || l === '@here'))
+            return 'noup';
         msg.delete();
         return text;
     }
