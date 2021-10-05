@@ -67,8 +67,10 @@ function handleCommands(folder: string, commands: Map<string, ICommand>, aliases
 			return;
 		}
 		const command = <ICommand> await import(join(__dirname, folder, file));
-		command.alias?.forEach(alias => aliases.set(alias, command.label ?? file));
-		commands.set(command.label ?? file, command);
-		console.log('Loaded command %s', command.label ?? file);
+		if (command.options?.disabled !== true) {
+			command.alias?.forEach(alias => aliases.set(alias, command.label ?? file));
+			commands.set(command.label ?? file, command);
+			console.log('Loaded command %s', command.label ?? file);
+		}
 	});
 }

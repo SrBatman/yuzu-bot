@@ -1,10 +1,9 @@
 {
   "name": "kbot",
-  "version": "4.4.4",
+  "version": "4.5.4",
   "description": "sample bot using Discord.js",
   "main": "index.js",
   "dependencies": {
-    "@types/duckduckgo-images-api": "^1.0.1",
     "@vitalets/google-translate-api": "^4.0.0",
     "discord.js": "^13.1.0",
     "dotenv": "^8.6.0",
@@ -23,7 +22,8 @@
     "@types/superagent": "^4.1.13",
     "@typescript-eslint/eslint-plugin": "^4.32.0",
     "@typescript-eslint/parser": "^4.32.0",
-    "eslint": "^7.32.0"
+    "eslint": "^7.32.0",
+    "@types/duckduckgo-images-api": "^1.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

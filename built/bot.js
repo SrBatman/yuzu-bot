@@ -51,14 +51,16 @@ function handleEvents(folder, s, events) {
 }
 function handleCommands(folder, commands, aliases) {
     (0, fs_1.readdirSync)((0, path_1.join)(__dirname, folder)).forEach(async (file) => {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         if (!file.endsWith('.js')) {
             handleCommands((0, path_1.join)(folder, file), commands, aliases);
             return;
         }
         const command = await Promise.resolve().then(() => (0, tslib_1.__importStar)(require((0, path_1.join)(__dirname, folder, file))));
-        (_a = command.alias) === null || _a === void 0 ? void 0 : _a.forEach(alias => { var _a; return aliases.set(alias, (_a = command.label) !== null && _a !== void 0 ? _a : file); });
-        commands.set((_b = command.label) !== null && _b !== void 0 ? _b : file, command);
-        console.log('Loaded command %s', (_c = command.label) !== null && _c !== void 0 ? _c : file);
+        if (((_a = command.options) === null || _a === void 0 ? void 0 : _a.disabled) !== true) {
+            (_b = command.alias) === null || _b === void 0 ? void 0 : _b.forEach(alias => { var _a; return aliases.set(alias, (_a = command.label) !== null && _a !== void 0 ? _a : file); });
+            commands.set((_c = command.label) !== null && _c !== void 0 ? _c : file, command);
+            console.log('Loaded command %s', (_d = command.label) !== null && _d !== void 0 ? _d : file);
+        }
     });
 }
