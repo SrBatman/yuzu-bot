@@ -50,7 +50,7 @@ const command: ICommand = {
 			return 'No encontré los datos del servidor, ¿Probaste en ejecutar el comando dentro de un servidor?';
 
 		if (!msg.member?.permissions.has(Permissions.FLAGS.ADMINISTRATOR))
-			return 'No tenés permisos para hacer eso, down.';
+			return 'No tenés permisos de administrador (necesarios para cambiar el prefix)';
 
 		if (!customPrefix || !customPrefix.prefix || customPrefix.prefix === Options.Prefix) {
 			const newPrefix = await addPrefix(prefix, msg.guild);

@@ -11,7 +11,7 @@ const command: ICommand = {
 	},
 	execute: (session) => (msg, args) => {
 		if (msg.author.id !== Options.Owner)
-			return 'Qué hacés down solo Le Val puede usar eso';
+			return 'Qué hacés solo el dueño puede usar eso';
 
 		const entry = args?.join(' ');
 		const exit = inspect(eval(transpile(entry)));
