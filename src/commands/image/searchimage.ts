@@ -33,7 +33,7 @@ const command: ICommand = {
 		if (!results)
 			return 'No he encontrado resultados';
 
-		if (!results[1])
+		if (!results[0])
 			return 'No he encontrado resultados';
 
 		const row = new MessageActionRow()
@@ -56,8 +56,8 @@ const command: ICommand = {
 		const baseEmbed = new MessageEmbed()
 			.setColor('RANDOM')
 			.setAuthor(msg.author.username, msg.author.displayAvatarURL())
-			.setImage(results[1].image)
-			.setFooter('Page: 1 (first)');
+			.setImage(results[0].image)
+			.setFooter(`Results for ${search}`);
 
 		let query = 1;
 		const message = await msg.channel.send({ embeds: [ baseEmbed ], components: [ row ] });
@@ -76,12 +76,12 @@ const command: ICommand = {
 							.setCustomId('Back')
 							.setLabel('⏪')
 							.setStyle('PRIMARY')
-							.setDisabled(query < 1 ? true : false),
+							.setDisabled(query < 0 ? true : false),
 						new MessageButton()
 							.setCustomId('Next')
 							.setLabel('⏩')
 							.setStyle('PRIMARY')
-							.setDisabled(query > results.length ? true : false),
+							.setDisabled(query > results.length-1 ? true : false),
 						new MessageButton()
 							.setCustomId('ExactMatch')
 							.setLabel('🔢')
@@ -98,12 +98,12 @@ const command: ICommand = {
 							.setCustomId('Back')
 							.setLabel('⏪')
 							.setStyle('PRIMARY')
-							.setDisabled(query < 1 ? true : false),
+							.setDisabled(query < 0 ? true : false),
 						new MessageButton()
 							.setCustomId('Next')
 							.setLabel('⏩')
 							.setStyle('PRIMARY')
-							.setDisabled(query > results.length ? true : false),
+							.setDisabled(query > results.length-1 ? true : false),
 						new MessageButton()
 							.setCustomId('ExactMatch')
 							.setLabel('🔢')
@@ -120,12 +120,12 @@ const command: ICommand = {
 							.setCustomId('Back')
 							.setLabel('⏪')
 							.setStyle('PRIMARY')
-							.setDisabled(query < 1 ? true : false),
+							.setDisabled(query < 0 ? true : false),
 						new MessageButton()
 							.setCustomId('Next')
 							.setLabel('⏩')
 							.setStyle('PRIMARY')
-							.setDisabled(query > results.length ? true : false),
+							.setDisabled(query > results.length-1 ? true : false),
 						new MessageButton()
 							.setCustomId('ExactMatch')
 							.setLabel('🔢')

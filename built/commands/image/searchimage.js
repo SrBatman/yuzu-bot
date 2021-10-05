@@ -23,7 +23,7 @@ const command = {
         const results = await image(search);
         if (!results)
             return 'No he encontrado resultados';
-        if (!results[1])
+        if (!results[0])
             return 'No he encontrado resultados';
         const row = new discord_js_1.MessageActionRow()
             .addComponents([
@@ -45,8 +45,8 @@ const command = {
         const baseEmbed = new discord_js_1.MessageEmbed()
             .setColor('RANDOM')
             .setAuthor(msg.author.username, msg.author.displayAvatarURL())
-            .setImage(results[1].image)
-            .setFooter('Page: 1 (first)');
+            .setImage(results[0].image)
+            .setFooter(`Results for ${search}`);
         let query = 1;
         const message = await msg.channel.send({ embeds: [baseEmbed], components: [row] });
         const filter = (i) => (i.customId === 'Back' || i.customId === 'Next' || i.customId === 'ExactMatch') && i.user.id === msg.author.id;
@@ -62,12 +62,12 @@ const command = {
                         .setCustomId('Back')
                         .setLabel('⏪')
                         .setStyle('PRIMARY')
-                        .setDisabled(query < 1 ? true : false),
+                        .setDisabled(query < 0 ? true : false),
                     new discord_js_1.MessageButton()
                         .setCustomId('Next')
                         .setLabel('⏩')
                         .setStyle('PRIMARY')
-                        .setDisabled(query > results.length ? true : false),
+                        .setDisabled(query > results.length - 1 ? true : false),
                     new discord_js_1.MessageButton()
                         .setCustomId('ExactMatch')
                         .setLabel('🔢')
@@ -84,12 +84,12 @@ const command = {
                         .setCustomId('Back')
                         .setLabel('⏪')
                         .setStyle('PRIMARY')
-                        .setDisabled(query < 1 ? true : false),
+                        .setDisabled(query < 0 ? true : false),
                     new discord_js_1.MessageButton()
                         .setCustomId('Next')
                         .setLabel('⏩')
                         .setStyle('PRIMARY')
-                        .setDisabled(query > results.length ? true : false),
+                        .setDisabled(query > results.length - 1 ? true : false),
                     new discord_js_1.MessageButton()
                         .setCustomId('ExactMatch')
                         .setLabel('🔢')
@@ -106,12 +106,12 @@ const command = {
                         .setCustomId('Back')
                         .setLabel('⏪')
                         .setStyle('PRIMARY')
-                        .setDisabled(query < 1 ? true : false),
+                        .setDisabled(query < 0 ? true : false),
                     new discord_js_1.MessageButton()
                         .setCustomId('Next')
                         .setLabel('⏩')
                         .setStyle('PRIMARY')
-                        .setDisabled(query > results.length ? true : false),
+                        .setDisabled(query > results.length - 1 ? true : false),
                     new discord_js_1.MessageButton()
                         .setCustomId('ExactMatch')
                         .setLabel('🔢')
