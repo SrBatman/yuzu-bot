@@ -76,12 +76,12 @@ const command: ICommand = {
 							.setCustomId('Back')
 							.setLabel('⏪')
 							.setStyle('PRIMARY')
-							.setDisabled(query < 0 ? true : false),
+							.setDisabled(query <= 0 ? true : false),
 						new MessageButton()
 							.setCustomId('Next')
 							.setLabel('⏩')
 							.setStyle('PRIMARY')
-							.setDisabled(query > results.length-1 ? true : false),
+							.setDisabled(query >= results.length-1 ? true : false),
 						new MessageButton()
 							.setCustomId('ExactMatch')
 							.setLabel('🔢')
@@ -98,12 +98,12 @@ const command: ICommand = {
 							.setCustomId('Back')
 							.setLabel('⏪')
 							.setStyle('PRIMARY')
-							.setDisabled(query < 0 ? true : false),
+							.setDisabled(query <= 0 ? true : false),
 						new MessageButton()
 							.setCustomId('Next')
 							.setLabel('⏩')
 							.setStyle('PRIMARY')
-							.setDisabled(query > results.length-1 ? true : false),
+							.setDisabled(query >= results.length-1 ? true : false),
 						new MessageButton()
 							.setCustomId('ExactMatch')
 							.setLabel('🔢')
@@ -120,12 +120,12 @@ const command: ICommand = {
 							.setCustomId('Back')
 							.setLabel('⏪')
 							.setStyle('PRIMARY')
-							.setDisabled(query < 0 ? true : false),
+							.setDisabled(query <= 0 ? true : false),
 						new MessageButton()
 							.setCustomId('Next')
 							.setLabel('⏩')
 							.setStyle('PRIMARY')
-							.setDisabled(query > results.length-1 ? true : false),
+							.setDisabled(query >= results.length-1 ? true : false),
 						new MessageButton()
 							.setCustomId('ExactMatch')
 							.setLabel('🔢')
