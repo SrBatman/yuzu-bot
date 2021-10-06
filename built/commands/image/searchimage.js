@@ -2,7 +2,7 @@
 const discord_js_1 = require("discord.js");
 const duckduckgo_images_api_1 = require("duckduckgo-images-api");
 const command = {
-    cooldown: 1,
+    cooldown: 4,
     label: 'image',
     alias: ['img', 'im', 'i'],
     options: {
@@ -44,22 +44,25 @@ const command = {
             new discord_js_1.MessageButton()
                 .setCustomId('ExactMatch')
                 .setLabel('🔢')
-                .setStyle('PRIMARY')
+                .setStyle('PRIMARY'),
+            new discord_js_1.MessageButton()
+                .setCustomId('Delete')
+                .setLabel('✖')
+                .setStyle('DANGER')
         ]);
         const baseEmbed = new discord_js_1.MessageEmbed()
             .setColor('RANDOM')
             .setImage(results[0].image)
             .addField('Safe search:', safe ? 'on' : 'off')
-            .setFooter(`Results for ${search}`);
-        if (safe)
-            baseEmbed.setAuthor(msg.author.username, msg.author.displayAvatarURL());
+            .setFooter(`Results for ${search}`)
+            .setAuthor(msg.author.username, msg.author.displayAvatarURL());
         if (!safe)
             baseEmbed.setDescription(`[${results[0].title}](${results[0].url})`);
         let query = 0;
         const querySize = results.length - 1;
         const message = await msg.channel.send({ embeds: [baseEmbed], components: [row] });
-        const filter = (i) => (i.customId === 'Back' || i.customId === 'Next' || i.customId === 'ExactMatch') && i.user.id === msg.author.id;
-        const collector = message.channel.createMessageComponentCollector({ filter, time: 120000 });
+        const filter = (i) => (i.customId === 'Back' || i.customId === 'Next' || i.customId === 'ExactMatch' || i.customId === 'Delete') && i.user.id === msg.author.id;
+        const collector = message.channel.createMessageComponentCollector({ filter, time: 25 * 1000 });
         collector.on('collect', async (i) => {
             var _a, _b, _c, _d;
             const embed = Object.assign(baseEmbed);
@@ -67,44 +70,47 @@ const command = {
                 query--;
                 const response = results[query];
                 if (response) {
-                    (_a = row.components[0]) === null || _a === void 0 ? void 0 : _a.setDisabled(query <= 0 ? true : false);
-                    (_b = row.components[1]) === null || _b === void 0 ? void 0 : _b.setDisabled(query >= querySize ? true : false);
+                    (_a = row.components[0]) === null || _a === void 0 ? void 0 : _a.setDisabled(query <= 0);
+                    (_b = row.components[1]) === null || _b === void 0 ? void 0 : _b.setDisabled(query >= querySize);
                     embed.setImage(response.image);
                     embed.setFooter(`Page: ${query}/${querySize}`);
                     if (!safe)
                         embed.setDescription(`[${response.title}](${response.url})`);
                     await i.update({ embeds: [embed], components: [row] });
+                    await collector.resetTimer();
                 }
             }
             else if (i.customId === 'Next' && message.id === i.message.id) {
                 query++;
                 const response = results[query];
                 if (response) {
-                    (_c = row.components[0]) === null || _c === void 0 ? void 0 : _c.setDisabled(query <= 0 ? true : false);
-                    (_d = row.components[1]) === null || _d === void 0 ? void 0 : _d.setDisabled(query >= querySize ? true : false);
+                    (_c = row.components[0]) === null || _c === void 0 ? void 0 : _c.setDisabled(query <= 0);
+                    (_d = row.components[1]) === null || _d === void 0 ? void 0 : _d.setDisabled(query >= querySize);
                     embed.setImage(response.image);
                     embed.setFooter(`Page: ${query}/${querySize}`);
                     if (!safe)
                         embed.setDescription(`[${response.title}](${response.url})`);
                     await i.update({ embeds: [embed], components: [row] });
+                    await collector.resetTimer();
                 }
             }
             else if (i.customId === 'ExactMatch' && message.id === i.message.id) {
                 await msg.reply(`Please send a number beetween 0 and ${querySize}`);
                 const messageFilter = (m) => !isNaN(parseInt(m.content)) && m.author === msg.author;
-                const messageCollector = msg.channel.createMessageCollector({ filter: messageFilter, time: 30 * 1000 });
+                const messageCollector = msg.channel.createMessageCollector({ filter: messageFilter, time: 20 * 1000 });
                 messageCollector.on('collect', async (m) => {
                     var _a, _b;
                     query = parseInt(m.content);
                     const response = results[query];
                     if (response) {
-                        (_a = row.components[0]) === null || _a === void 0 ? void 0 : _a.setDisabled(query <= 0 ? true : false);
-                        (_b = row.components[1]) === null || _b === void 0 ? void 0 : _b.setDisabled(query >= querySize ? true : false);
+                        (_a = row.components[0]) === null || _a === void 0 ? void 0 : _a.setDisabled(query <= 0);
+                        (_b = row.components[1]) === null || _b === void 0 ? void 0 : _b.setDisabled(query >= querySize);
                         embed.setImage(response.image);
                         embed.setFooter(`Page: ${query}/${querySize}`);
                         if (!safe)
                             embed.setDescription(`[${response.title}](${response.url})`);
                         await message.edit({ embeds: [embed], components: [row] });
+                        await collector.resetTimer();
                     }
                 });
                 messageCollector.on('end', async (collected) => {
@@ -114,6 +120,11 @@ const command = {
                     }
                 });
                 await i.update({ embeds: [embed], components: [row] });
+            }
+            else if (i.customId === 'Delete' && message.id === i.message.id) {
+                await i.reply({ content: 'Ok!', ephemeral: true });
+                await message.delete();
+                await collector.stop();
             }
         });
     }

@@ -3,7 +3,6 @@ import type { MessageComponentInteraction, Message } from 'discord.js';
 import { MessageEmbed, MessageActionRow, MessageButton, Permissions, Constants, TextChannel } from 'discord.js';
 
 // images
-import type { DuckDuckGoImage } from 'duckduckgo-images-api';
 import { image_search as imageSearch } from 'duckduckgo-images-api';
 
 const command: ICommand = {
@@ -19,7 +18,7 @@ const command: ICommand = {
 			usage: '<Search>'
 		}
 	},
-	execute: () => async (msg, args): Promise<MessageContent> => {
+	execute: () => async (msg, args): Promise<MessageContent | undefined> => {
 
 		const search = args.join(' ');
 
@@ -56,7 +55,11 @@ const command: ICommand = {
 				new MessageButton()
 					.setCustomId('ExactMatch')
 					.setLabel('🔢')
-					.setStyle('PRIMARY')
+					.setStyle('PRIMARY'),
+				new MessageButton()
+					.setCustomId('Delete')
+					.setLabel('✖')
+					.setStyle('DANGER')
 			]);
 		const baseEmbed = new MessageEmbed()
 			.setColor('RANDOM')
@@ -73,8 +76,8 @@ const command: ICommand = {
 		const message = await msg.channel.send({ embeds: [ baseEmbed ], components: [ row ] });
 
 		// collector
-		const filter = (i: MessageComponentInteraction) => (i.customId === 'Back' || i.customId === 'Next' || i.customId === 'ExactMatch') && i.user.id === msg.author.id;
-		const collector = message.channel.createMessageComponentCollector({ filter, time: 120000 });
+		const filter = (i: MessageComponentInteraction) => (i.customId === 'Back' || i.customId === 'Next' || i.customId === 'ExactMatch' || i.customId === 'Delete') && i.user.id === msg.author.id;
+		const collector = message.channel.createMessageComponentCollector({ filter, time: 25 * 1000 });
 
 		collector.on('collect', async i => {
 			const embed = <MessageEmbed> Object.assign(baseEmbed);
@@ -89,6 +92,7 @@ const command: ICommand = {
 					if (!safe)
 						embed.setDescription(`[${response.title}](${response.url})`);
 					await i.update({ embeds: [ embed ], components: [ row ] });
+					collector.resetTimer();
 				}
 			}
 			else if (i.customId === 'Next' && message.id === i.message.id) {
@@ -102,12 +106,13 @@ const command: ICommand = {
 					if (!safe)
 						embed.setDescription(`[${response.title}](${response.url})`);
 					await i.update({ embeds: [ embed ], components: [ row ] });
+					collector.resetTimer();
 				}
 			}
 			else if (i.customId === 'ExactMatch' && message.id === i.message.id) {
 				await msg.reply(`Please send a number beetween 0 and ${querySize}`);
 				const messageFilter = (m: Message) => !isNaN(parseInt(m.content)) && m.author === msg.author;
-				const messageCollector = msg.channel.createMessageCollector({ filter: messageFilter, time: 25 * 1000 });
+				const messageCollector = msg.channel.createMessageCollector({ filter: messageFilter, time: 20 * 1000 });
 				messageCollector.on('collect', async m => {
 					query = parseInt(m.content);
 					const response = results[query];
@@ -119,6 +124,7 @@ const command: ICommand = {
 						if (!safe)
 							embed.setDescription(`[${response.title}](${response.url})`);
 						await message.edit({ embeds: [ embed ], components: [ row ] });
+						await collector.resetTimer();
 					}
 				});
 				messageCollector.on('end', async collected => {
@@ -129,10 +135,15 @@ const command: ICommand = {
 				});
 				await i.update({ embeds: [ embed ], components: [ row ] });
 			}
+			else if (i.customId === 'Delete' && message.id === i.message.id) {
+				await i.reply({ content: 'Ok!', ephemeral: true });
+				await message.delete();
+				collector.stop();
+			}
 		});
 	}
 };
-async function image(query: string, moderate: boolean): Promise<DuckDuckGoImage[]> {
+async function image(query: string, moderate: boolean) {
 	const results = await imageSearch({ query, moderate });
 	return [ ...results.filter(f => f) ];
 }

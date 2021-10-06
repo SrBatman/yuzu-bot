@@ -8,8 +8,7 @@ const cooldowns = new Map();
 const event = {
     label: 'messageCreate',
     async execute(msg) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
-        var timestamps;
+        var _a, _b, _c, _d, _e, _f, _g;
         const session = msg.client;
         const prefix = await getPrefix(options_1.default.Prefix, msg.guild);
         const args = msg.content.slice(prefix.length).trim().split(/\s+/gm);
@@ -33,14 +32,15 @@ const event = {
             msg.channel.send(error);
             return;
         }
+        let timestamps;
         if (command.label) {
             if (!cooldowns.has(command.label))
                 cooldowns.set(command.label, new Map());
             timestamps = cooldowns.get(command.label);
         }
-        if ((_d = msg.guild) === null || _d === void 0 ? void 0 : _d.id)
-            if (timestamps === null || timestamps === void 0 ? void 0 : timestamps.has((_e = msg.guild) === null || _e === void 0 ? void 0 : _e.id)) {
-                const expirationTime = ((_f = command.cooldown) !== null && _f !== void 0 ? _f : 3) * 1000 + (timestamps === null || timestamps === void 0 ? void 0 : timestamps.get((_g = msg.guild) === null || _g === void 0 ? void 0 : _g.id));
+        if (msg.guild)
+            if (timestamps === null || timestamps === void 0 ? void 0 : timestamps.has(msg.guild.id)) {
+                const expirationTime = ((_d = command.cooldown) !== null && _d !== void 0 ? _d : 3) * 1000 + (timestamps === null || timestamps === void 0 ? void 0 : timestamps.get(msg.guild.id));
                 if (Date.now() < expirationTime) {
                     const timeLeft = new Date(expirationTime - Date.now()).getSeconds();
                     msg.channel.send(`estoy re caliente como para poder ejecutar más comandos \\🔥\nEspera **${timeLeft}** antes volver a usar **${command.label}**`);
@@ -48,13 +48,13 @@ const event = {
                 }
             }
         if (msg.guild) {
-            setTimeout(() => { var _a; return timestamps === null || timestamps === void 0 ? void 0 : timestamps.delete((_a = msg.guild) === null || _a === void 0 ? void 0 : _a.id); }, ((_h = command.cooldown) !== null && _h !== void 0 ? _h : 3) * 1000);
+            setTimeout(() => { var _a; return timestamps === null || timestamps === void 0 ? void 0 : timestamps.delete((_a = msg.guild) === null || _a === void 0 ? void 0 : _a.id); }, ((_e = command.cooldown) !== null && _e !== void 0 ? _e : 3) * 1000);
             timestamps === null || timestamps === void 0 ? void 0 : timestamps.set(msg.guild.id, Date.now());
         }
         try {
             const output = await command.execute(session)(msg, args);
             if (output) {
-                if (!((_k = (_j = msg.guild) === null || _j === void 0 ? void 0 : _j.me) === null || _k === void 0 ? void 0 : _k.permissions.has(discord_js_1.Permissions.FLAGS.SEND_MESSAGES)))
+                if (!((_g = (_f = msg.guild) === null || _f === void 0 ? void 0 : _f.me) === null || _g === void 0 ? void 0 : _g.permissions.has(discord_js_1.Permissions.FLAGS.SEND_MESSAGES)))
                     return;
                 if (output instanceof discord_js_1.MessageEmbed) {
                     const sended = await msg.channel.send({ embeds: [output] });
