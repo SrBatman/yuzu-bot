@@ -12,7 +12,6 @@ const cooldowns = new Map<string, Map<string, number>>();
 const event: IEvent = {
 	label: 'messageCreate',
 	async execute(msg: Message): Promise<void> {
-		var timestamps: Map<string, number> | undefined;
 		const session = msg.client;
 		const prefix = await getPrefix(Options.Prefix, msg.guild as Guild | undefined);
 		// arguments, ej: .command args0 args1 args2 ...
@@ -42,14 +41,15 @@ const event: IEvent = {
 			msg.channel.send(error);
 			return;
 		}
+		let timestamps: Map<string, number> | undefined;
 		if (command.label) {
 			// cooldowns map
 			if (!cooldowns.has(command.label)) cooldowns.set(command.label, new Map<string, number>());
 			timestamps = cooldowns.get(command.label);
 		}
-		if (msg.guild?.id)
-			if (timestamps?.has(msg.guild?.id)) {
-				const expirationTime = (command.cooldown ?? 3) * 1000 + <number> timestamps?.get(msg.guild?.id);
+		if (msg.guild)
+			if (timestamps?.has(msg.guild.id)) {
+				const expirationTime = (command.cooldown ?? 3) * 1000 + <number> timestamps?.get(msg.guild.id);
 				if (Date.now() < expirationTime) {
 					const timeLeft = new Date(expirationTime - Date.now()).getSeconds();
 					//....

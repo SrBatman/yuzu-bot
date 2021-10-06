@@ -7,7 +7,7 @@ import type { DuckDuckGoImage } from 'duckduckgo-images-api';
 import { image_search as imageSearch } from 'duckduckgo-images-api';
 
 const command: ICommand = {
-	cooldown: 1,
+	cooldown: 4,
 	label: 'image',
 	alias: ['img', 'im', 'i'],
 	options: {
@@ -62,10 +62,8 @@ const command: ICommand = {
 			.setColor('RANDOM')
 			.setImage(results[0].image)
 			.addField('Safe search:', safe ? 'on' : 'off')
-			.setFooter(`Results for ${search}`);
-
-		if (safe)
-			baseEmbed.setAuthor(msg.author.username, msg.author.displayAvatarURL());
+			.setFooter(`Results for ${search}`)
+			.setAuthor(msg.author.username, msg.author.displayAvatarURL());
 
 		if (!safe)
 			baseEmbed.setDescription(`[${results[0].title}](${results[0].url})`);
@@ -84,8 +82,8 @@ const command: ICommand = {
 				query--;
 				const response = results[query];
 				if (response) {
-					row.components[0]?.setDisabled(query <= 0 ? true : false);
-					row.components[1]?.setDisabled(query >= querySize ? true : false);
+					row.components[0]?.setDisabled(query <= 0);
+					row.components[1]?.setDisabled(query >= querySize);
 					embed.setImage(response.image);
 					embed.setFooter(`Page: ${query}/${querySize}`);
 					if (!safe)
@@ -97,8 +95,8 @@ const command: ICommand = {
 				query++;
 				const response = results[query];
 				if (response) {
-					row.components[0]?.setDisabled(query <= 0 ? true : false);
-					row.components[1]?.setDisabled(query >= querySize ? true : false);
+					row.components[0]?.setDisabled(query <= 0);
+					row.components[1]?.setDisabled(query >= querySize);
 					embed.setImage(response.image);
 					embed.setFooter(`Page: ${query}/${querySize}`);
 					if (!safe)
@@ -109,13 +107,13 @@ const command: ICommand = {
 			else if (i.customId === 'ExactMatch' && message.id === i.message.id) {
 				await msg.reply(`Please send a number beetween 0 and ${querySize}`);
 				const messageFilter = (m: Message) => !isNaN(parseInt(m.content)) && m.author === msg.author;
-				const messageCollector = msg.channel.createMessageCollector({ filter: messageFilter, time: 30 * 1000 });
+				const messageCollector = msg.channel.createMessageCollector({ filter: messageFilter, time: 25 * 1000 });
 				messageCollector.on('collect', async m => {
 					query = parseInt(m.content);
 					const response = results[query];
 					if (response) {
-						row.components[0]?.setDisabled(query <= 0 ? true : false);
-						row.components[1]?.setDisabled(query >= querySize ? true : false);
+						row.components[0]?.setDisabled(query <= 0);
+						row.components[1]?.setDisabled(query >= querySize);
 						embed.setImage(response.image);
 						embed.setFooter(`Page: ${query}/${querySize}`);
 						if (!safe)
@@ -128,7 +126,7 @@ const command: ICommand = {
 						await msg.channel.send('Ok...');
 						await msg.channel.bulkDelete(collected);
 					}
-				})
+				});
 				await i.update({ embeds: [ embed ], components: [ row ] });
 			}
 		});
