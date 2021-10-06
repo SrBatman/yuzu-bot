@@ -1,12 +1,13 @@
 import type { ICommand, MessageContent } from '../../typing/command.d';
-import type { MessageComponentInteraction } from 'discord.js';
-import { MessageEmbed, MessageActionRow, MessageButton, Message, Permissions } from 'discord.js';
+import type { MessageComponentInteraction, Message } from 'discord.js';
+import { MessageEmbed, MessageActionRow, MessageButton, Permissions, Constants, TextChannel } from 'discord.js';
 
 // images
 import type { DuckDuckGoImage } from 'duckduckgo-images-api';
 import { image_search as imageSearch } from 'duckduckgo-images-api';
 
 const command: ICommand = {
+	cooldown: 1,
 	label: 'image',
 	alias: ['img', 'im', 'i'],
 	options: {
@@ -26,11 +27,15 @@ const command: ICommand = {
 			return 'Por favor especifica una búsqueda';
 
 		if (msg.guild?.me?.permissions.has(Permissions.FLAGS.ADD_REACTIONS))
-			await msg.react('✅');
+			await msg.react('✅').catch(err => msg.channel.send(err.message));
 
-		const results = await image(search);
+		if (msg.channel.type === Constants.ChannelTypes[1])
+			await msg.react('✅').catch(err => msg.channel.send(err.message));
 
-		if (!results)
+		const safe = msg.channel instanceof TextChannel ? !msg.channel.nsfw : true;
+		const results = await image(search, safe);
+
+		if (results.length <= 0)
 			return 'No he encontrado resultados';
 
 		if (!results[0])
@@ -40,12 +45,12 @@ const command: ICommand = {
 			.addComponents([
 				new MessageButton()
 					.setCustomId('Back')
-					.setLabel('⏪')
+					.setLabel('⬅')
 					.setStyle('PRIMARY')
 					.setDisabled(true),
 				new MessageButton()
 					.setCustomId('Next')
-					.setLabel('⏩')
+					.setLabel('➡')
 					.setStyle('PRIMARY')
 					.setDisabled(false),
 				new MessageButton()
@@ -54,106 +59,78 @@ const command: ICommand = {
 					.setStyle('PRIMARY')
 			]);
 		const baseEmbed = new MessageEmbed()
+			.setDescription(`[${results[0].title}](${results[0].url})`)
 			.setColor('RANDOM')
-			.setAuthor(msg.author.username, msg.author.displayAvatarURL())
 			.setImage(results[0].image)
+			.addField('Safe search:', safe ? 'on' : 'off')
 			.setFooter(`Results for ${search}`);
 
-		let query = 1;
+		if (safe)
+			baseEmbed.setAuthor(msg.author.username, msg.author.displayAvatarURL());
+
+		let query = 0;
+		const querySize = results.length - 1;
 		const message = await msg.channel.send({ embeds: [ baseEmbed ], components: [ row ] });
 
 		// collector
 		const filter = (i: MessageComponentInteraction) => (i.customId === 'Back' || i.customId === 'Next' || i.customId === 'ExactMatch') && i.user.id === msg.author.id;
-		const collector = message.channel.createMessageComponentCollector({ filter, time: 60 * 1000 });
+		const collector = message.channel.createMessageComponentCollector({ filter, time: 120000 });
 
 		collector.on('collect', async i => {
 			const embed = <MessageEmbed> Object.assign(baseEmbed);
 			if (i.customId === 'Back' && message.id === i.message.id) {
 				query--;
-				const newRow = new MessageActionRow()
-					.addComponents([
-						new MessageButton()
-							.setCustomId('Back')
-							.setLabel('⏪')
-							.setStyle('PRIMARY')
-							.setDisabled(query <= 0 ? true : false),
-						new MessageButton()
-							.setCustomId('Next')
-							.setLabel('⏩')
-							.setStyle('PRIMARY')
-							.setDisabled(query >= results.length-1 ? true : false),
-						new MessageButton()
-							.setCustomId('ExactMatch')
-							.setLabel('🔢')
-							.setStyle('PRIMARY')
-						]);
-				if (results[query] && results[1])
-					await i.update({ embeds: [ embed.setImage(results[query]?.image ?? results[1].image).setFooter(`Page: ${query}/${results.length}`) ], components: [ newRow ] });
+				const response = results[query];
+				if (response) {
+					row.components[0]?.setDisabled(query <= 0 ? true : false);
+					row.components[1]?.setDisabled(query >= querySize ? true : false);
+					embed.setImage(response.image);
+					embed.setFooter(`Page: ${query}/${querySize}`);
+					embed.setDescription(`[${response.title}](${response.url})`);
+					await i.update({ embeds: [ embed ], components: [ row ] });
+				}
 			}
 			else if (i.customId === 'Next' && message.id === i.message.id) {
 				query++;
-				const newRow = new MessageActionRow()
-					.addComponents([
-						new MessageButton()
-							.setCustomId('Back')
-							.setLabel('⏪')
-							.setStyle('PRIMARY')
-							.setDisabled(query <= 0 ? true : false),
-						new MessageButton()
-							.setCustomId('Next')
-							.setLabel('⏩')
-							.setStyle('PRIMARY')
-							.setDisabled(query >= results.length-1 ? true : false),
-						new MessageButton()
-							.setCustomId('ExactMatch')
-							.setLabel('🔢')
-							.setStyle('PRIMARY')
-					]);
-				if (results[query] && results[1])
-					await i.update({ embeds: [ embed.setImage(results[query]?.image ?? results[1].image).setFooter(`Page: ${query}/${results.length}`) ], components: [ newRow ] });
+				const response = results[query];
+				if (response) {
+					row.components[0]?.setDisabled(query <= 0 ? true : false);
+					row.components[1]?.setDisabled(query >= querySize ? true : false);
+					embed.setImage(response.image);
+					embed.setFooter(`Page: ${query}/${querySize}`);
+					embed.setDescription(`[${response.title}](${response.url})`);
+					await i.update({ embeds: [ embed ], components: [ row ] });
+				}
 			}
 			else if (i.customId === 'ExactMatch' && message.id === i.message.id) {
-				const m = await msg.reply(`Please send a number beetween 0 and ${results.length}`);
-				const newRow = new MessageActionRow()
-					.addComponents([
-						new MessageButton()
-							.setCustomId('Back')
-							.setLabel('⏪')
-							.setStyle('PRIMARY')
-							.setDisabled(query <= 0 ? true : false),
-						new MessageButton()
-							.setCustomId('Next')
-							.setLabel('⏩')
-							.setStyle('PRIMARY')
-							.setDisabled(query >= results.length-1 ? true : false),
-						new MessageButton()
-							.setCustomId('ExactMatch')
-							.setLabel('🔢')
-							.setStyle('PRIMARY')
-					]);
-				const filter = (m: Message) => !isNaN(parseInt(m.content)) && m.author === msg.author;
-				const messageCollector = m.channel.createMessageCollector({ filter, time: 15 * 1000 });
+				await msg.reply(`Please send a number beetween 0 and ${querySize}`);
+				const messageFilter = (m: Message) => !isNaN(parseInt(m.content)) && m.author === msg.author;
+				const messageCollector = msg.channel.createMessageCollector({ filter: messageFilter, time: 30 * 1000 });
 				messageCollector.on('collect', async m => {
-					const selection = parseInt(m.content);
-					const response = results[selection];
-					if (!response) {
-						msg.channel.send({ content: 'No se encontró la página' });
-						return;
+					query = parseInt(m.content);
+					const response = results[query];
+					if (response) {
+						row.components[0]?.setDisabled(query <= 0 ? true : false);
+						row.components[1]?.setDisabled(query >= querySize ? true : false);
+						embed.setImage(response.image);
+						embed.setFooter(`Page: ${query}/${querySize}`);
+						embed.setDescription(`[${response.title}](${response.url})`);
+						await message.edit({ embeds: [ embed ], components: [ row ] });
 					}
-					query = selection;
-					embed.setImage(response.image);
-					embed.setFooter(`Page: ${query}/${results.length}`);
-					await message.edit({ embeds: [ embed ], components: [ newRow ] });
-					return;
 				});
-				await i.update({ embeds: [ embed ], components: [ newRow ] })
+				messageCollector.on('end', async collected => {
+					if (msg.channel instanceof TextChannel) {
+						await msg.channel.send('Ok...');
+						await msg.channel.bulkDelete(collected);
+					}
+				})
+				await i.update({ embeds: [ embed ], components: [ row ] });
 			}
 		});
 	}
 };
-async function image(search: string): Promise<DuckDuckGoImage[] | undefined> {
-	const results = await imageSearch({ query: search, moderate: true, iterations: 50, retries: 50 });
-	if (results) return [ ...results.filter(f => f) ];
-	else return undefined;
+async function image(query: string, moderate: boolean): Promise<DuckDuckGoImage[]> {
+	const results = await imageSearch({ query, moderate });
+	return [ ...results.filter(f => f) ];
 }
 export = command;

@@ -46,7 +46,7 @@ const command = {
         if (!msg.guild)
             return 'No encontré los datos del servidor, ¿Probaste en ejecutar el comando dentro de un servidor?';
         if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has(discord_js_1.Permissions.FLAGS.ADMINISTRATOR)))
-            return 'No tenés permisos para hacer eso, down.';
+            return 'No tenés permisos de administrador (necesarios para cambiar el prefix)';
         if (!customPrefix || !customPrefix.prefix || customPrefix.prefix === options_1.default.Prefix) {
             const newPrefix = await addPrefix(prefix, msg.guild);
             return `El nuevo prefix será **${newPrefix.prefix}**`;

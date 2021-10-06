@@ -48,7 +48,7 @@ const command = {
                 inline: true
             },
             {
-                name: 'Channelsw',
+                name: 'Channels',
                 value: `**Text**: ${channels.text}\n**Voice**: ${channels.voice}`,
                 inline: true
             }
