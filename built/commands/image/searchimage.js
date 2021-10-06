@@ -47,13 +47,14 @@ const command = {
                 .setStyle('PRIMARY')
         ]);
         const baseEmbed = new discord_js_1.MessageEmbed()
-            .setDescription(`[${results[0].title}](${results[0].url})`)
             .setColor('RANDOM')
             .setImage(results[0].image)
             .addField('Safe search:', safe ? 'on' : 'off')
             .setFooter(`Results for ${search}`);
         if (safe)
             baseEmbed.setAuthor(msg.author.username, msg.author.displayAvatarURL());
+        if (!safe)
+            baseEmbed.setDescription(`[${results[0].title}](${results[0].url})`);
         let query = 0;
         const querySize = results.length - 1;
         const message = await msg.channel.send({ embeds: [baseEmbed], components: [row] });

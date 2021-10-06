@@ -59,7 +59,6 @@ const command: ICommand = {
 					.setStyle('PRIMARY')
 			]);
 		const baseEmbed = new MessageEmbed()
-			.setDescription(`[${results[0].title}](${results[0].url})`)
 			.setColor('RANDOM')
 			.setImage(results[0].image)
 			.addField('Safe search:', safe ? 'on' : 'off')
@@ -67,6 +66,9 @@ const command: ICommand = {
 
 		if (safe)
 			baseEmbed.setAuthor(msg.author.username, msg.author.displayAvatarURL());
+
+		if (!safe)
+			baseEmbed.setDescription(`[${results[0].title}](${results[0].url})`);
 
 		let query = 0;
 		const querySize = results.length - 1;
@@ -116,8 +118,8 @@ const command: ICommand = {
 						row.components[1]?.setDisabled(query >= querySize ? true : false);
 						embed.setImage(response.image);
 						embed.setFooter(`Page: ${query}/${querySize}`);
-					if (!safe)
-						embed.setDescription(`[${response.title}](${response.url})`);
+						if (!safe)
+							embed.setDescription(`[${response.title}](${response.url})`);
 						await message.edit({ embeds: [ embed ], components: [ row ] });
 					}
 				});
