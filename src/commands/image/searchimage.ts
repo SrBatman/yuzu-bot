@@ -86,7 +86,8 @@ const command: ICommand = {
 					row.components[1]?.setDisabled(query >= querySize ? true : false);
 					embed.setImage(response.image);
 					embed.setFooter(`Page: ${query}/${querySize}`);
-					embed.setDescription(`[${response.title}](${response.url})`);
+					if (!safe)
+						embed.setDescription(`[${response.title}](${response.url})`);
 					await i.update({ embeds: [ embed ], components: [ row ] });
 				}
 			}
@@ -98,7 +99,8 @@ const command: ICommand = {
 					row.components[1]?.setDisabled(query >= querySize ? true : false);
 					embed.setImage(response.image);
 					embed.setFooter(`Page: ${query}/${querySize}`);
-					embed.setDescription(`[${response.title}](${response.url})`);
+					if (!safe)
+						embed.setDescription(`[${response.title}](${response.url})`);
 					await i.update({ embeds: [ embed ], components: [ row ] });
 				}
 			}
@@ -114,6 +116,7 @@ const command: ICommand = {
 						row.components[1]?.setDisabled(query >= querySize ? true : false);
 						embed.setImage(response.image);
 						embed.setFooter(`Page: ${query}/${querySize}`);
+					if (!safe)
 						embed.setDescription(`[${response.title}](${response.url})`);
 						await message.edit({ embeds: [ embed ], components: [ row ] });
 					}
