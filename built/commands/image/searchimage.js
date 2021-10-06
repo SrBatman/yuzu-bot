@@ -77,7 +77,7 @@ const command = {
                     if (!safe)
                         embed.setDescription(`[${response.title}](${response.url})`);
                     await i.update({ embeds: [embed], components: [row] });
-                    await collector.resetTimer();
+                    collector.resetTimer();
                 }
             }
             else if (i.customId === 'Next' && message.id === i.message.id) {
@@ -91,7 +91,7 @@ const command = {
                     if (!safe)
                         embed.setDescription(`[${response.title}](${response.url})`);
                     await i.update({ embeds: [embed], components: [row] });
-                    await collector.resetTimer();
+                    collector.resetTimer();
                 }
             }
             else if (i.customId === 'ExactMatch' && message.id === i.message.id) {
@@ -124,7 +124,7 @@ const command = {
             else if (i.customId === 'Delete' && message.id === i.message.id) {
                 await i.reply({ content: 'Ok!', ephemeral: true });
                 await message.delete();
-                await collector.stop();
+                collector.stop();
             }
         });
     }
