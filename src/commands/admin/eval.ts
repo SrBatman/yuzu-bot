@@ -9,7 +9,7 @@ const command: ICommand = {
 		guildOnly: true,
 		adminOnly: false
 	},
-	execute: (session) => (msg, args) => {
+	execute: session => (msg, args) => {
 		if (msg.author.id !== Options.Owner)
 			return 'Qué hacés solo el dueño puede usar eso';
 

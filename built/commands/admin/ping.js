@@ -11,6 +11,6 @@ const command = {
             usage: ''
         }
     },
-    execute: (session) => () => `pong! \\🏓 ${Math.floor(session.ws.ping)}ms`
+    execute: session => () => `pong! \\🏓 ${Math.floor(session.ws.ping)}ms`
 };
 module.exports = command;

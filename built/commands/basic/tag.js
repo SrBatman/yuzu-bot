@@ -84,7 +84,7 @@ const command = {
                         msg.channel.send('No encontré el tag');
                         return;
                     }
-                    tagController.pass(tag, { server: (_d = msg.guild) === null || _d === void 0 ? void 0 : _d.id, user: target.id }, tag === null || tag === void 0 ? void 0 : tag.nsfw, tag === null || tag === void 0 ? void 0 : tag.global);
+                    await tagController.pass(tag, { server: (_d = msg.guild) === null || _d === void 0 ? void 0 : _d.id, user: target.id }, tag === null || tag === void 0 ? void 0 : tag.nsfw, tag === null || tag === void 0 ? void 0 : tag.global);
                 }
                 break;
             }

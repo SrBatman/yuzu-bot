@@ -12,17 +12,14 @@ const command: ICommand = {
 			usage: '[@Mención]'
 		}
 	},
-	execute: (session) => (msg, args) => {
+	execute: session => (msg, args) => {
 		const search = args.join(' ');
 		const target = msg.mentions.users.first();
 
-		if (!search)
+		if (!search && !target)
 			return 'Menciona un usuario';
 
-		let user = session.users.cache.get(search);
-
-		if (!user && target)
-			user = target;
+		const user = session.users.cache.get(search) ?? target;
 
 		if (!user)
 			return 'No se encontró el usuario';

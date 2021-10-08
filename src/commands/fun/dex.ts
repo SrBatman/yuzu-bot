@@ -55,9 +55,7 @@ async function getPokemonFromApi(pokemon: string | number): Promise<IPokemon | u
 		const { body } = await superagent.get(`${pokeAPI}/pokemon/${pokemon}`);
 		return <IPokemon> body;
 	}
-	catch (err: unknown) {
-		return undefined;
-	}
+	catch (err: unknown) { return undefined; }
 }
 function parseMessageToPokemon(message: string): IPokemonTarget {
 	const base = {

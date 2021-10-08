@@ -26,6 +26,7 @@ const command: ICommand = {
 
 		const translated = <{ text: string }> await translate(text, { from: 'auto', to: lang })
 			.catch((err: Error) => console.error(err));
+
 		return new MessageEmbed()
 			.setColor('RANDOM')
 			.setAuthor(msg.author.username, msg.author.displayAvatarURL())

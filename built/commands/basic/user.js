@@ -12,14 +12,13 @@ const command = {
             usage: '[@Mención]'
         }
     },
-    execute: (session) => (msg, args) => {
+    execute: session => (msg, args) => {
+        var _a;
         const search = args.join(' ');
         const target = msg.mentions.users.first();
-        if (!search)
+        if (!search && !target)
             return 'Menciona un usuario';
-        let user = session.users.cache.get(search);
-        if (!user && target)
-            user = target;
+        const user = (_a = session.users.cache.get(search)) !== null && _a !== void 0 ? _a : target;
         if (!user)
             return 'No se encontró el usuario';
         return new discord_js_1.MessageEmbed()

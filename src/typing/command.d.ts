@@ -1,36 +1,25 @@
-import type {
-	Client as Session,
-	PermissionString,
-	Message,
-	Snowflake,
-	MessageOptions
-} from 'discord.js';
-
+import type { Client as Session, PermissionString, Message, Snowflake, MessageOptions, CommandInteraction, CommandInteractionOptionResolver } from 'discord.js';
+import type { SlashCommandBuilder } from 'discord.js/api/v9';
 export type MessageContent =
-| string
-| MessageEmbed
-| MessageOptions
-| undefined;
+    | MessageEmbed
+    | MessageOptions
+    | string
+    | undefined;
 
 export type Category =
-| 'fun'
-| 'util'
-| 'moderation'
-| 'admin'
-| 'owner'
-| 'none';
+    | 'fun'
+    | 'util'
+    | 'moderation'
+    | 'admin'
+    | 'owner'
+    | 'none';
 
 export type CommandOptions = {
     guildOnly?: boolean | false, // if the command can be executed on dm
     adminOnly?: boolean | false,
     permissions?: PermissionString[],
     permissionsForClient?: PermissionString[],
-    allowedIDS?: Snowflake[];
     disabled?: boolean | false,
-    argsRequired?: {
-        message: MessageContent,
-        required: boolean,
-    },
     information?: {
         descr?: string, // description
         usage?: string, // duh
@@ -39,12 +28,19 @@ export type CommandOptions = {
 };
 
 export interface ICommand {
-    label?: string; // the name of the command
+    label: string; // the name of the command
     // category?: Category; // TODO
     alias?: string[]; // aliases like ['avatar', 'pfp', 'icon']
     cooldown?: (number | 3);
     options?: CommandOptions;
     execute: (session: Session) =>
-    (msg: Message, args: readonly string[]) =>
-    MessageContent | Promise<MessageContent>;
+        (msg: Message, args: string[]) =>
+            MessageContent | Promise<MessageContent>;
+}
+
+// slash commands
+export interface ISlashCommand {
+    public options?: CommandOptions;
+    public data: SlashCommandBuilder;
+    public execute: (interaction: Interaction, args: CommandInteractionOptionResolver) => MessageContent | Promise<MessageContent>;
 }

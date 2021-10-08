@@ -5,18 +5,18 @@ import * as tagController from '../../database/controllers/tag.controller';
 import Options from '../../options';
 
 type Argument = // the arguments passed
-| 'add'
-| 'set'
-| 'new'
-| 'remove'
-| 'delete'
-| 'give'
-| 'gift'
-| 'edit'
-| 'list'
-| 'nsfw'
-| 'global'
-| 'owner';
+	| 'add'
+	| 'set'
+	| 'new'
+	| 'remove'
+	| 'delete'
+	| 'give'
+	| 'gift'
+	| 'edit'
+	| 'list'
+	| 'nsfw'
+	| 'global'
+	| 'owner';
 
 const OWNERID = Options.Owner;
 const isArgument = (arg: unknown): arg is Argument =>
@@ -109,7 +109,7 @@ const command: ICommand = {
 					msg.channel.send('No encontré el tag');
 					return;
 				}
-				tagController.pass(tag, { server: msg.guild?.id, user: target.id }, tag?.nsfw, tag?.global);
+				await tagController.pass(tag, { server: msg.guild?.id, user: target.id }, tag?.nsfw, tag?.global);
 			}
 
 			break;

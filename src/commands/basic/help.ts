@@ -15,7 +15,7 @@ const command: ICommand = {
 		}
 	},
 	cooldown: 5,
-	execute: (session) => (msg, args) => {
+	execute: session => (msg, args) => {
 		const search = args.join(' ');
 		const base = new MessageEmbed()
 			.setColor('RANDOM')
@@ -30,7 +30,7 @@ const command: ICommand = {
 					` ${c?.options?.information?.short ?? c.options?.information?.descr ?? 'Comando sin descripción'}`
 				]);
 
-			const commandEmbed = Object.assign(base)
+			const commandEmbed = <MessageEmbed> Object.assign(base)
 				.setTitle(String.raw`\👾 Comandos de ${session.user?.tag}`)
 				.setColor('RANDOM')
 				.setDescription([ base.description ?? 'sin descripción...', ...info ].join('\n'));
@@ -41,7 +41,7 @@ const command: ICommand = {
 		if (!cmd)
 			return 'No encontré ese comando';
 
-		return Object.assign(base)
+		return <MessageEmbed> Object.assign(base)
 			.setTitle('Información del comando.')
 			.addFields([
 				{

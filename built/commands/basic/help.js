@@ -16,7 +16,7 @@ const command = {
         }
     },
     cooldown: 5,
-    execute: (session) => (msg, args) => {
+    execute: session => (msg, args) => {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
         const search = args.join(' ');
         const base = new discord_js_1.MessageEmbed()

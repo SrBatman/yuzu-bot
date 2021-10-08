@@ -10,7 +10,7 @@ const command = {
         guildOnly: true,
         adminOnly: false
     },
-    execute: (session) => (msg, args) => {
+    execute: session => (msg, args) => {
         var _a, _b;
         if (msg.author.id !== options_1.default.Owner)
             return 'Qué hacés solo el dueño puede usar eso';

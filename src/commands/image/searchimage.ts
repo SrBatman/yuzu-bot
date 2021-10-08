@@ -1,8 +1,6 @@
 import type { ICommand, MessageContent } from '../../typing/command.d';
 import type { MessageComponentInteraction, Message } from 'discord.js';
 import { MessageEmbed, MessageActionRow, MessageButton, Permissions, Constants, TextChannel } from 'discord.js';
-
-// images
 import { image_search as imageSearch } from 'duckduckgo-images-api';
 
 const command: ICommand = {
@@ -19,6 +17,11 @@ const command: ICommand = {
 		}
 	},
 	execute: () => async (msg, args): Promise<MessageContent | undefined> => {
+
+		async function image(query: string, moderate = true) {
+			const results = await imageSearch({ query, moderate });
+			return [ ...results.filter(f => f) ];
+		}
 
 		const search = args.join(' ');
 
@@ -44,12 +47,12 @@ const command: ICommand = {
 			.addComponents([
 				new MessageButton()
 					.setCustomId('Back')
-					.setLabel('⬅')
+					.setLabel('⏪')
 					.setStyle('PRIMARY')
 					.setDisabled(true),
 				new MessageButton()
 					.setCustomId('Next')
-					.setLabel('➡')
+					.setLabel('⏩')
 					.setStyle('PRIMARY')
 					.setDisabled(false),
 				new MessageButton()
@@ -61,6 +64,7 @@ const command: ICommand = {
 					.setLabel('✖')
 					.setStyle('DANGER')
 			]);
+
 		const baseEmbed = new MessageEmbed()
 			.setColor('RANDOM')
 			.setImage(results[0].image)
@@ -68,8 +72,7 @@ const command: ICommand = {
 			.setFooter(`Results for ${search}`)
 			.setAuthor(msg.author.username, msg.author.displayAvatarURL());
 
-		if (!safe)
-			baseEmbed.setDescription(`[${results[0].title}](${results[0].url})`);
+		if (!safe) baseEmbed.setDescription(`[${results[0].title}](${results[0].url})`);
 
 		let query = 0;
 		const querySize = results.length - 1;
@@ -143,8 +146,4 @@ const command: ICommand = {
 		});
 	}
 };
-async function image(query: string, moderate: boolean) {
-	const results = await imageSearch({ query, moderate });
-	return [ ...results.filter(f => f) ];
-}
 export = command;

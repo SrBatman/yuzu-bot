@@ -22,7 +22,7 @@ const command: ICommand = {
 			return 'Escribí el contenido del mensaje o te revoleo a piñas';
 
 		if (text.split(' ').some(l => l === '@everyone' || l === '@here'))
-			return 'noup'
+			return 'noup';
 
 		return text;
 	}

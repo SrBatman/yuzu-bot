@@ -16,6 +16,10 @@ const command = {
     },
     execute: () => async (msg, args) => {
         var _a, _b;
+        async function image(query, moderate = true) {
+            const results = await (0, duckduckgo_images_api_1.image_search)({ query, moderate });
+            return [...results.filter(f => f)];
+        }
         const search = args.join(' ');
         if (!search)
             return 'Por favor especifica una búsqueda';
@@ -33,12 +37,12 @@ const command = {
             .addComponents([
             new discord_js_1.MessageButton()
                 .setCustomId('Back')
-                .setLabel('⬅')
+                .setLabel('⏪')
                 .setStyle('PRIMARY')
                 .setDisabled(true),
             new discord_js_1.MessageButton()
                 .setCustomId('Next')
-                .setLabel('➡')
+                .setLabel('⏩')
                 .setStyle('PRIMARY')
                 .setDisabled(false),
             new discord_js_1.MessageButton()
@@ -129,8 +133,4 @@ const command = {
         });
     }
 };
-async function image(query, moderate) {
-    const results = await (0, duckduckgo_images_api_1.image_search)({ query, moderate });
-    return [...results.filter(f => f)];
-}
 module.exports = command;
